@@ -7,7 +7,7 @@ class CustomProfileTextStyles {
   static TextStyle get mainHeading => TextStyle(
         fontSize: 24.0.sp, // Font size for the main heading
         fontWeight: FontWeight.bold, // Font weight for emphasis
-        color: Colors.black, // Color of the text
+        color: black, // Color of the text
       );
 
   // Style for the name in the profile

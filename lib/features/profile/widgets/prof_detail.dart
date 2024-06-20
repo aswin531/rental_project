@@ -10,6 +10,7 @@ class ProfileDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: transparent,
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
