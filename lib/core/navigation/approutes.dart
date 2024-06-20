@@ -1,5 +1,4 @@
 import 'package:go_router/go_router.dart';
-import 'package:rentit/features/authentication/presentation/pages/confirm_otp.dart';
 import 'package:rentit/features/profile/pages/profile.dart';
 
 final GoRouter router = GoRouter(routes: [

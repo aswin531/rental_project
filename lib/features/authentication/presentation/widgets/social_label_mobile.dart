@@ -15,7 +15,7 @@ class SocialLabelMobileScreen extends StatelessWidget {
             color: containerbg,
             borderRadius: BorderRadius.circular(12),
           ),
-          width: 300,
+          width: 300.w,
           height: 40.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -29,20 +29,20 @@ class SocialLabelMobileScreen extends StatelessWidget {
               ),
               Text(
                 "Continue with Google",
-                style: TextStyle(color: black, fontSize: 18),
+                style: TextStyle(color: black, fontSize: 18.sp),
               )
             ],
           ),
         ),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: 20.h,
         ),
         Container(
           decoration: BoxDecoration(
             color: containerbg,
             borderRadius: BorderRadius.circular(12),
           ),
-          width: 300,
+          width: 300.w,
           height: 40.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +59,7 @@ class SocialLabelMobileScreen extends StatelessWidget {
               ),
               Text(
                 "Continue with Mail",
-                style: TextStyle(color: black, fontSize: 18),
+                style: TextStyle(color: black, fontSize: 18.sp),
               )
             ],
           ),
