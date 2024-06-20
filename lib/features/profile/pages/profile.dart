@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rentit/core/constants/colors.dart';
 import 'package:rentit/features/profile/widgets/container_section.dart';
-import 'package:rentit/features/profile/widgets/profile_detail_section.dart';
 import 'package:rentit/features/profile/widgets/profile_text_styles.dart';
+import 'package:rentit/features/profile/widgets/prof_detail.dart';
 
 class MainProfileScreen extends StatelessWidget {
   const MainProfileScreen({super.key});
@@ -32,11 +32,12 @@ class MainProfileScreen extends StatelessWidget {
               height: 150.h,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset("assets/images/defprofile.png"),
+                child: CircleAvatar(
+                    child: Image.asset("assets/images/defprofile.png")),
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             Text(
               "Esther Howard",
@@ -46,7 +47,8 @@ class MainProfileScreen extends StatelessWidget {
               height: 10.h,
             ),
             const ProfileContainers(),
-            const ProfileDetailSection()
+            //const ProfileDetailSection()
+            const Expanded(child: ProfileDetails())
           ],
         ),
       ),

@@ -87,7 +87,7 @@ class ProfileContainers extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(
-                  width: 73.w,
+                  width: 69.w,
                   height: 73.h,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

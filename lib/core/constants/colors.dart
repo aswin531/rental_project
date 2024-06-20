@@ -9,7 +9,7 @@ final containerbg = Colors.grey[200];
 Color otp = const Color.fromARGB(255, 196, 196, 196);
 Color colorprofile = const Color(0x00aa9083);
 const Color myLightGray = Colors.white70;
-
+const Color homegrey = Color(0xfff6f6f6);
 
 Color grey = Colors.grey;
 final greyLight = Colors.grey[150];
