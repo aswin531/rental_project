@@ -6,7 +6,13 @@ class SignUpWithEmailAndPasswordUseCase {
 
   SignUpWithEmailAndPasswordUseCase(this.repository);
 
-  Future<User> call(String email, String password) {
-    return repository.signUpWithEmailAndPassword(email, password);
+  Future<User> signUpWithEmailAndPassword(
+    String name,
+    String lastName,
+    String email,
+    String password,
+    String confirmPassword
+  ) async {
+    return await repository.signUpWithEmailAndPassword(name,lastName,email, password,confirmPassword);
   }
 }

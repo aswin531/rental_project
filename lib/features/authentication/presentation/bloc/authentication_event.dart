@@ -18,14 +18,14 @@ class SignInWithEmailAndPassword extends AuthenticationEvent {
 }
 
 class SignUpWithEmailAndPassword extends AuthenticationEvent {
+  final String? name;
+  final String? lastName;
   final String email;
   final String password;
   final String? confirmPassword;
-  final String? name;
-  final String? lastName;
 
-  const SignUpWithEmailAndPassword(this.email, this.password,
-      this.confirmPassword, this.name, this.lastName);
+  const SignUpWithEmailAndPassword(this.name, this.lastName, this.email,
+      this.password, this.confirmPassword);
 
   @override
   List<Object> get props => [email, password];

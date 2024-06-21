@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       CustomTextFormField(
-                        labelText: "email",
+                        labelText: "Email",
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         // validator: (p0) {},
@@ -57,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       CustomTextFormField(
-                        labelText: "password",
+                        labelText: "Password",
                         controller: passwordController,
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,

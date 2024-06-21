@@ -15,7 +15,7 @@ class AuthenticationBloc
   }) : super(AuthenticationInitial());
 
   Stream<AuthenticationState> mapEventToState(
-      AuthenticationEvent event) async* {
+      AuthenticationEvent event) async* {  
     if (event is SignInWithEmailAndPassword) {
       yield AuthenticationLoading();
       try {
@@ -27,7 +27,7 @@ class AuthenticationBloc
     } else if (event is SignUpWithEmailAndPassword) {
       yield AuthenticationLoading();
       try {
-        final user = await signUpUseCase.call(event.email, event.password);
+        final user = await signUpUseCase.signUpWithEmailAndPassword(event.name!,event.lastName!,event.email, event.password,event.confirmPassword!);
         yield AuthenticationAuthenticated(user);
       } catch (e) {
         yield AuthenticationUnAuthenticated(e.toString());

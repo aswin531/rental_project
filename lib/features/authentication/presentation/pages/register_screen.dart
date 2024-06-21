@@ -6,6 +6,8 @@ import 'package:rentit/features/authentication/presentation/widgets/custom_text_
 import 'package:rentit/features/authentication/presentation/widgets/social_label.dart';
 
 class RegisterScreen extends StatelessWidget {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
@@ -48,7 +50,7 @@ class RegisterScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         CustomTextFormField(
-                          labelText: "email",
+                          labelText: "Name",
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
                           // validator: (p0) {},
@@ -57,7 +59,25 @@ class RegisterScreen extends StatelessWidget {
                           height: 20.h,
                         ),
                         CustomTextFormField(
-                          labelText: "password",
+                          labelText: "Last name",
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          // validator: (p0) {},
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        CustomTextFormField(
+                          labelText: "Email",
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          // validator: (p0) {},
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        CustomTextFormField(
+                          labelText: "Password",
                           controller: passwordController,
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
