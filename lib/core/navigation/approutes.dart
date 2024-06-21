@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:rentit/features/bottomnav/presentation/pages/bottomnav_with_anicons.dart';
 import 'package:rentit/features/profile/pages/profile.dart';
 
 final GoRouter router = GoRouter(routes: [
@@ -23,8 +24,12 @@ final GoRouter router = GoRouter(routes: [
   //   path: '/',
   //   builder: (context, state) => const LocationAccessScreen(),
   // ),
+  // GoRoute(
+  //   path: '/',
+  //   builder: (context, state) => const MainProfileScreen(),
+  // ),
   GoRoute(
     path: '/',
-    builder: (context, state) => const MainProfileScreen(),
+    builder: (context, state) =>  BottomNavBarWithIcons(),
   ),
 ]);
