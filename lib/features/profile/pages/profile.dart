@@ -7,7 +7,7 @@ import 'package:rentit/features/profile/widgets/prof_detail.dart';
 class MainProfileScreen extends StatelessWidget {
   const MainProfileScreen({super.key});
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(

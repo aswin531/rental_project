@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "628120438123",
+    "project_id": "rentit-11660",
+    "storage_bucket": "rentit-11660.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628120438123:android:d6aabc066d8f0e4f0e782e",
+        "android_client_info": {
+          "package_name": "com.example.rent_it"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628120438123-ld9lkk171c4m52qrl3c99937t1fd4kte.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-fQ582rs5uaN9sON8aYgBc9jraCD5WAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628120438123-ld9lkk171c4m52qrl3c99937t1fd4kte.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "628120438123-hj12v707qrr8tb0op28v48cbmhbfub3a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rentIt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
