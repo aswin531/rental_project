@@ -1,34 +1,49 @@
+// part of 'authentication_bloc.dart';
+
 import 'package:equatable/equatable.dart';
 
-abstract class AuthenticationEvent extends Equatable {
-  const AuthenticationEvent();
+abstract class AuthEvent extends Equatable {
+  const AuthEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class SignInWithEmailAndPassword extends AuthenticationEvent {
+class SignInGoogleEvent extends AuthEvent {}
+
+
+class SigInEmailPasswordEvent extends AuthEvent {
   final String email;
   final String password;
 
-  const SignInWithEmailAndPassword(this.email, this.password);
+  const SigInEmailPasswordEvent({required this.email, required this.password});
 
   @override
   List<Object> get props => [email, password];
 }
 
-class SignUpWithEmailAndPassword extends AuthenticationEvent {
-  final String? name;
-  final String? lastName;
+
+class SignUpEmailPasswordEvent extends AuthEvent {
   final String email;
   final String password;
-  final String? confirmPassword;
-
-  const SignUpWithEmailAndPassword(this.name, this.lastName, this.email,
-      this.password, this.confirmPassword);
+  const SignUpEmailPasswordEvent({required this.email, required this.password});
 
   @override
   List<Object> get props => [email, password];
 }
 
-class SignOut extends AuthenticationEvent {}
+
+class SignInPhoneEvent extends AuthEvent {
+  final String phoneNumber;
+  final String smsCode;
+  const SignInPhoneEvent({required this.phoneNumber, required this.smsCode});
+
+  @override
+  List<Object> get props => [phoneNumber, smsCode];
+}
+
+
+class SignOutEvent extends AuthEvent{}
+
+
+class CheckStatusEvent extends AuthEvent{}

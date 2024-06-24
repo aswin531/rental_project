@@ -1,37 +1,31 @@
 import 'package:equatable/equatable.dart';
-import 'package:rentit/features/authentication/domain/entity/user_entity.dart';
 
-abstract class AuthenticationState extends Equatable {
-  const AuthenticationState();
+abstract class Authstate extends Equatable {
+  const Authstate();
 
   @override
   List<Object> get props => [];
 }
+//=========================================
+class AuthInitial extends Authstate {}
 
-//Initialising Authentication State
-class AuthenticationInitial extends AuthenticationState {}
+//=========================================
 
-//Loading Authentication State
-class AuthenticationLoading extends AuthenticationState {}
+class AuthAuthenticated extends Authstate {}
 
-class AuthenticationAuthenticated extends AuthenticationState {
-  final User user;
+//=========================================
 
-  const AuthenticationAuthenticated(this.user);
+class AuthUnAuthenticated extends Authstate {}
 
-  @override
-  List<Object> get props => [user];
-}
+//=========================================
 
-
-
-class AuthenticationUnAuthenticated extends AuthenticationState {
+class AuthError extends Authstate {
   final String message;
-
-  const AuthenticationUnAuthenticated(this.message);
+  const AuthError({required this.message});
 
   @override
   List<Object> get props => [message];
 }
+
 
 
