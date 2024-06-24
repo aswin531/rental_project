@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentit/core/constants/colors.dart';
 import 'package:rentit/features/authentication/presentation/widgets/custom_text_styles.dart';
 
@@ -118,12 +121,11 @@ class LoginRegSelectionScreen extends StatelessWidget {
   }
 
   void _navigateToPage(BuildContext context) async {
-    // Wait for a short duration before navigating
     await Future.delayed(const Duration(milliseconds: 300));
-    // if (isLoginActive.value) {
-    //   Navigator.pushNamed(context, '/login');
-    // } else {
-    //   Navigator.pushNamed(context, '/register');
-    // }
+    if (isLoginActive.value) {
+      context.go('/login');
+    } else {
+      context.go('/register');
+    }
   }
 }

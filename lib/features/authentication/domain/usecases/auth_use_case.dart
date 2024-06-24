@@ -36,12 +36,23 @@ class SignUpWithEmailAndPassword {
 
 //-----------SignUp Phone-Number----------------
 
+class VerifyPhoneNumber {
+  final AuthRepository repository;
+
+  VerifyPhoneNumber({required this.repository});
+
+  Future<void> call(String phoneNumber) async {
+    return await repository.verifyPhoneNumber(phoneNumber);
+  }
+}
+
 class SignInWithPhoneNumber {
   final AuthRepository repository;
+
   SignInWithPhoneNumber({required this.repository});
 
-  Future<void> call(String phoneNumber, String smsCode) async {
-    return await repository.signInWithPhoneNumber(phoneNumber, smsCode);
+  Future<void> call(String smsCode) async {
+    await repository.signInWithPhoneNumber(smsCode);
   }
 }
 
@@ -52,7 +63,7 @@ class SignOut {
   SignOut({required this.repository});
 
   Future<void> call() async {
-    return repository.signOut();
+    return await repository.signOut();
   }
 }
 
@@ -62,7 +73,7 @@ class GetCurrentUser {
   final AuthRepository repository;
   GetCurrentUser({required this.repository});
 
-  User? call()  {
+  User? call() {
     return repository.getCurrentUser();
   }
 }

@@ -6,12 +6,20 @@ abstract class Authstate extends Equatable {
   @override
   List<Object> get props => [];
 }
+
 //=========================================
 class AuthInitial extends Authstate {}
 
 //=========================================
 
-class AuthAuthenticated extends Authstate {}
+class AuthAuthenticated extends Authstate {
+  // final User? user;
+  // AuthAuthenticated(this.user);
+}
+
+//=========================================
+
+class CodeSentState extends Authstate {}
 
 //=========================================
 
@@ -26,6 +34,3 @@ class AuthError extends Authstate {
   @override
   List<Object> get props => [message];
 }
-
-
-

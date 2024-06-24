@@ -33,14 +33,31 @@ class SignUpEmailPasswordEvent extends AuthEvent {
 }
 
 
-class SignInPhoneEvent extends AuthEvent {
+class SendPhoneCodeEvent extends AuthEvent {
   final String phoneNumber;
-  final String smsCode;
-  const SignInPhoneEvent({required this.phoneNumber, required this.smsCode});
+  const SendPhoneCodeEvent({required this.phoneNumber});
 
   @override
-  List<Object> get props => [phoneNumber, smsCode];
+  List<Object> get props => [phoneNumber];
 }
+
+class CodeSentEvent extends AuthEvent {
+  final String verificationId;
+  const CodeSentEvent({required this.verificationId});
+
+  @override
+  List<Object> get props => [verificationId];
+}
+
+class VerifyPhoneCodeEvent extends AuthEvent {
+  final String verificationId;
+  final String smsCode;
+  const VerifyPhoneCodeEvent({required this.verificationId, required this.smsCode});
+
+  @override
+  List<Object> get props => [verificationId, smsCode];
+}
+
 
 
 class SignOutEvent extends AuthEvent{}

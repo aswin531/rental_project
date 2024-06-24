@@ -17,8 +17,14 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<User?> signInWithGoogle() => dataSource.signInWithGoogle();
 
   @override
-  Future<void> signInWithPhoneNumber(String phoneNumber, String smsCode) =>
-      dataSource.signInWithPhoneNumber(smsCode);
+  Future<void> verifyPhoneNumber(String phoneNumber) async {
+    await dataSource.verifyPhoneNumber(phoneNumber);
+  }
+
+  @override
+  Future<void> signInWithPhoneNumber(String smsCode) async {
+    await dataSource.signInWithCredential(smsCode);
+  }
 
   @override
   Future<void> signOut() => dataSource.signOut();

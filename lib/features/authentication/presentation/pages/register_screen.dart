@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentit/features/authentication/presentation/widgets/custom_text_styles.dart';
 import 'package:rentit/features/authentication/presentation/widgets/register_form.dart';
 import 'package:rentit/features/authentication/presentation/widgets/social_label.dart';
@@ -93,7 +94,9 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 SizedBox(height: constraints.maxHeight * 0.02),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go('/login');
+                  },
                   child: Text(
                     "Already have an account?",
                     style: CustomTextStyles.captiongrey.copyWith(

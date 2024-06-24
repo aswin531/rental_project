@@ -1,22 +1,24 @@
 import 'package:go_router/go_router.dart';
 import 'package:rentit/features/authentication/presentation/pages/login_screen.dart';
+import 'package:rentit/features/authentication/presentation/pages/phone_number_register.dart';
 import 'package:rentit/features/authentication/presentation/pages/register_screen.dart';
+import 'package:rentit/features/authentication/presentation/pages/reglog.dart';
 
 
 final GoRouter router = GoRouter(routes: [
-  //GoRoute(path: '/',builder: (context, state) =>LoginRegSelectionScreen() ,),
+  GoRoute(path: '/',builder: (context, state) =>LoginRegSelectionScreen() ,),
   GoRoute(
-    path: '/',
+    path: '/login',
     builder: (context, state) =>  LoginScreen(),
   ),
-  // GoRoute(
-  //   path: '/',
-  //   builder: (context, state) =>  RegisterScreen(),
-  // ),
-  // GoRoute(
-  //   path: '/',
-  //   builder: (context, state) => const MobileNumberRegScreen(),
-  // ),
+  GoRoute(
+    path: '/register',
+    builder: (context, state) =>  RegisterScreen(),
+  ),
+  GoRoute(
+    path: '/mobilereg',
+    builder: (context, state) => const MobileNumberRegScreen(),
+  ),
   // GoRoute(
   //   path: '/',
   //   builder: (context, state) => const ConfirmOtpScreen(),

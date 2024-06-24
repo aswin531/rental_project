@@ -50,7 +50,7 @@ class MobileNumberRegScreen extends StatelessWidget {
                     ),
                     labelText: 'Phone Number',
                   ),
-                  initialCountryCode: 'IN', // Default country code
+                  initialCountryCode: 'IN',
                   onChanged: (phone) {
                     //print(phone.completeNumber);
                   },
@@ -65,16 +65,18 @@ class MobileNumberRegScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: SizedBox(
-                  width: 250.h,
-                  height: 50.h,
+                  width: 235.h,
+                  height: 40.h,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primary,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      //context.read<AuthBloc>().add(SignInPhoneEvent(phoneNumber: '',smsCode: ));
+                    },
                     child: Text(
                       "Verify",
                       style: CustomTextStyles.buttonlabeltext,

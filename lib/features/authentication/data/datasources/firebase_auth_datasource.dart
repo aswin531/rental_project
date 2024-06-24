@@ -22,6 +22,7 @@ class FirebaseDataSource {
   }
 
 //------------------SignIn --Email & Password ------------------------------------
+
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     await firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
@@ -49,9 +50,9 @@ class FirebaseDataSource {
 
   //------------------SignUp -- PhoneNumber ------------------------------------
 
-  late String verificationId;
+  late String _verificationId;
 
-  Future<void> verifyPhonenumber(String phoneNumber) async {
+  Future<void> verifyPhoneNumber(String phoneNumber) async {
     await firebaseAuth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
@@ -61,20 +62,22 @@ class FirebaseDataSource {
         // ignore: avoid_print
         print("Phone Number Verification Failed : $error");
       },
-      codeSent: (String verificationId, forceResendingToken) {
-        verificationId = verificationId;
+      codeSent: (String verificationId, int? forceResendingToken) {
+        _verificationId = verificationId;
       },
-      codeAutoRetrievalTimeout: (verificationId) {
-        verificationId = verificationId;
+      codeAutoRetrievalTimeout: (String verificationId) {
+        _verificationId = verificationId;
       },
     );
   }
 
-//-----Function to sign in with phone number using the SMS code
+//-----Function to sign in with phone number using the SMS code ----------------
 
-  Future<void> signInWithPhoneNumber(String smsCode) async {
+  Future<void> signInWithCredential(String smsCode) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: smsCode);
+      verificationId: _verificationId,
+      smsCode: smsCode,
+    );
     await firebaseAuth.signInWithCredential(credential);
   }
 }
