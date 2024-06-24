@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 
+class RentItColors {
+  static const Color primary = Color(0xFF6200EA); 
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color black87 = Color(0xDD000000);
+  static const Color black54 = Color(0x8A000000);
+  static const Color grey = Color(0xFFBDBDBD);
+  static const Color background = Color(0xFFF5F5F5); 
+}
+
 Color white = Colors.white;
 Color primary = const Color.fromRGBO(31, 65, 187, 1);
 Color homeappbar = const Color(0x00008bf0);

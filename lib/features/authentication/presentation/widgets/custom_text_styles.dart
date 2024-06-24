@@ -103,6 +103,14 @@ class CustomTextStyles {
       ),
     );
   }
-
+  static TextStyle get nonbuttonlabeltext {
+    return GoogleFonts.roboto(
+      textStyle: TextStyle(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w700,
+        color: primary,
+      ),
+    );
+  }
   // Add more custom text styles as needed
 }

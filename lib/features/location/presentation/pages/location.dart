@@ -9,6 +9,10 @@ class LocationAccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: white,
+        toolbarHeight: 20.h,
+      ),
       backgroundColor: white,
       body: SingleChildScrollView(
         child: Center(
@@ -18,14 +22,17 @@ class LocationAccessScreen extends StatelessWidget {
                 height: 30.h,
               ),
               SizedBox(
-                child: Image.asset("assets/images/location.jpg"),
+                child: Image.asset("assets/images/loc-bg.png"),
+              ),
+              SizedBox(
+                height: 10.h,
               ),
               Text(
                 "What is Your Location ?",
                 style: CustomTextStyles.headline3,
               ),
               SizedBox(
-                height: 15.h,
+                height: 12.h,
               ),
               Text(
                 "we need to know your location in order ",
@@ -59,20 +66,15 @@ class LocationAccessScreen extends StatelessWidget {
               Container(
                 width: 300.h,
                 decoration: BoxDecoration(
-                    color: greyLight, borderRadius: BorderRadius.circular(10)),
+                    color: grey, borderRadius: BorderRadius.circular(10)),
                 child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(greyLight!),
+                      backgroundColor: MaterialStateProperty.all<Color>(grey),
                     ),
                     onPressed: () {},
                     child: Text(
-                      "Allow Location Manually",
-                      style: TextStyle(
-                        color: primary,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      "Enter Location Manually",
+                      style: CustomTextStyles.buttonlabeltext,
                     )),
               ),
             ],

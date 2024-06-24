@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rentit/core/constants/colors.dart';
-import 'package:rentit/features/authentication/presentation/widgets/custom_form_field.dart';
 import 'package:rentit/features/authentication/presentation/widgets/custom_text_styles.dart';
+import 'package:rentit/features/authentication/presentation/widgets/register_form.dart';
 import 'package:rentit/features/authentication/presentation/widgets/social_label.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -12,132 +11,110 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(12.h),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xFFF5F5F5), // Minimal background color
+            ),
             child: Column(
               children: [
-                SizedBox(
-                  height: 40.h,
+                SizedBox(height: constraints.maxHeight * 0.05),
+                Container(
+                  width: 120.w,
+                  height: 120.h,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/land.jpg"),
+                      fit: BoxFit.cover,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
                 ),
+                SizedBox(height: constraints.maxHeight * 0.02),
                 Text(
                   "Create Account",
-                  style: CustomTextStyles.headline1,
+                  style: CustomTextStyles.headline1.copyWith(
+                    color: Colors.black87,
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                SizedBox(height: constraints.maxHeight * 0.01),
                 Text(
-                  "create an account so you ",
-                  style: CustomTextStyles.headline3,
+                  "Create an account to explore all the rides",
+                  style: CustomTextStyles.headline3.copyWith(
+                    color: Colors.black54,
+                    fontSize: 16.sp,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                Text(
-                  "can explore all the rides",
-                  style: CustomTextStyles.headline3,
+                SizedBox(height: constraints.maxHeight * 0.02),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Container(
+                      padding: EdgeInsets.all(20.h),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: RegisterForm(
+                          formKey: _formKey,
+                          nameController: nameController,
+                          lastNameController: lastNameController,
+                          emailController: emailController,
+                          passwordController: passwordController,
+                          confirmPassController: confirmPassController),
+                    ),
+                  ),
                 ),
-                SizedBox(
-                  height: 25.h,
-                ),
-                Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        CustomTextFormField(
-                          labelText: "Name",
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          // validator: (p0) {},
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        CustomTextFormField(
-                          labelText: "Last name",
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          // validator: (p0) {},
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        CustomTextFormField(
-                          labelText: "Email",
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          // validator: (p0) {},
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        CustomTextFormField(
-                          labelText: "Password",
-                          controller: passwordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
-                          // validator: (p0) {},
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        CustomTextFormField(
-                          labelText: "Confirm password",
-                          controller: confirmPassController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
-                          // validator: (p0) {},
-                        ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: primary,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(primary),
-                              ),
-                              onPressed: () {},
-                              child: Text(
-                                "Sign up",
-                                style: CustomTextStyles.buttonlabeltext,
-                              )),
-                        ),
-                      ],
-                    )),
-                SizedBox(
-                  height: 25.h,
-                ),
+                SizedBox(height: constraints.maxHeight * 0.02),
                 TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Already have an account?",
-                      style: CustomTextStyles.captiongrey,
-                    )),
-                SizedBox(
-                  height: 15.h,
+                  onPressed: () {},
+                  child: Text(
+                    "Already have an account?",
+                    style: CustomTextStyles.captiongrey.copyWith(
+                      color: Colors.black54,
+                    ),
+                  ),
                 ),
+                SizedBox(height: constraints.maxHeight * 0.01),
                 Text(
-                  "Or continue with ",
-                  style: CustomTextStyles.caption,
+                  "Or continue with",
+                  style: CustomTextStyles.caption.copyWith(
+                    color: Colors.black54,
+                  ),
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                const SocialMediaLabel()
+                SizedBox(height: constraints.maxHeight * 0.02),
+                const SocialMediaLabel(),
+                SizedBox(height: constraints.maxHeight * 0.02),
               ],
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rentit/core/constants/colors.dart';
 import 'package:rentit/features/authentication/presentation/widgets/custom_text_styles.dart';
-import 'package:rentit/features/authentication/presentation/widgets/custom_form_field.dart';
+import 'package:rentit/features/authentication/presentation/widgets/login_form.dart';
 import 'package:rentit/features/authentication/presentation/widgets/social_label.dart';
+import 'package:rentit/core/constants/colors.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -15,110 +15,120 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
-      body: SingleChildScrollView(
-        child: Center(
-            child: Padding(
-          padding: EdgeInsets.all(12.0.h),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 50.h,
-              ),
-              Text(
-                "Login here",
-                style: CustomTextStyles.headline1,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text(
-                "welcome back you've ",
-                style: CustomTextStyles.headline2,
-              ),
-              Text(
-                "been missed! ",
-                style: CustomTextStyles.headline2,
-              ),
-              SizedBox(
-                height: 45.h,
-              ),
-              Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      CustomTextFormField(
-                        labelText: "Email",
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        // validator: (p0) {},
+      appBar: AppBar(
+        backgroundColor: RentItColors.background,
+        toolbarHeight: 2.h,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              color: RentItColors.background,
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: constraints.maxHeight * 0.05),
+                Text(
+                  "Login here",
+                  style: CustomTextStyles.headline1.copyWith(
+                    color: Colors.black87,
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: constraints.maxHeight * 0.02),
+                Text(
+                  "Welcome back, you've",
+                  style: CustomTextStyles.headline2.copyWith(
+                    color: Colors.black54,
+                    fontSize: 16.sp,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  "been missed!",
+                  style: CustomTextStyles.headline2.copyWith(
+                    color: Colors.black54,
+                    fontSize: 16.sp,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: constraints.maxHeight * 0.04),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Container(
+                      padding: EdgeInsets.all(20.h),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      CustomTextFormField(
-                        labelText: "Password",
-                        controller: passwordController,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        // validator: (p0) {},
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "Forgot Password?",
-                              style: CustomTextStyles.caption,
-                            )),
-                      ),
-                      SizedBox(
-                        height: 15.h,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: primary,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(primary),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 120.w,
+                              height: 120.h,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/defprofile.png"),
+                                  fit: BoxFit.cover,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(66, 72, 214, 12),
+                                    blurRadius: 10,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
                             ),
-                            onPressed: () {},
-                            child: Text(
-                              "Sign In",
-                              style: CustomTextStyles.buttonlabeltext,
-                            )),
-                      )
-                    ],
-                  )),
-              SizedBox(
-                height: 20.h,
-              ),
-              TextButton(
+                            SizedBox(height: 10.h),
+                            LoginFormWidget(
+                                formKey: _formKey,
+                                emailController: emailController,
+                                passwordController: passwordController),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: constraints.maxHeight * 0.01),
+                TextButton(
                   onPressed: () {},
                   child: Text(
                     "Create a new account",
-                    style: CustomTextStyles.captiongrey,
-                  )),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text(
-                "Or continue with ",
-                style: CustomTextStyles.caption,
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-              const SocialMediaLabel()
-            ],
-          ),
-        )),
+                    style: CustomTextStyles.captiongrey.copyWith(
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+                SizedBox(height: constraints.maxHeight * 0.02),
+                Text(
+                  "Or continue with",
+                  style: CustomTextStyles.caption.copyWith(
+                    color: Colors.black54,
+                  ),
+                ),
+                SizedBox(height: constraints.maxHeight * 0.02),
+                const SocialMediaLabel(),
+                SizedBox(height: constraints.maxHeight * 0.02),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

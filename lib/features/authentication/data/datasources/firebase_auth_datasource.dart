@@ -58,6 +58,7 @@ class FirebaseDataSource {
         await firebaseAuth.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException error) {
+        // ignore: avoid_print
         print("Phone Number Verification Failed : $error");
       },
       codeSent: (String verificationId, forceResendingToken) {
