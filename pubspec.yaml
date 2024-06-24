@@ -47,6 +47,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
   rive: ^0.13.8
+  google_sign_in: ^6.2.1
   
 
 dev_dependencies:

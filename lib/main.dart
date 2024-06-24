@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilSetup(
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
+        // showPerformanceOverlay: true,
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: primary),
