@@ -6,14 +6,23 @@ import 'package:go_router/go_router.dart';
 import 'package:rentit/core/constants/colors.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_state.dart';
 
 class SocialMediaLabel extends StatelessWidget {
   const SocialMediaLabel({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Row(
+    return BlocListener<AuthBloc, Authstate>(
+      listener: (context, state) {
+        if (state is AuthAuthenticated) {
+          context.go('/profilemain');
+        } else if (state is AuthError) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.message)));
+        }
+      },
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Card(
@@ -58,6 +67,7 @@ class SocialMediaLabel extends StatelessWidget {
             ),
           ),
         ],
+      ),
     );
   }
 }

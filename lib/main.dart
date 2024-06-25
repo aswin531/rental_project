@@ -11,6 +11,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:rentit/features/authentication/data/datasources/firebase_auth_datasource.dart';
 import 'package:rentit/features/authentication/data/repositories/auth_repo_imple.dart';
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
+import 'package:rentit/features/authentication/domain/usecases/auth_use_case.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -25,6 +27,17 @@ Future<void> main() async {
             firebaseAuth: FirebaseAuth.instance, googleSignIn: GoogleSignIn()),
       ),
     ),
+    BlocProvider<AuthBloc>(
+        create: (_) => AuthBloc(
+            signInWithEmailAndPassword: SignInWithEmailAndPassword(
+                repository: _.read<AuthRepository>()),
+            signInWithGoogle:
+                SignInWithGoogle(repositrory: _.read<AuthRepository>()),
+            signUpWithEmailAndPassword: SignUpWithEmailAndPassword(
+                repository: _.read<AuthRepository>()),
+            signInWithPhoneNumber:
+                SignInWithPhoneNumber(repository: _.read<AuthRepository>()),
+            signOut: SignOut(repository: _.read<AuthRepository>())))
   ], child: const MyApp()));
 }
 

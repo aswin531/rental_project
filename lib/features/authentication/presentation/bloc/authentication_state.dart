@@ -13,8 +13,8 @@ class AuthInitial extends Authstate {}
 //=========================================
 
 class AuthAuthenticated extends Authstate {
-  // final User? user;
-  // AuthAuthenticated(this.user);
+  //final User? user;
+  //  const AuthAuthenticated(this.user);
 }
 
 //=========================================
