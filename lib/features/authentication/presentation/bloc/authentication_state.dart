@@ -13,6 +13,12 @@ class AuthInitial extends Authstate {}
 //=========================================
 
 class AuthAuthenticated extends Authstate {
+  // AuthAuthenticated(user);
+
+  // @override
+  // List<Object?> get props => [user];
+  //   String get userEmail => user.email; // Assuming email is a property in User
+
   //final User? user;
   //  const AuthAuthenticated(this.user);
 }
@@ -34,3 +40,6 @@ class AuthError extends Authstate {
   @override
   List<Object> get props => [message];
 }
+
+//=========================================
+

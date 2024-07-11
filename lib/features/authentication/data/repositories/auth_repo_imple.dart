@@ -32,4 +32,5 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> signUpWithEmailAndPassword(String email, String password) =>
       dataSource.signUpWithEmailAndPassword(email, password);
+      
 }

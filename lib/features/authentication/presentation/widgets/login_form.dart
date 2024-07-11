@@ -1,7 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentit/core/constants/colors.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_state.dart';
 import 'package:rentit/features/authentication/presentation/widgets/custom_form_field.dart';
 import 'package:rentit/features/authentication/presentation/widgets/custom_text_styles.dart';
 
@@ -19,9 +23,19 @@ class LoginFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: SingleChildScrollView(
+    return BlocListener<AuthBloc, Authstate>(
+      listener: (context, state) {
+        if (state is AuthAuthenticated) {
+          context.go('/home');
+        } else if (state is AuthError) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              closeIconColor: primary,
+              content: Text(state.message)));
+        }
+      },
+      child: Form(
+        key: _formKey,
         child: Column(
           children: [
             CustomTextFormField(
@@ -34,8 +48,7 @@ class LoginFormWidget extends StatelessWidget {
             CustomTextFormField(
               labelText: "Password",
               controller: passwordController,
-              keyboardType:
-                  TextInputType.visiblePassword,
+              keyboardType: TextInputType.visiblePassword,
               obscureText: true,
               // validator: (p0) {},
             ),
@@ -46,8 +59,7 @@ class LoginFormWidget extends StatelessWidget {
                 onPressed: () {},
                 child: Text(
                   "Forgot Password?",
-                  style:
-                      CustomTextStyles.caption.copyWith(
+                  style: CustomTextStyles.caption.copyWith(
                     color: Colors.black54,
                   ),
                 ),
@@ -63,16 +75,17 @@ class LoginFormWidget extends StatelessWidget {
                   // padding:
                   //     EdgeInsets.symmetric(vertical: 15.h),
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  context.read<AuthBloc>().add(SigInEmailPasswordEvent(
+                      email: emailController.text,
+                      password: passwordController.text));
+                },
                 child: Text(
                   "Sign In",
-                  style: CustomTextStyles
-                      .buttonlabeltext
-                      .copyWith(
+                  style: CustomTextStyles.buttonlabeltext.copyWith(
                     color: Colors.white,
                     fontSize: 18.sp,
                   ),

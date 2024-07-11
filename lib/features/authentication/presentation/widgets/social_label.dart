@@ -18,8 +18,10 @@ class SocialMediaLabel extends StatelessWidget {
         if (state is AuthAuthenticated) {
           context.go('/profilemain');
         } else if (state is AuthError) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(state.message)));
+           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              closeIconColor: primary,
+              content: Text(state.message)));
         }
       },
       child: Row(

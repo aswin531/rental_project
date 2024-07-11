@@ -77,3 +77,9 @@ class GetCurrentUser {
     return repository.getCurrentUser();
   }
 }
+
+//-----------Get User----------------
+class ForgetPassword {
+  final AuthRepository repository;
+  ForgetPassword({required this.repository});
+}

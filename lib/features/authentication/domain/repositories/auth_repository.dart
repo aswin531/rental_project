@@ -11,6 +11,7 @@ abstract class AuthRepository {
 
   Future<void> signInWithPhoneNumber(String smsCode);
 
+
   Future<void> signOut();
 
   User? getCurrentUser();

@@ -43,7 +43,7 @@ class ProfileDetails extends StatelessWidget {
                       icon: FontAwesomeIcons.user,
                       title: 'Account',
                       onPressed: () {
-                        context.go("/accountprof");
+                        context.push("/accountprof");
                       },
                     ),
                     SizedBox(height: 10.h),

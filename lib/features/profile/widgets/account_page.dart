@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentit/core/constants/colors.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_state.dart';
+import 'package:rentit/features/authentication/presentation/widgets/custom_text_styles.dart';
+import 'package:rentit/features/profile/widgets/signout_button.dart';
 
 class AccountScreenWidget extends StatelessWidget {
   const AccountScreenWidget({super.key});
@@ -11,15 +15,93 @@ class AccountScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: RentItColors.background,
       appBar: AppBar(
-        toolbarHeight: 2.h,
+        toolbarHeight: 30.h,
+        leading: IconButton(
+            onPressed: () {
+              context.pop();
+            },
+            icon: const Icon(Icons.arrow_back_ios_rounded)),
         backgroundColor: RentItColors.background,
+        title: Text(
+          'Account Details',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: BlocBuilder<AuthBloc, Authstate>(
         builder: (context, state) {
-          return Center(
-            child: Container(
-             // child: Text("email : ${state.}"),
+          return Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 50.w,
+                      backgroundColor: RentItColors.primary,
+                      child: Icon(
+                        FontAwesomeIcons.user,
+                        size: 50.sp,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20.h,
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(height: 30.h),
+                        Text('Name: ',
+                            style: CustomTextStyles.mobilescreentext),
+                        SizedBox(height: 10.h),
+                        Icon(
+                          FontAwesomeIcons.ccVisa,
+                          color: Colors.green,
+                          size: 24.h,
+                          shadows: const [
+                            Shadow(color: Colors.amber),
+                            Shadow()
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20.h),
+                Text(
+                  'Email:',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                Text(
+                  'Phone:',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                Text(
+                  'Primary Location:',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 30.h),
+                const LogoutButtonWidget()
+              ],
             ),
           );
         },

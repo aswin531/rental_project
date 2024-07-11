@@ -11,7 +11,6 @@ abstract class AuthEvent extends Equatable {
 
 class SignInGoogleEvent extends AuthEvent {}
 
-
 class SigInEmailPasswordEvent extends AuthEvent {
   final String email;
   final String password;
@@ -22,7 +21,6 @@ class SigInEmailPasswordEvent extends AuthEvent {
   List<Object> get props => [email, password];
 }
 
-
 class SignUpEmailPasswordEvent extends AuthEvent {
   final String email;
   final String password;
@@ -31,7 +29,6 @@ class SignUpEmailPasswordEvent extends AuthEvent {
   @override
   List<Object> get props => [email, password];
 }
-
 
 class SendPhoneCodeEvent extends AuthEvent {
   final String phoneNumber;
@@ -52,7 +49,8 @@ class CodeSentEvent extends AuthEvent {
 class VerifyPhoneCodeEvent extends AuthEvent {
   final String verificationId;
   final String smsCode;
-  const VerifyPhoneCodeEvent({required this.verificationId, required this.smsCode});
+  const VerifyPhoneCodeEvent(
+      {required this.verificationId, required this.smsCode});
 
   @override
   List<Object> get props => [verificationId, smsCode];
@@ -60,7 +58,6 @@ class VerifyPhoneCodeEvent extends AuthEvent {
 
 
 
-class SignOutEvent extends AuthEvent{}
+class SignOutEvent extends AuthEvent {}
 
-
-class CheckStatusEvent extends AuthEvent{}
+class CheckStatusEvent extends AuthEvent {}

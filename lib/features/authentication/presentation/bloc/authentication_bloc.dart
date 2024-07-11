@@ -21,6 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
       this.getCurrentUser})
       : super(AuthInitial()) {
 //=====================SigIn-Google-Event========================
+
     on<SignInGoogleEvent>(
       (event, emit) async {
         try {
@@ -33,6 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
     );
 
 //=====================SigIn-EmailPassword-Event========================
+
     on<SigInEmailPasswordEvent>((event, emit) async {
       try {
         await signInWithEmailAndPassword!(event.email, event.password);
@@ -43,6 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
     });
 
 //=====================SigUp-EmailPassword-Event========================
+
     on<SignUpEmailPasswordEvent>((event, emit) async {
       try {
         await signUpWithEmailAndPassword!(event.email, event.password);
@@ -53,17 +56,18 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
     });
 
     //=====================Send-PhoneCode-Event========================
-on<SendPhoneCodeEvent>((event, emit) async {
+    on<SendPhoneCodeEvent>((event, emit) async {
       try {
         await verifyPhoneNumber?.call(event.phoneNumber);
         emit(CodeSentState());
       } catch (e) {
         emit(AuthError(message: e.toString()));
       }
-    });    
+    });
 
     //=====================Verify-PhoneCode-Event========================
-   on<VerifyPhoneCodeEvent>((event, emit) async {
+
+    on<VerifyPhoneCodeEvent>((event, emit) async {
       try {
         //final userCredential = await signInWithPhoneNumber?.call(event.smsCode);
         emit(AuthAuthenticated());
@@ -73,6 +77,7 @@ on<SendPhoneCodeEvent>((event, emit) async {
     });
 
 //=====================SignOut-Event========================
+
     on<SignOutEvent>((event, emit) async {
       try {
         await signOut!();
@@ -83,6 +88,7 @@ on<SendPhoneCodeEvent>((event, emit) async {
     });
 
 //=====================SignOut-Event========================
+
     on<CheckStatusEvent>((event, emit) async {
       final user = getCurrentUser!();
       if (user != null) {
@@ -91,5 +97,9 @@ on<SendPhoneCodeEvent>((event, emit) async {
         emit(AuthUnAuthenticated());
       }
     });
+
+//=====================FOrgetPassword=======================
+
+ 
   }
 }

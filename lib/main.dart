@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,11 @@ import 'package:rentit/features/authentication/data/repositories/auth_repo_imple
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/authentication/domain/usecases/auth_use_case.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:rentit/features/home/data/datasource/car_retrieval_datasource.dart';
+import 'package:rentit/features/home/data/repository/carretrieve_repo_impl.dart';
+import 'package:rentit/features/home/domain/repository/carrepo_interface.dart';
+import 'package:rentit/features/home/domain/usecases/retrievecar_usecase.dart';
+import 'package:rentit/features/home/presentation/blocs/homecar_bloc.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -20,25 +26,40 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MultiRepositoryProvider(providers: [
-    RepositoryProvider<AuthRepository>(
-      create: (_) => AuthRepositoryImpl(
-        dataSource: FirebaseDataSource(
-            firebaseAuth: FirebaseAuth.instance, googleSignIn: GoogleSignIn()),
-      ),
-    ),
-    BlocProvider<AuthBloc>(
-        create: (_) => AuthBloc(
-            signInWithEmailAndPassword: SignInWithEmailAndPassword(
-                repository: _.read<AuthRepository>()),
-            signInWithGoogle:
-                SignInWithGoogle(repositrory: _.read<AuthRepository>()),
-            signUpWithEmailAndPassword: SignUpWithEmailAndPassword(
-                repository: _.read<AuthRepository>()),
-            signInWithPhoneNumber:
-                SignInWithPhoneNumber(repository: _.read<AuthRepository>()),
-            signOut: SignOut(repository: _.read<AuthRepository>())))
-  ], child: const MyApp()));
+  runApp(MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>(
+          create: (_) => AuthRepositoryImpl(
+            dataSource: FirebaseDataSource(
+                firebaseAuth: FirebaseAuth.instance,
+                googleSignIn: GoogleSignIn()),
+          ),
+        ),
+        RepositoryProvider<CarRepository>(
+          create: (_) => CarRepositoryImpl(
+            carRemoteDataSource: CarRemoteDataSource(
+                firebaseFirestore: FirebaseFirestore.instance),
+          ),
+        ),
+      ],
+      child: MultiBlocProvider(providers: [
+        BlocProvider<AuthBloc>(
+            create: (_) => AuthBloc(
+                signInWithEmailAndPassword: SignInWithEmailAndPassword(
+                    repository: _.read<AuthRepository>()),
+                signInWithGoogle:
+                    SignInWithGoogle(repositrory: _.read<AuthRepository>()),
+                signUpWithEmailAndPassword: SignUpWithEmailAndPassword(
+                    repository: _.read<AuthRepository>()),
+                signInWithPhoneNumber:
+                    SignInWithPhoneNumber(repository: _.read<AuthRepository>()),
+                signOut: SignOut(repository: _.read<AuthRepository>()))),
+        BlocProvider<HomeCarRetrieveBloc>(
+          create: (context) => HomeCarRetrieveBloc(
+            retrieveCars: RetrieveCars(context.read<CarRepository>()),
+          ),
+        ),
+      ], child: const MyApp())));
 }
 
 class MyApp extends StatelessWidget {

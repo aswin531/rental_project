@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentit/core/constants/colors.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
@@ -25,6 +26,7 @@ class SocialLabelMobileScreen extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
+                  context.go("/login");
                   context.read<AuthBloc>().add(SignInGoogleEvent());
                 },
                 icon: Icon(
@@ -53,7 +55,9 @@ class SocialLabelMobileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.go("/register");
+                },
                 icon: Icon(
                   Icons.mail,
                   color: black,

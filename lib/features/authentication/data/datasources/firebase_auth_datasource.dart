@@ -80,4 +80,5 @@ class FirebaseDataSource {
     );
     await firebaseAuth.signInWithCredential(credential);
   }
+
 }
