@@ -2,32 +2,19 @@ import 'package:rentit/features/home/domain/entities/car_entity.dart';
 
 class CarVehicleModel extends CarVehicle {
   CarVehicleModel({
-    required String carId,
-    required String make,
-    required String engine,
-    required int seatCapacity,
-    required String model,
-    required String body,
-    required int year,
-    required String color,
-    required double rentalPriceDay,
-    required bool status,
-    required List<String> imageUrls,
-    required String mainImageUrl,
-  }) : super(
-          carId: carId,
-          make: make,
-          engine: engine,
-          seatCapacity: seatCapacity,
-          model: model,
-          body: body,
-          year: year,
-          color: color,
-          rentalPriceDay: rentalPriceDay,
-          status: status,
-          imageUrls: imageUrls,
-          mainImageUrl: mainImageUrl,
-        );
+    required super.carId,
+    required super.make,
+    required super.engine,
+    required super.seatCapacity,
+    required super.model,
+    required super.body,
+    required super.year,
+    required super.color,
+    required super.rentalPriceDay,
+    required super.status,
+    required super.imageUrls,
+    required super.mainImageUrl,
+  });
 
   factory CarVehicleModel.fromMap(Map<String, dynamic> map, String id) {
     return CarVehicleModel(

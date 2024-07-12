@@ -51,8 +51,7 @@ class LocationAccessScreen extends StatelessWidget {
                     color: primary, borderRadius: BorderRadius.circular(10)),
                 child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(primary),
+                      backgroundColor: WidgetStateProperty.all<Color>(primary),
                     ),
                     onPressed: () {},
                     child: Text(
@@ -69,7 +68,7 @@ class LocationAccessScreen extends StatelessWidget {
                     color: grey, borderRadius: BorderRadius.circular(10)),
                 child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(grey),
+                      backgroundColor: WidgetStateProperty.all<Color>(grey),
                     ),
                     onPressed: () {},
                     child: Text(
