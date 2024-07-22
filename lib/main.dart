@@ -14,11 +14,11 @@ import 'package:rentit/features/authentication/data/repositories/auth_repo_imple
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/authentication/domain/usecases/auth_use_case.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:rentit/features/home/data/datasource/car_retrieval_datasource.dart';
-import 'package:rentit/features/home/data/repository/carretrieve_repo_impl.dart';
-import 'package:rentit/features/home/domain/repository/carrepo_interface.dart';
-import 'package:rentit/features/home/domain/usecases/retrievecar_usecase.dart';
-import 'package:rentit/features/home/presentation/blocs/homecar_bloc.dart';
+import 'package:rentit/features/home/data/datasource/car_datasource.dart';
+import 'package:rentit/features/home/data/repository/car_repos_impl.dart';
+import 'package:rentit/features/home/domain/repository/car_rental_repo.dart';
+import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
+import 'package:rentit/features/home/presentation/bloc/carbloc.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -36,11 +36,10 @@ Future<void> main() async {
           ),
         ),
         RepositoryProvider<CarRepository>(
-          create: (_) => CarRepositoryImpl(
-            carRemoteDataSource: CarRemoteDataSource(
-                firebaseFirestore: FirebaseFirestore.instance),
-          ),
-        ),
+          create: (_) => CarReposImpl(
+              remoteDataSource:
+                  CarRemoteDataSourceImpl(FirebaseFirestore.instance)),
+        )
       ],
       child: MultiBlocProvider(providers: [
         BlocProvider<AuthBloc>(
@@ -54,11 +53,10 @@ Future<void> main() async {
                 signInWithPhoneNumber:
                     SignInWithPhoneNumber(repository: _.read<AuthRepository>()),
                 signOut: SignOut(repository: _.read<AuthRepository>()))),
-        BlocProvider<HomeCarRetrieveBloc>(
-          create: (context) => HomeCarRetrieveBloc(
-            retrieveCars: RetrieveCars(context.read<CarRepository>()),
-          ),
-        ),
+        BlocProvider<CarBloc>(
+            create: (_) => CarBloc(
+                getcarUsecase:
+                    GetcarUsecase(repository: _.read<CarRepository>())))
       ], child: const MyApp())));
 }
 
@@ -80,3 +78,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+//context.read ==>> _.read<CarRepository>() is used to retrieve an instance of CarRepository from the dependency injection setup
