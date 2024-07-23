@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/home/domain/entity/car_entity.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carstates.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/location_widget.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/popular_section.dart';
 
 class CarListScreen extends StatelessWidget {
   const CarListScreen({super.key});
@@ -26,9 +27,9 @@ class CarListScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      LocationWidget(),
+                      const LocationWidget(),
                       const SizedBox(height: 16),
-                      SearchBar(),
+                      const SearchBar(),
                       const SizedBox(height: 24),
                       BrandsSection(),
                       const SizedBox(height: 24),
@@ -53,54 +54,14 @@ class CarListScreen extends StatelessWidget {
   }
 }
 
-class LocationWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Location',
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-        Row(
-          children: [
-            Icon(Icons.location_on, color: Colors.white),
-            SizedBox(width: 8),
-            Text(
-              'New York, USA', // Hardcoded location
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
 
-class SearchBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        prefixIcon: const Icon(Icons.search),
-        hintText: 'Search',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide.none,
-        ),
-      ),
-    );
-  }
-}
+
+
 
 class BrandsSection extends StatelessWidget {
   final List<String> brands = ['Mercedes', 'Skoda', 'Ferrari', 'Other'];
+
+   BrandsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +86,7 @@ class BrandsSection extends StatelessWidget {
 class BrandLogo extends StatelessWidget {
   final String brand;
 
-  const BrandLogo({Key? key, required this.brand}) : super(key: key);
+  const BrandLogo({super.key, required this.brand});
 
   @override
   Widget build(BuildContext context) {
@@ -144,56 +105,6 @@ class BrandLogo extends StatelessWidget {
   }
 }
 
-class PopularCarSection extends StatelessWidget {
-  final List<CarVehicleEntity> cars;
-
-  const PopularCarSection({Key? key, required this.cars}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Popular Car',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-            TextButton(
-              onPressed: () => context.read<CarBloc>().add(FetchCars()),
-              child:
-                  const Text('View All', style: TextStyle(color: Colors.white)),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: cars.length,
-          itemBuilder: (context, index) {
-            final car = cars[index];
-            return CarCard(
-              rating: 4.9, // Hardcoded rating
-              imageUrl: car.imageUrls.last,
-              carType: car.model,
-              carName: '${car.make} ${car.model}',
-              pricePerHour: car.rentalPriceRange,
-              fuelType: car.engine,
-              seats: car.seatCapacity,
-              transmission: 'Manual', // Hardcoded transmission
-            );
-          },
-        ),
-      ],
-    );
-  }
-}
 
 class CarCard extends StatelessWidget {
   final double rating;
@@ -206,7 +117,7 @@ class CarCard extends StatelessWidget {
   final String transmission;
 
   const CarCard({
-    Key? key,
+    super.key,
     required this.rating,
     required this.imageUrl,
     required this.carType,
@@ -215,7 +126,7 @@ class CarCard extends StatelessWidget {
     required this.fuelType,
     required this.seats,
     required this.transmission,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

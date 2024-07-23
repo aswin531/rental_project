@@ -8,6 +8,9 @@ class CarBloc extends Bloc<CarEvent, CarState> {
 
   CarBloc({required this.getcarUsecase}) : super(CarInitial()) {
     on<FetchCars>(onFetchCars);
+    on<RefreshCars>(onRefreshCars);
+    on<FilterCars>(onFilterCars);
+    on<FetchBrands>(onFetchBrands);
   }
 
 //onFetch
@@ -37,9 +40,20 @@ class CarBloc extends Bloc<CarEvent, CarState> {
     emit(CarLoading());
     try {
       final cars = await getcarUsecase.execute();
-      final filteredCars =
+      final filteredBrands =
           cars.where((car) => car.make == event.brand).toList();
-      emit(CarLoaded(filteredCars));
+      emit(CarLoaded(filteredBrands));
+    } catch (e) {
+      emit(CarError(e.toString()));
+    }
+  }
+
+//filterBrand
+  Future<void> onFetchBrands(FetchBrands event, Emitter<CarState> emit) async {
+    try {
+      final cars = await getcarUsecase.execute();
+      final brands = cars.map((car) => car.make).toSet().toList();
+      emit(BrandsLoaded(brands));
     } catch (e) {
       emit(CarError(e.toString()));
     }
