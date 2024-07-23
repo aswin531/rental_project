@@ -1,9 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
-import 'package:rentit/features/home/presentation/bloc/carevent.dart';
-import 'package:rentit/features/home/presentation/bloc/carstates.dart';
+import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
+import 'package:rentit/features/home/presentation/bloc/car/carstates.dart';
 
 class CarBloc extends Bloc<CarEvent, CarState> {
   final GetcarUsecase getcarUsecase;

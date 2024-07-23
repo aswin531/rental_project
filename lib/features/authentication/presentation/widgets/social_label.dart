@@ -16,7 +16,7 @@ class SocialMediaLabel extends StatelessWidget {
     return BlocListener<AuthBloc, Authstate>(
       listener: (context, state) {
         if (state is AuthAuthenticated) {
-          context.go('/profilemain');
+          context.go('/home');
         } else if (state is AuthError) {
            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.red,

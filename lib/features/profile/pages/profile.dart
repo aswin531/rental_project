@@ -15,14 +15,14 @@ class MainProfileScreen extends StatelessWidget {
       // body: Container(
       //   decoration:const BoxDecoration(
       //     image: DecorationImage(
-      //       image: AssetImage("assets/images/grey.jpg"), // Path to your image
+      //       image: AssetImage("assets/images/grey.jpg"), 
       //       fit: BoxFit.cover, // Cover the entire container
       //     ),
       //   ),
       body: Center(
         child: Column(
           mainAxisAlignment:
-              MainAxisAlignment.center, // Adjust the alignment as needed
+              MainAxisAlignment.center, 
           children: [
             SizedBox(
               height: 30.h,
@@ -37,7 +37,7 @@ class MainProfileScreen extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: Colors.grey[900]
-                    ?.withOpacity(0.5), // Adjust opacity for readability
+                    ?.withOpacity(0.5), 
                 borderRadius: BorderRadius.circular(20),
               ),
               width: 150.h,

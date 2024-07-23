@@ -18,7 +18,7 @@ import 'package:rentit/features/home/data/datasource/car_datasource.dart';
 import 'package:rentit/features/home/data/repository/car_repos_impl.dart';
 import 'package:rentit/features/home/domain/repository/car_rental_repo.dart';
 import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
-import 'package:rentit/features/home/presentation/bloc/carbloc.dart';
+import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
