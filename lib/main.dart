@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +18,13 @@ import 'package:rentit/features/home/data/repository/car_repos_impl.dart';
 import 'package:rentit/features/home/domain/repository/car_rental_repo.dart';
 import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
+import 'package:rentit/features/rental/data/datasource/rental_datasource.dart';
+import 'package:rentit/features/rental/data/repository/rental_repo_impl.dart';
+import 'package:rentit/features/rental/domain/repository/rental_repo.dart';
+import 'package:rentit/features/rental/domain/usecases/get_user_rental.dart';
+import 'package:rentit/features/rental/domain/usecases/rental_usecase.dart';
+import 'package:rentit/features/rental/domain/usecases/update_request.dart';
+import 'package:rentit/features/rental/presentation/bloc/rental_bloc.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -39,7 +45,10 @@ Future<void> main() async {
           create: (_) => CarReposImpl(
               remoteDataSource:
                   CarRemoteDataSourceImpl(FirebaseFirestore.instance)),
-        )
+        ),
+        RepositoryProvider<RentalRequestRepository>(
+            create: (_) => RentalRequestRepositoryImpl(FirebaseRentalRequestDataSource(FirebaseFirestore.instance),
+                ))
       ],
       child: MultiBlocProvider(providers: [
         BlocProvider<AuthBloc>(
@@ -57,6 +66,15 @@ Future<void> main() async {
             create: (_) => CarBloc(
                 getcarUsecase:
                     GetcarUsecase(repository: _.read<CarRepository>()))),
+        BlocProvider(
+          create: (_) => RentalRequestBloc(
+              createRentalRequest:
+                  CreateRentalRequest(_.read<RentalRequestRepository>()),
+              getUserRentalRequests:
+                  GetUserRentalRequests(_.read<RentalRequestRepository>()),
+              updateRentalRequestStatus:
+                  UpdateRentalRequestStatus(_.read<RentalRequestRepository>())),
+        )
       ], child: const MyApp())));
 }
 

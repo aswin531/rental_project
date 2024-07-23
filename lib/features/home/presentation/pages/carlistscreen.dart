@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentit/features/cardetail/cardetailpage.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carstates.dart';
@@ -34,6 +35,7 @@ class CarListScreen extends StatelessWidget {
                       BrandsSection(),
                       const SizedBox(height: 24),
                       PopularCarSection(cars: state.cars),
+                      
                     ],
                   ),
                 ),
@@ -54,14 +56,10 @@ class CarListScreen extends StatelessWidget {
   }
 }
 
-
-
-
-
 class BrandsSection extends StatelessWidget {
-  final List<String> brands = ['Mercedes', 'Skoda', 'Ferrari', 'Other'];
+  final List<String> brands = ['Alfa Romeo', 'BMW', 'Audi',];
 
-   BrandsSection({super.key});
+  BrandsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +103,6 @@ class BrandLogo extends StatelessWidget {
   }
 }
 
-
 class CarCard extends StatelessWidget {
   final double rating;
   final String imageUrl;
@@ -114,7 +111,7 @@ class CarCard extends StatelessWidget {
   final RangeValues pricePerHour;
   final String fuelType;
   final int seats;
-  final String transmission;
+  final String? transmission;
 
   const CarCard({
     super.key,
@@ -125,63 +122,80 @@ class CarCard extends StatelessWidget {
     required this.pricePerHour,
     required this.fuelType,
     required this.seats,
-    required this.transmission,
+     this.transmission,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Icon(Icons.star, color: Colors.yellow),
-                  Text('$rating'),
-                ],
-              ),
-              const Icon(Icons.favorite_border),
-            ],
-          ),
-          Image.network(imageUrl, height: 120),
-          Text(carType, style: const TextStyle(color: Colors.grey)),
-          Text(carName,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '\$${pricePerHour.start.toStringAsFixed(2)}/hr',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CarDetailPage(
+                  carName: carName,
+                  carType: carType,
+                  imageUrl: imageUrl,
+                  rating: rating,
+                  pricePerHour: pricePerHour,
+                  fuelType: fuelType,
+                  seats: seats,
+                  transmission: "Manual"),
+            ));
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.star, color: Colors.yellow),
+                    Text('$rating'),
+                  ],
                 ),
-              ),
-              Row(
-                children: [
-                  const Icon(Icons.local_gas_station, size: 16),
-                  Text(fuelType),
-                  const SizedBox(width: 8),
-                  const Icon(Icons.person, size: 16),
-                  Text('$seats Seats'),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text('+ $transmission', style: const TextStyle(color: Colors.grey)),
-        ],
+                const Icon(Icons.favorite_border),
+              ],
+            ),
+            Image.network(imageUrl, height: 120),
+            Text(carType, style: const TextStyle(color: Colors.grey)),
+            Text(carName,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '\$${pricePerHour.start.toStringAsFixed(2)}/hr',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+                Row(
+                  children: [
+                    const Icon(Icons.local_gas_station, size: 16),
+                    Text(fuelType),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.person, size: 16),
+                    Text('$seats Seats'),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text('+ $transmission', style: const TextStyle(color: Colors.grey)),
+          ],
+        ),
       ),
     );
   }
