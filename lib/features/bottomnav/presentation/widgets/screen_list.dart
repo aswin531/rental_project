@@ -6,7 +6,8 @@ import 'package:rentit/features/profile/widgets/account_page.dart';
 List<Widget> screens() {
   return const [
     CarListScreen(),
-    MainProfileScreen(),
     AccountScreenWidget(),
+    Center(child: Text('Explore Screen'),),
+    MainProfileScreen(),
   ];
 }

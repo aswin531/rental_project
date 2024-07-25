@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:rentit/features/bottomnav/presentation/bloc/navigation_bloc.dart';
 import 'package:rentit/features/bottomnav/presentation/bloc/navigation_state.dart';
+import 'package:rentit/features/bottomnav/presentation/widgets/navbar_items.dart';
 import 'package:rentit/features/bottomnav/presentation/widgets/screen_list.dart';
 
 class PersistentBottomNav extends StatelessWidget {
@@ -38,43 +39,20 @@ class PersistentBottomNav extends StatelessWidget {
               ),
               isVisible: true,
               animationSettings: const NavBarAnimationSettings(
-                navBarItemAnimation: ItemAnimationSettings(
-                  duration: Duration(milliseconds: 1000),
-                  curve: Curves.ease,
-                ),
-                screenTransitionAnimation: ScreenTransitionAnimationSettings(
-                  animateTabTransition: true,
-                  duration: Duration(milliseconds: 1000),
-                  screenTransitionAnimationType:
-                      ScreenTransitionAnimationType.fadeIn,
-                ),
-              ));
+                  navBarItemAnimation: ItemAnimationSettings(
+                    duration: Duration(milliseconds: 700),
+                    curve: Curves.ease,
+                  ),
+                  screenTransitionAnimation: ScreenTransitionAnimationSettings(
+                    animateTabTransition: true,
+                    duration: Duration(milliseconds: 700),
+                    screenTransitionAnimationType:
+                        ScreenTransitionAnimationType.fadeIn,
+                  ),
+                  onNavBarHideAnimation:
+                      OnHideAnimationSettings(curve: Curves.bounceInOut)));
         },
       ),
     );
   }
-}
-
-
-List<PersistentBottomNavBarItem> navBarItems() {
-  return [
-    PersistentBottomNavBarItem(
-      icon: const Icon(Icons.home),
-      title: "Home",
-      activeColorPrimary: Colors.blue,
-      inactiveColorPrimary: Colors.grey,
-    ),
-    PersistentBottomNavBarItem(
-      icon: const Icon(Icons.search),
-      title: "Search",
-      activeColorPrimary: Colors.blue,
-      inactiveColorPrimary: Colors.grey,
-    ),
-    PersistentBottomNavBarItem(
-      icon: const Icon(Icons.person),
-      title: "Profile",
-      activeColorPrimary: Colors.blue,
-      inactiveColorPrimary: Colors.grey,
-    ),
-  ];
 }

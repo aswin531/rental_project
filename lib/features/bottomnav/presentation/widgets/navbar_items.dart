@@ -16,6 +16,12 @@ List<PersistentBottomNavBarItem> navBarItems() {
       inactiveColorPrimary: Colors.grey,
     ),
     PersistentBottomNavBarItem(
+      icon: const Icon(Icons.language),
+      title: "Profile",
+      activeColorPrimary: Colors.blue,
+      inactiveColorPrimary: Colors.grey,
+    ),
+    PersistentBottomNavBarItem(
       icon: const Icon(Icons.person),
       title: "Profile",
       activeColorPrimary: Colors.blue,

@@ -12,8 +12,7 @@ PersistentTabView buildPersistentTabView(BuildContext context,
     items: navBarItems(),
     confineToSafeArea: true,
     backgroundColor: Colors.grey.shade900,
-    handleAndroidBackButtonPress: true,    
-
+    handleAndroidBackButtonPress: true,
     resizeToAvoidBottomInset: true,
     stateManagement: true,
     navBarHeight: MediaQuery.of(context).viewInsets.bottom == 0
@@ -24,11 +23,10 @@ PersistentTabView buildPersistentTabView(BuildContext context,
     isVisible: true,
     decoration: NavBarDecoration(
       borderRadius: BorderRadius.circular(10.0),
-      colorBehindNavBar: Colors.white,
+      colorBehindNavBar: Colors.grey,
     ),
     animationSettings: const NavBarAnimationSettings(
       navBarItemAnimation: ItemAnimationSettings(
-        // Navigation Bar's items animation properties.
         duration: Duration(milliseconds: 400),
         curve: Curves.ease,
       ),
@@ -36,7 +34,7 @@ PersistentTabView buildPersistentTabView(BuildContext context,
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         duration: Duration(milliseconds: 200),
-        screenTransitionAnimationType: ScreenTransitionAnimationType.fadeIn,
+        screenTransitionAnimationType: ScreenTransitionAnimationType.slide,
       ),
     ),
   );

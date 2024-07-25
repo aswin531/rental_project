@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_state.dart';
 import 'package:rentit/features/authentication/presentation/widgets/custom_text_styles.dart';
 
 class LogoutButtonWidget extends StatelessWidget {
@@ -32,13 +37,20 @@ class LogoutButtonWidget extends StatelessWidget {
                           fontSize: 18),
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
+                  BlocListener<AuthBloc, Authstate>(
+                    listener: (context, state) {
+                      if (state is AuthUnAuthenticated) {
+                        context.pushReplacement('/login');
+                      }
                     },
-                    child: const Text(
-                      'Logout',
-                      style: TextStyle(color: Colors.red, fontSize: 18),
+                    child: TextButton(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(SignOutEvent());
+                      },
+                      child: const Text(
+                        'Logout',
+                        style: TextStyle(color: Colors.red, fontSize: 18),
+                      ),
                     ),
                   ),
                 ],
