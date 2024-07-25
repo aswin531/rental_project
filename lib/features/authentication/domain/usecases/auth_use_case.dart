@@ -78,8 +78,38 @@ class GetCurrentUser {
   }
 }
 
-//-----------Get User----------------
+//-----------Forget User----------------
 class ForgetPassword {
   final AuthRepository repository;
   ForgetPassword({required this.repository});
+}
+
+//-----------SaveAuth Usecase----------------
+class SaveAuthToken {
+  final AuthRepository repository;
+  SaveAuthToken({required this.repository});
+
+  Future<void> call(String token) async {
+    return await repository.saveAuthToken(token);
+  }
+}
+
+//-----------GetAuth Usecase----------------
+class GetAuthToken {
+  final AuthRepository repository;
+  GetAuthToken({required this.repository});
+
+  Future<String?> call() async {
+    return await repository.getAuthToken();
+  }
+}
+
+//-----------GetAuth Usecase----------------
+class ClearAuthToken {
+  final AuthRepository repository;
+  ClearAuthToken({required this.repository});
+
+  Future<void> call() async {
+    return await repository.clearAuthToken();
+  }
 }

@@ -2,65 +2,65 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rentit/features/authentication/data/datasources/firebase_auth_datasource.dart';
+import 'package:rentit/features/authentication/data/datasources/local_storage_datasource.dart';
 import 'package:rentit/features/authentication/data/repositories/auth_repo_imple.dart';
+import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/authentication/domain/usecases/auth_use_case.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-final getIt = GetIt.instance;
+final sl = GetIt.instance;
 
-void setUpDependencies() {
-  getIt.registerLazySingleton<SignInWithGoogle>(
-    () => SignInWithGoogle(
-      repositrory: AuthRepositoryImpl(
-        dataSource: FirebaseDataSource(
-            firebaseAuth: FirebaseAuth.instance, googleSignIn: GoogleSignIn()),
-      ),
-    ),
+Future<void> init() async {
+  //SharedPreferences
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => sharedPreferences);
+// FirebaseAuth
+  final firebaseAuth = FirebaseAuth.instance;
+  sl.registerLazySingleton(() => firebaseAuth);
+// GoogleSignIn
+  final googleSignIn = GoogleSignIn();
+  sl.registerLazySingleton(() => googleSignIn);
+
+  // DataSources
+  sl.registerLazySingleton<LocalStorageDatasource>(
+    () => SharedPreferencesDataSource(sl()),
   );
 
-  getIt.registerLazySingleton<SignInWithEmailAndPassword>(
-    () => SignInWithEmailAndPassword(
-      repository: AuthRepositoryImpl(
-        dataSource: FirebaseDataSource(
-            firebaseAuth: FirebaseAuth.instance, googleSignIn: GoogleSignIn()),
-      ),
-    ),
+  sl.registerLazySingleton<FirebaseDataSource>(
+    () => FirebaseDataSource(
+        firebaseAuth: sl<FirebaseAuth>(), googleSignIn: sl<GoogleSignIn>()),
   );
 
-  getIt.registerLazySingleton<SignUpWithEmailAndPassword>(
-    () => SignUpWithEmailAndPassword(
-      repository: AuthRepositoryImpl(
-        dataSource: FirebaseDataSource(
-            firebaseAuth: FirebaseAuth.instance, googleSignIn: GoogleSignIn()),
-      ),
-    ),
-  );
+// Repositories
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
+      firebaseDataSource: sl<FirebaseDataSource>(), localStorageDatasource: sl<LocalStorageDatasource>()));
 
-  getIt.registerLazySingleton<SignInWithPhoneNumber>(
-    () => SignInWithPhoneNumber(
-      repository: AuthRepositoryImpl(
-        dataSource: FirebaseDataSource(
-            firebaseAuth: FirebaseAuth.instance, googleSignIn: GoogleSignIn()),
-      ),
-    ),
-  );
+//Usecases
+  sl.registerLazySingleton(() => SignInWithGoogle(repositrory: sl()));
+  sl.registerLazySingleton(() => SignInWithEmailAndPassword(repository: sl()));
+  sl.registerLazySingleton(() => SignUpWithEmailAndPassword(repository: sl()));
+  sl.registerLazySingleton(() => VerifyPhoneNumber(repository: sl()));
+  sl.registerLazySingleton(() => SignInWithPhoneNumber(repository: sl()));
+  sl.registerLazySingleton(() => SignOut(repository: sl()));
+  sl.registerLazySingleton(() => GetCurrentUser(repository: sl()));
+  sl.registerLazySingleton(() => SaveAuthToken(repository: sl()));
+  sl.registerLazySingleton(() => GetAuthToken(repository: sl()));
+  sl.registerLazySingleton(() => ClearAuthToken(repository: sl()));
 
-  getIt.registerLazySingleton<SignOut>(
-    () => SignOut(
-      repository: AuthRepositoryImpl(
-        dataSource: FirebaseDataSource(
-            firebaseAuth: FirebaseAuth.instance, googleSignIn: GoogleSignIn()),
-      ),
-    ),
-  );
-
-  getIt.registerLazySingleton<GetCurrentUser>(
-    () => GetCurrentUser(
-      repository: AuthRepositoryImpl(
-        dataSource: FirebaseDataSource(
-            firebaseAuth: FirebaseAuth.instance, googleSignIn: GoogleSignIn()),
-      ),
-    ),
-  );
+//BLoC
+  sl.registerFactory(() => AuthBloc(
+        signInWithGoogle: sl(),
+        signInWithEmailAndPassword: sl(),
+        signUpWithEmailAndPassword: sl(),
+        verifyPhoneNumber: sl(),
+        signInWithPhoneNumber: sl(),
+        signOut: sl(),
+        getCurrentUser: sl(),
+        saveAuthToken: sl(),
+        getAuthToken: sl(),
+        clearAuthToken: sl(),
+      ));
 }
 
 
@@ -69,11 +69,14 @@ void setUpDependencies() {
 
 
 
-// void setupDependencies() {
-//   getIt.registerSingleton<SignInWithGoogle>(SignInWithGoogle());
-//   getIt.registerSingleton<SignInWithEmailAndPassword>(SignInWithEmailAndPassword());
-//   getIt.registerSingleton<SignUpWithEmailAndPassword>(SignUpWithEmailAndPassword());
-//   getIt.registerSingleton<SignInWithPhoneNumber>(SignInWithPhoneNumber());
-//   getIt.registerSingleton<SignOut>(SignOut());
-//   getIt.registerSingleton<GetCurrentUser>(GetCurrentUser());
-// }
+
+
+
+
+
+
+
+
+// Lazy singleton means the instance 
+//will be created only once when it is needed for the first time.
+//FirebaseDataSource and LocalStorageDataSource=> dependencies required by AuthRepositoryImpl

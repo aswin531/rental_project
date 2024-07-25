@@ -4,21 +4,27 @@ import 'package:rentit/features/authentication/presentation/pages/login_screen.d
 import 'package:rentit/features/authentication/presentation/pages/phone_number_register.dart';
 import 'package:rentit/features/authentication/presentation/pages/register_screen.dart';
 import 'package:rentit/features/authentication/presentation/pages/reglog.dart';
-import 'package:rentit/features/cardetail/cardetailpage.dart';
 import 'package:rentit/features/home/presentation/pages/carlistscreen.dart';
 import 'package:rentit/features/profile/pages/profile.dart';
 import 'package:rentit/features/profile/widgets/account_page.dart';
+import 'package:rentit/features/splash/splashscreen.dart';
 
-
-final GoRouter router = GoRouter(routes: [
-  GoRoute(path: '/',builder: (context, state) =>LoginRegSelectionScreen() ,),
+final GoRouter router = GoRouter(initialLocation: '/splash', routes: [
+  GoRoute(
+    path: '/splash',
+    builder: (context, state) => const SplashScreenListener(),
+  ),
+  GoRoute(
+    path: '/loginRegSelection',
+    builder: (context, state) => LoginRegSelectionScreen(),
+  ),
   GoRoute(
     path: '/login',
-    builder: (context, state) =>  LoginScreen(),
+    builder: (context, state) => LoginScreen(),
   ),
   GoRoute(
     path: '/register',
-    builder: (context, state) =>  RegisterScreen(),
+    builder: (context, state) => RegisterScreen(),
   ),
   GoRoute(
     path: '/mobilereg',

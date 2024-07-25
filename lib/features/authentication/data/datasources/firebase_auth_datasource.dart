@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseDataSource {
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
-  //add for Phone sign In 
+  //add for Phone sign In
 
   FirebaseDataSource({required this.firebaseAuth, required this.googleSignIn});
 
@@ -24,16 +25,30 @@ class FirebaseDataSource {
 
 //------------------SignIn --Email & Password ------------------------------------
 
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
-    await firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
+  Future<User?> signInWithEmailAndPassword(
+      String email, String password) async {
+    final UserCredential userCredential = await firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: password);
+    return userCredential.user;
   }
 
 //------------------SignUp --Email & Password ------------------------------------
 
-  Future<void> signUpWithEmailAndPassword(String email, String password) async {
-    await firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+  Future<User?> signUpWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      UserCredential userCredential =
+          await firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return userCredential.user;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error during sign-up: $e');
+      }
+      return null;
+    }
   }
 
 //------------------SignOut ------------------------------------
@@ -82,4 +97,5 @@ class FirebaseDataSource {
     await firebaseAuth.signInWithCredential(credential);
   }
 
+  signInWithPhoneNumber(String smsCode) {}
 }

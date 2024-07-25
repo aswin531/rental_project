@@ -42,6 +42,15 @@ class LoginFormWidget extends StatelessWidget {
               labelText: "Email",
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                  return 'Please enter a valid email address';
+                }
+                return null;
+              },
               // validator: (p0) {},
             ),
             SizedBox(height: 20.h),
@@ -50,7 +59,15 @@ class LoginFormWidget extends StatelessWidget {
               controller: passwordController,
               keyboardType: TextInputType.visiblePassword,
               obscureText: true,
-              // validator: (p0) {},
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                if (value.length < 6) {
+                  return 'Password must be at least 6 characters';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 10.h),
             Align(
@@ -66,31 +83,40 @@ class LoginFormWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 15.h),
-            SizedBox(
-              width: double.infinity,
-              height: 40.h,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primary,
-                  // padding:
-                  //     EdgeInsets.symmetric(vertical: 15.h),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+            BlocBuilder<AuthBloc, Authstate>(
+              builder: (context, state) {
+                if (state is AuthLoading) {
+                  return const CircularProgressIndicator();
+                }
+                return SizedBox(
+                  width: double.infinity,
+                  height: 40.h,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primary,
+                      // padding:
+                      //     EdgeInsets.symmetric(vertical: 15.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        context.read<AuthBloc>().add(SignInEmailPasswordEvent(
+                            email: emailController.text,
+                            password: passwordController.text));
+                      }
+                    },
+                    child: Text(
+                      "Sign In",
+                      style: CustomTextStyles.buttonlabeltext.copyWith(
+                        color: Colors.white,
+                        fontSize: 18.sp,
+                      ),
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  context.read<AuthBloc>().add(SigInEmailPasswordEvent(
-                      email: emailController.text,
-                      password: passwordController.text));
-                },
-                child: Text(
-                  "Sign In",
-                  style: CustomTextStyles.buttonlabeltext.copyWith(
-                    color: Colors.white,
-                    fontSize: 18.sp,
-                  ),
-                ),
-              ),
+                );
+              },
             ),
           ],
         ),
