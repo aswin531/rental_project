@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
+import 'package:rentit/features/bottomnav/presentation/bloc/navigation_bloc.dart';
 import 'package:rentit/features/home/data/datasource/car_datasource.dart';
 import 'package:rentit/features/home/data/repository/car_repos_impl.dart';
 import 'package:rentit/features/home/domain/repository/car_rental_repo.dart';
@@ -65,6 +66,7 @@ Future<void> main() async {
               updateRentalRequestStatus:
                   UpdateRentalRequestStatus(_.read<RentalRequestRepository>())),
         ),
+        BlocProvider(create: (context) => NavigationBloc()),
       ], child: const MyApp())));
 }
 

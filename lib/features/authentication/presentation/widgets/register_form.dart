@@ -32,7 +32,7 @@ class RegisterForm extends StatelessWidget {
     return BlocListener<AuthBloc, Authstate>(
       listener: (context, state) {
         if (state is AuthAuthenticated) {
-          context.go('/profilemain');
+          context.go('/navBarBottom');
         } else if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.red,
@@ -43,7 +43,8 @@ class RegisterForm extends StatelessWidget {
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomTextFormField(
                 labelText: "Name",
@@ -63,7 +64,15 @@ class RegisterForm extends StatelessWidget {
                 labelText: "Email",
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
-                // validator: (p0) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    return 'Please enter a valid email address';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 20.h),
               CustomTextFormField(
@@ -71,7 +80,15 @@ class RegisterForm extends StatelessWidget {
                 controller: passwordController,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
-                // validator: (p0) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  if (value.length < 6) {
+                    return 'Password must be at least 6 characters';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 20.h),
               CustomTextFormField(
@@ -79,35 +96,46 @@ class RegisterForm extends StatelessWidget {
                 controller: confirmPassController,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
-                // validator: (p0) {},
+                validator: (value) {
+                  if (value != passwordController.text) {
+                    return 'Please enter correct password';
+                  }
+
+                  return null;
+                },
               ),
               SizedBox(height: 30.h),
-              SizedBox(
-                width: double.infinity,
-                height: 35.h,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primary,
-                    padding: EdgeInsets.symmetric(vertical: 3.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+              BlocBuilder<AuthBloc, Authstate>(builder: (context, state) {
+                if (state is AuthLoading) {
+                  return const CircularProgressIndicator();
+                }
+                return SizedBox(
+                  width: double.infinity,
+                  height: 35.h,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primary,
+                      padding: EdgeInsets.symmetric(vertical: 3.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    onPressed: () {
+                      context.read<AuthBloc>().add(SignUpEmailPasswordEvent(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          ));
+                    },
+                    child: Text(
+                      "Sign up",
+                      style: CustomTextStyles.buttonlabeltext.copyWith(
+                        color: Colors.white,
+                        fontSize: 18.sp,
+                      ),
                     ),
                   ),
-                  onPressed: () {
-                    context.read<AuthBloc>().add(SignUpEmailPasswordEvent(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        ));
-                  },
-                  child: Text(
-                    "Sign up",
-                    style: CustomTextStyles.buttonlabeltext.copyWith(
-                      color: Colors.white,
-                      fontSize: 18.sp,
-                    ),
-                  ),
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),

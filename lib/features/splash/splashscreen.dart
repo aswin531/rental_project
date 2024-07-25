@@ -9,9 +9,42 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background Image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    "assets/images/bgremovedd.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/logosp.png',
+                  height: 250.0,
+                  width: 250.0,
+                ),
+                const SizedBox(height: 20),
+                // const Text(
+                //   'Rent IT',
+                //   style: TextStyle(
+                //     fontSize: 24.0,
+                //     fontWeight: FontWeight.bold,
+                //     color: Colors.white,
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -24,11 +57,13 @@ class SplashScreenListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, Authstate>(
       listener: (context, state) {
-        if (state is AuthAuthenticated) {
-          context.go('/home');
-        } else if (state is AuthUnAuthenticated) {
-          context.go('/loginRegSelection');
-        }
+        Future.delayed(const Duration(seconds: 3), () {
+          if (state is AuthAuthenticated) {
+            context.go('/navBarBottom');
+          } else if (state is AuthUnAuthenticated) {
+            context.go('/loginRegSelection');
+          }
+        });
       },
       child: const SplashScreen(),
     );

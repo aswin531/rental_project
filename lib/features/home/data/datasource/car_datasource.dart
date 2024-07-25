@@ -13,6 +13,6 @@ class CarRemoteDataSourceImpl implements CarRemoteDataSource {
   @override
   Future<List<CarVehicleModel>> getCars() async {
     final snapshot = await _firebaseFirestore.collection('cars').get();
-    return snapshot.docs.map((doc) => CarVehicleModel.fromFirestoreDcument(doc.data() as Map<String, dynamic>, doc.id)).toList();
+    return snapshot.docs.map((doc) => CarVehicleModel.fromFirestoreDcument(doc.data(), doc.id)).toList();
   }
 }
