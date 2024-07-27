@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
 import 'package:rentit/features/rental/domain/usecases/get_user_rental.dart';
 import 'package:rentit/features/rental/domain/usecases/update_request.dart';
 import 'package:rentit/features/rental/domain/usecases/rental_usecase.dart';
@@ -40,16 +39,7 @@ Future<void> _onFetchUserRentalRequests(
 ) async {
   emit(RentalRequestLoading());
   try {
-    final requestModels = await getUserRentalRequests(event.userId);
-    // Convert List<RentalRequestModel> to List<RentalRequest>
-    final requests = requestModels.map((model) {
-      return RentalRequest(
-        userId: model.userId,
-        carId: model.carId,
-        startDate: model.startDate,
-        endDate: model.endDate,
-      );
-    }).toList();
+    final requests = await getUserRentalRequests(event.userId);
     emit(UserRentalRequestsLoaded(requests));
   } catch (e) {
     emit(RentalRequestError(e.toString()));

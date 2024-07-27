@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_bloc.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_event.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_state.dart';
+import 'package:rentit/features/rental/presentation/widgets/booking_button.dart';
 
 class CarDetailPage extends StatelessWidget {
   final String carName;
@@ -29,25 +25,6 @@ class CarDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime? startDate;
-    DateTime? endDate;
-
-    Future<void> selectDate(BuildContext context, bool isStartDate) async {
-      final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2101),
-      );
-      if (picked != null) {
-        if (isStartDate) {
-          startDate = picked;
-        } else {
-          endDate = picked;
-        }
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -117,68 +94,7 @@ class CarDetailPage extends StatelessWidget {
                           'Price: \$${pricePerHour.start.toStringAsFixed(2)}/hr',
                           style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () => selectDate(context, true),
-                            child: const Text('Select Start Date'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => selectDate(context, false),
-                            child: const Text('Select End Date'),
-                          ),
-                        ],
-                      ),
-                      BlocConsumer<RentalRequestBloc, RentalRequestState>(
-                        listener: (context, state) {
-                          if (state is RentalRequestCreated) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    'Rental request created successfully!'),
-                              ),
-                            );
-                          } else if (state is RentalRequestError) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Error: ${state.message}'),
-                              ),
-                            );
-                          }
-                        },
-                        builder: (context, state) {
-                          return ElevatedButton(
-                            onPressed: state is RentalRequestLoading
-                                ? null
-                                : () {
-                                    if (startDate != null && endDate != null) {
-                                      final request = RentalRequest(
-                                        carId: carName,
-                                        userId: 'user_id', endDate:endDate! , startDate: startDate!,
-                                      );
-                                      context.read<RentalRequestBloc>().add(
-                                            CreateRentalRequestEvent(request),
-                                          );
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                              'Please select both start and end dates.'),
-                                        ),
-                                      );
-                                    }
-                                  },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue),
-                            child: state is RentalRequestLoading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : const Text('Book Now'),
-                          );
-                        },
-                      ),
+                      BookingButton(carId: carName)
                     ],
                   ),
                 ],
