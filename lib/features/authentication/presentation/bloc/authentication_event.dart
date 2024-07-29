@@ -62,3 +62,5 @@ class VerifyPhoneCodeEvent extends AuthEvent {
 class SignOutEvent extends AuthEvent {}
 
 class CheckStatusEvent extends AuthEvent {}
+
+class FetchCurrentUser extends AuthEvent {}

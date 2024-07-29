@@ -17,6 +17,7 @@ class RentalRequest {
   final String address;
   final String licenseNumber;
   final String? comment;
+  final bool status;
 
   RentalRequest({
     this.id,
@@ -35,5 +36,6 @@ class RentalRequest {
     required this.address,
     required this.licenseNumber,
     this.comment,
+    required this.status  //this.status = false, // Default status is false (pending)
   });
 }

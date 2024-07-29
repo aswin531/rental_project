@@ -5,40 +5,24 @@ import '../../domain/entity/rental_entity.dart';
 
 class RentalRequestModel extends RentalRequest {
   RentalRequestModel({
-    String? id,
-    required String carId,
-    required String userId,
-    required DateTime startDate,
-    required DateTime endDate,
-    required bool isPickup,
-    required bool isDelivery,
-    String? pickupTime,
-    String? pickupArrival,
-    String? deliveryTime,
-    String? deliveryPlace,
-    required String name,
-    required String phone,
-    required String address,
-    required String licenseNumber,
-    String? comment,
-  }) : super(
-          id: id,
-          carId: carId,
-          userId: userId,
-          startDate: startDate,
-          endDate: endDate,
-          isPickup: isPickup,
-          isDelivery: isDelivery,
-          pickupTime: pickupTime,
-          pickupArrival: pickupArrival,
-          deliveryTime: deliveryTime,
-          deliveryPlace: deliveryPlace,
-          name: name,
-          phone: phone,
-          address: address,
-          licenseNumber: licenseNumber,
-          comment: comment,
-        );
+    super.id,
+    required super.carId,
+    required super.userId,
+    required super.startDate,
+    required super.endDate,
+    required super.isPickup,
+    required super.isDelivery,
+    super.pickupTime,
+    super.pickupArrival,
+    super.deliveryTime,
+    super.deliveryPlace,
+    required super.name,
+    required super.phone,
+    required super.address,
+    required super.licenseNumber,
+    super.comment,
+    required super.status, 
+  });
 
   factory RentalRequestModel.fromJson(Map<String, dynamic> json, String id) {
     return RentalRequestModel(
@@ -58,6 +42,7 @@ class RentalRequestModel extends RentalRequest {
       address: json['address'] as String,
       licenseNumber: json['licenseNumber'] as String,
       comment: json['comment'] as String?,
+      status: json['status']
     );
   }
 
@@ -78,6 +63,7 @@ class RentalRequestModel extends RentalRequest {
       'address': address,
       'licenseNumber': licenseNumber,
       'comment': comment,
+      'status':status,
     };
   }
 
@@ -100,6 +86,7 @@ class RentalRequestModel extends RentalRequest {
       address: entity.address,
       licenseNumber: entity.licenseNumber,
       comment: entity.comment,
+      status: entity.status
     );
   }
 }

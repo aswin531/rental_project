@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentit/core/services/user_services.dart';
 import 'package:rentit/features/authentication/domain/usecases/auth_use_case.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_state.dart';
@@ -27,12 +29,20 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
     required this.getAuthToken,
     required this.clearAuthToken,
   }) : super(AuthInitial()) {
+    on<FetchCurrentUser>((event, emit) {
+      final user = getCurrentUser();
+      if (user != null) {
+        emit(AuthAuthenticated(user));
+      } else {
+        emit(AuthUnAuthenticated());
+      }
+    });
     //=====================Check-Status-Event========================
     on<CheckStatusEvent>((event, emit) async {
       final user = getCurrentUser();
       final token = await getAuthToken();
       if (user != null && token != null) {
-        emit(AuthAuthenticated());
+        emit(AuthAuthenticated(user));
       } else {
         emit(AuthUnAuthenticated());
       }
@@ -46,7 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         if (user != null) {
           final token = await user.getIdToken();
           await saveAuthToken(token ?? '');
-          emit(AuthAuthenticated());
+          emit(AuthAuthenticated(user));
         } else {
           emit(AuthUnAuthenticated());
         }
@@ -62,7 +72,12 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         await signInWithEmailAndPassword(event.email, event.password);
         final token = await getAuthToken();
         await saveAuthToken(token ?? '');
-        emit(AuthAuthenticated());
+        final user = getCurrentUser();
+        final userId = user?.uid;
+    final userService = UserService();
+    userService.setUserId(userId ?? '');
+        debugPrint('User ID set:$userId');
+        emit(AuthAuthenticated(user!));
       } catch (e) {
         emit(AuthError(message: e.toString()));
       }
@@ -75,7 +90,9 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         await signUpWithEmailAndPassword(event.email, event.password);
         final token = await getAuthToken();
         await saveAuthToken(token ?? '');
-        emit(AuthAuthenticated());
+        final user = getCurrentUser();
+
+        emit(AuthAuthenticated(user!));
       } catch (e) {
         emit(AuthError(message: e.toString()));
       }
@@ -94,8 +111,10 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
     //=====================Verify-PhoneCode-Event========================
     on<VerifyPhoneCodeEvent>((event, emit) async {
       try {
+        final user = getCurrentUser();
+
         //final userCredential = await signInWithPhoneNumber?.call(event.smsCode);
-        emit(AuthAuthenticated());
+        emit(AuthAuthenticated(user!));
       } catch (e) {
         emit(AuthError(message: e.toString()));
       }

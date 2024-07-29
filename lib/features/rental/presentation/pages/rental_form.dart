@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:rentit/core/validators/license_validators.dart';
 import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
 
 class RentalFormState {
@@ -116,29 +119,43 @@ class RentalFormWidget extends StatelessWidget {
                 _buildTextField(
                   controller: formState.nameController,
                   labelText: 'Full Name',
-                  validator: _requiredValidator,
+                  validator: (value) => Validator.requiredValidator(value),
                 ),
-                _buildTextField(
-                  controller: formState.phoneController,
-                  labelText: 'Phone Number',
-                  validator: _requiredValidator,
-                  keyboardType: TextInputType.phone,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IntlPhoneField(
+                    controller: formState.phoneController,
+                    onChanged: (phone) {},
+                    decoration: InputDecoration(
+                      labelText: 'Phone',
+                      prefixIcon: Icon(
+                        Icons.call,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      suffixIcon: const Icon(Icons.backspace),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                    ),
+                    initialCountryCode: 'IN',
+                    onCountryChanged: (country) {},
+                  ),
                 ),
                 _buildTextField(
                   controller: formState.emailController,
                   labelText: 'Email Address',
-                  validator: _emailValidator,
+                  validator: (value) => Validator.emailValidator(value),
                   keyboardType: TextInputType.emailAddress,
                 ),
                 _buildTextField(
                   controller: formState.addressController,
                   labelText: 'Address',
-                  validator: _requiredValidator,
+                  validator: (value) => Validator.requiredValidator(value),
                 ),
                 _buildTextField(
                   controller: formState.licenseController,
-                  labelText: 'Driver\'s License Number',
-                  validator: _requiredValidator,
+                  labelText: 'Driver\'s License Number', //KL12 20231234567
+                  validator: (value) => Validator.driverLicenseValidator(value),
                 ),
                 _buildTextField(
                   controller: formState.commentController,
@@ -176,7 +193,7 @@ class RentalFormWidget extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           labelText: labelText,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
         validator: validator,
         keyboardType: keyboardType,
@@ -201,7 +218,7 @@ class RentalFormWidget extends StatelessWidget {
           InkWell(
             onTap: () => _selectDateTime(context, onDateSelected),
             child: InputDecorator(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -214,7 +231,7 @@ class RentalFormWidget extends StatelessWidget {
                         ? DateFormat('MMM dd, yyyy HH:mm').format(selectedDate)
                         : 'Select date and time',
                   ),
-                  Icon(Icons.calendar_today),
+                  const Icon(Icons.calendar_today),
                 ],
               ),
             ),
@@ -278,44 +295,34 @@ class RentalFormWidget extends StatelessWidget {
     );
   }
 
-  String? _requiredValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'This field is required';
-    }
-    return null;
-  }
-
-  String? _emailValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Email is required';
-    }
-    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-      return 'Enter a valid email address';
-    }
-    return null;
-  }
-
   void _submitForm(BuildContext context) {
+    // final userService = UserService();
+      final user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    debugPrint('UserId: ${user.uid}');
+  } else {
+    debugPrint('No user is signed in.');
+  }
     if (formState.formKey.currentState!.validate() &&
         formState.startDate != null &&
         formState.endDate != null) {
       final request = RentalRequest(
-        carId: carId,
-        userId: 'user_id', // You might want to get this from a user service
-        startDate: formState.startDate!,
-        endDate: formState.endDate!,
-        isPickup: formState.isPickup,
-        isDelivery: formState.isDelivery,
-        pickupTime: formState.pickupTimeController.text,
-        pickupArrival: formState.pickupArrivalController.text,
-        deliveryTime: formState.deliveryTimeController.text,
-        deliveryPlace: formState.deliveryPlaceController.text,
-        name: formState.nameController.text,
-        phone: formState.phoneController.text,
-        address: formState.addressController.text,
-        licenseNumber: formState.licenseController.text,
-        comment: formState.commentController.text,
-      );
+          carId: carId,
+          userId:user!.uid,
+          startDate: formState.startDate!,
+          endDate: formState.endDate!,
+          isPickup: formState.isPickup,
+          isDelivery: formState.isDelivery,
+          pickupTime: formState.pickupTimeController.text,
+          pickupArrival: formState.pickupArrivalController.text,
+          deliveryTime: formState.deliveryTimeController.text,
+          deliveryPlace: formState.deliveryPlaceController.text,
+          name: formState.nameController.text,
+          phone: formState.phoneController.text,
+          address: formState.addressController.text,
+          licenseNumber: formState.licenseController.text,
+          comment: formState.commentController.text,
+          status: false);
 
       onSubmit(request);
       Navigator.pop(context);
