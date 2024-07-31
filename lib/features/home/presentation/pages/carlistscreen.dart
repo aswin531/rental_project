@@ -14,13 +14,14 @@ class CarListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NotificationService notificationService = NotificationService();
-        debugPrint("Notification requested");
-
+    debugPrint("Notification requested");
+    notificationService.firebaseInit(context);
     notificationService.requestNotificationPermission();
     // notificationService.isTokenRefresh();
     notificationService.getDeviceToken().then((value) {
       debugPrint("Device Token : $value");
     });
+
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<CarBloc, CarState>(
