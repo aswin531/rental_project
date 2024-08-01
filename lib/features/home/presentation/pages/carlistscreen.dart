@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/core/services/notification_services.dart';
 import 'package:rentit/features/cardetail/cardetailpage.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
@@ -13,15 +12,6 @@ class CarListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NotificationService notificationService = NotificationService();
-    debugPrint("Notification requested");
-    notificationService.firebaseInit(context);
-    notificationService.requestNotificationPermission();
-    // notificationService.isTokenRefresh();
-    notificationService.getDeviceToken().then((value) {
-      debugPrint("Device Token : $value");
-    });
-
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<CarBloc, CarState>(

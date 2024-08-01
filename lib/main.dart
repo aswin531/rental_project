@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/core/constants/colors.dart';
@@ -8,7 +7,6 @@ import 'package:rentit/core/constants/screen_util_setup.dart';
 import 'package:rentit/core/di/dependency_injection.dart';
 import 'package:rentit/core/router/approutes.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:rentit/core/services/notification_services.dart';
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
@@ -32,13 +30,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseMessaging.onBackgroundMessage(
-      firebaseMessagingBackgroundHandler); // Registered the background message handler
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+
 
   // Initialize dependencies
   await init();

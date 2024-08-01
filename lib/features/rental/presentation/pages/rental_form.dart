@@ -297,18 +297,18 @@ class RentalFormWidget extends StatelessWidget {
 
   void _submitForm(BuildContext context) {
     // final userService = UserService();
-      final user = FirebaseAuth.instance.currentUser;
-  if (user != null) {
-    debugPrint('UserId: ${user.uid}');
-  } else {
-    debugPrint('No user is signed in.');
-  }
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      debugPrint('UserId: ${user.uid}');
+    } else {
+      debugPrint('No user is signed in.');
+    }
     if (formState.formKey.currentState!.validate() &&
         formState.startDate != null &&
         formState.endDate != null) {
       final request = RentalRequest(
           carId: carId,
-          userId:user!.uid,
+          userId: user!.uid,
           startDate: formState.startDate!,
           endDate: formState.endDate!,
           isPickup: formState.isPickup,
@@ -328,4 +328,5 @@ class RentalFormWidget extends StatelessWidget {
       Navigator.pop(context);
     }
   }
+
 }
