@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/mybookings/presentation/bloc/events/tab_event.dart';
-import 'package:rentit/features/mybookings/presentation/bloc/states/tab_state.dart';
-import 'package:rentit/features/mybookings/presentation/bloc/tabbloc/tab_bloc.dart';
-import 'package:rentit/features/mybookings/presentation/widgets/booking_components.dart';
-import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/features/rental/presentation/bloc/mybooking_bloc/bloc.dart';
+import 'package:rentit/features/rental/presentation/bloc/mybooking_bloc/event.dart';
+import 'package:rentit/features/rental/presentation/bloc/mybooking_bloc/state.dart';
+import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_components.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});

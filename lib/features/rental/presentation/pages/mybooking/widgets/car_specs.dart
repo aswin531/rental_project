@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rentit/features/mybookings/presentation/widgets/spec_items.dart';
+import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/spec_item.dart';
 
 class CarSpecs extends StatelessWidget {
   const CarSpecs({super.key});

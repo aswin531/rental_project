@@ -107,6 +107,7 @@ class BrandLogo extends StatelessWidget {
 }
 
 class CarCard extends StatelessWidget {
+  final String carId;
   final double rating;
   final String imageUrl;
   final String carType;
@@ -118,6 +119,7 @@ class CarCard extends StatelessWidget {
 
   const CarCard({
     super.key,
+    required this.carId,
     required this.rating,
     required this.imageUrl,
     required this.carType,
@@ -136,6 +138,7 @@ class CarCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => CarDetailPage(
+                  carId: carId,
                   carName: carName,
                   carType: carType,
                   imageUrl: imageUrl,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rentit/features/rental/presentation/widgets/booking_button.dart';
+import 'package:rentit/features/rental/presentation/pages/rental/widgets/booking_button.dart';
 
 class CarDetailPage extends StatelessWidget {
+  final String carId;
   final String carName;
   final String carType;
   final String imageUrl;
@@ -13,6 +14,7 @@ class CarDetailPage extends StatelessWidget {
 
   const CarDetailPage({
     super.key,
+    required this.carId,
     required this.carName,
     required this.carType,
     required this.imageUrl,
@@ -94,7 +96,7 @@ class CarDetailPage extends StatelessWidget {
                           'Price: \$${pricePerHour.start.toStringAsFixed(2)}/hr',
                           style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
-                      BookingButton(carId: carName)
+                      BookingButton(carId: carId)
                     ],
                   ),
                 ],

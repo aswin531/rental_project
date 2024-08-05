@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
@@ -38,9 +37,10 @@ class PopularCarSection extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: cars.length,
-          itemBuilder: (context, index) {
+          itemBuilder: (context, index) {    
             final car = cars[index];
             return CarCard(
+              carId: car.carId,
               rating: 4.9, // Hardcoded rating
               imageUrl: car.imageUrls.last,
               carType: car.model,

@@ -15,14 +15,14 @@ import 'package:rentit/features/home/data/repository/car_repos_impl.dart';
 import 'package:rentit/features/home/domain/repository/car_rental_repo.dart';
 import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
-import 'package:rentit/features/mybookings/presentation/bloc/tabbloc/tab_bloc.dart';
 import 'package:rentit/features/rental/data/datasource/rental_datasource.dart';
 import 'package:rentit/features/rental/data/repository/rental_repo_impl.dart';
 import 'package:rentit/features/rental/domain/repository/rental_repo.dart';
 import 'package:rentit/features/rental/domain/usecases/get_user_rental.dart';
 import 'package:rentit/features/rental/domain/usecases/rental_usecase.dart';
 import 'package:rentit/features/rental/domain/usecases/update_request.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_bloc.dart';
+import 'package:rentit/features/rental/presentation/bloc/mybooking_bloc/bloc.dart';
+import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {

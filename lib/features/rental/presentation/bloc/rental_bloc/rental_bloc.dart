@@ -3,8 +3,8 @@ import 'package:rentit/features/authentication/domain/repositories/auth_reposito
 import 'package:rentit/features/rental/domain/usecases/get_user_rental.dart';
 import 'package:rentit/features/rental/domain/usecases/update_request.dart';
 import 'package:rentit/features/rental/domain/usecases/rental_usecase.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_event.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_state.dart';
+import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
+import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 
 class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   final CreateRentalRequest createRentalRequest;

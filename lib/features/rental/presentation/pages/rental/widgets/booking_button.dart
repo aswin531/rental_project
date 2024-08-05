@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_bloc.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_event.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_state.dart';
-import 'package:rentit/features/rental/presentation/pages/rental_form.dart';
+import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
+import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
+import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
+import 'package:rentit/features/rental/presentation/pages/rental/rental_form.dart';
 
 class BookingButton extends StatelessWidget {
   final String carId;

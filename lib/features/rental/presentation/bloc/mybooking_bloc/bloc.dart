@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/mybookings/presentation/bloc/events/tab_event.dart';
-import 'package:rentit/features/mybookings/presentation/bloc/states/tab_state.dart';
+import 'package:rentit/features/rental/presentation/bloc/mybooking_bloc/event.dart';
+import 'package:rentit/features/rental/presentation/bloc/mybooking_bloc/state.dart';
 
 class TabBloc extends Bloc<TabEvent, TabState> {
   TabBloc() : super(TabState(0)) {

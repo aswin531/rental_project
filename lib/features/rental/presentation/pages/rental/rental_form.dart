@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
-import 'package:rentit/features/rental/presentation/widgets/logo_form.dart';
-import 'package:rentit/features/rental/presentation/widgets/rental_form.dart';
-import 'package:rentit/features/rental/presentation/widgets/rental_form_state.dart';
+import 'package:rentit/features/rental/presentation/pages/rental/widgets/logo_form.dart';
+import 'package:rentit/features/rental/presentation/pages/rental/widgets/rental_form.dart';
+import 'package:rentit/features/rental/presentation/pages/rental/widgets/rental_form_state.dart';
 
 class RentalFormWidget extends StatelessWidget {
   final String carId;

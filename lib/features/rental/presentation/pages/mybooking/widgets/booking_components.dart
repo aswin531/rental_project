@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rentit/features/mybookings/presentation/widgets/booking_buttons.dart';
-import 'package:rentit/features/mybookings/presentation/widgets/car_specs.dart';
-import 'package:rentit/features/mybookings/presentation/widgets/location_map.dart';
-import 'package:rentit/features/mybookings/presentation/widgets/req_car_detail.dart';
+import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_button.dart';
+import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/car_specs.dart';
+import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/location_map.dart';
+import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/req_car_details.dart';
 
 class BookingContent extends StatelessWidget {
   const BookingContent({super.key});
