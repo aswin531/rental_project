@@ -31,10 +31,11 @@ class CarDetails extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Card(
                   color: const Color.fromARGB(255, 227, 231, 233),
-                  elevation: 10,
+                  elevation: 3,
                   child: Stack(
                     children: [
-                      Image.asset('assets/images/civic-bg.png'),
+                      Image.network(
+                          rentalRequestWithCarDetails.car.imageUrls.last),
                       Positioned(
                         bottom: 8,
                         left: 8,
