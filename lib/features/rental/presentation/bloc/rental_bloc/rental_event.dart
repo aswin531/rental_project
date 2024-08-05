@@ -17,3 +17,11 @@ class UpdateRentalRequestStatusEvent extends RentalRequestEvent {
   final String status;
   UpdateRentalRequestStatusEvent(this.requestId, this.status);
 }
+
+class FetchCarDetailsEvent extends RentalRequestEvent {
+  final String carId;
+  FetchCarDetailsEvent(this.carId);
+}
+
+
+

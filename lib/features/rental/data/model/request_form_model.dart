@@ -1,6 +1,5 @@
-// In lib/features/rental/data/models/rental_request_model.dart
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import '../../domain/entity/rental_entity.dart';
 
 class RentalRequestModel extends RentalRequest {
@@ -45,11 +44,12 @@ class RentalRequestModel extends RentalRequest {
         licenseNumber: json['licenseNumber'] as String,
         email: json['email'] as String,
         comments: json['comments'] as String?,
-        createdAt: json['createdAt'] as DateTime,
+        createdAt: (json['createdAt'] as Timestamp).toDate(),
         status: RentalRequestStatus.values.firstWhere(
             (element) =>
-                element.toString() ==
-                'RentalRequestStatus.${json['status']}', //Constructs a string in the format "RentalRequestStatus.<status>"
+                element.toString().split('.').last ==
+                json[
+                    'status'], //Constructs a string in the format "RentalRequestStatus.<status>"
             orElse: () => RentalRequestStatus.pending));
   }
 
@@ -71,8 +71,11 @@ class RentalRequestModel extends RentalRequest {
       'licenseNumber': licenseNumber,
       'email': email,
       'comments': comments,
-      'createdAt': createdAt,
-      'status': status.toString().split('.').last, //splitting status.toString() => RentalRequestStatus.<status>
+      'createdAt': Timestamp.fromDate(createdAt),
+      'status': status
+          .toString()
+          .split('.')
+          .last, //splitting status.toString() => RentalRequestStatus.<status>
     };
   }
 
@@ -99,6 +102,19 @@ class RentalRequestModel extends RentalRequest {
       createdAt: entity.createdAt,
       status: entity.status,
     );
+  }
+}
+
+Color getStatusColor(RentalRequestStatus status) {
+  switch (status) {
+    case RentalRequestStatus.pending:
+      return const Color.fromARGB(255, 58, 110, 170);
+    case RentalRequestStatus.accepted:
+      return Colors.green;
+    case RentalRequestStatus.rejected:
+      return Colors.red;
+    default:
+      return Colors.black;
   }
 }
 

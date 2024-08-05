@@ -11,6 +11,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   final GetUserRentalRequests getUserRentalRequests;
   final UpdateRentalRequestStatus updateRentalRequestStatus;
     final AuthRepository? authRepository;
+    //final GetCarDetails getCarDetails;
 
 
   RentalRequestBloc({
@@ -63,4 +64,17 @@ Future<void> _onFetchUserRentalRequests(
       emit(RentalRequestError(e.toString()));
     }
   }
+
+  // Future<void> _onFetchCarDetails(
+  //   FetchCarDetailsEvent event,
+  //   Emitter<RentalRequestState> emit,
+  // ) async {
+  //   emit(RentalRequestLoading());
+  //   try {
+  //     final car = await getCarDetails(event.carId);
+  //     emit(CarDetailsLoaded(car));
+  //   } catch (e) {
+  //     emit(RentalRequestError(e.toString()));
+  //   }
+  // }
 }

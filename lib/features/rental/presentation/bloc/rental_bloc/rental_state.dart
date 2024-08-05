@@ -14,3 +14,8 @@ class RentalRequestError extends RentalRequestState {
   final String message;
   RentalRequestError(this.message);
 }
+
+// class CarDetailsLoaded extends RentalRequestState {
+//   final Car car;
+//   CarDetailsLoaded(this.car);
+// }
