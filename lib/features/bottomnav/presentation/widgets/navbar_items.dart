@@ -17,7 +17,7 @@ List<PersistentBottomNavBarItem> navBarItems() {
     ),
     PersistentBottomNavBarItem(
       icon: const Icon(Icons.language),
-      title: "Profile",
+      title: "Bookings",
       activeColorPrimary: Colors.blue,
       inactiveColorPrimary: Colors.grey,
     ),

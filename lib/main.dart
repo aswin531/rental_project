@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/core/constants/colors.dart';
 import 'package:rentit/core/constants/screen_util_setup.dart';
 import 'package:rentit/core/di/dependency_injection.dart';
 import 'package:rentit/core/router/approutes.dart';
@@ -16,6 +15,7 @@ import 'package:rentit/features/home/data/repository/car_repos_impl.dart';
 import 'package:rentit/features/home/domain/repository/car_rental_repo.dart';
 import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
+import 'package:rentit/features/mybookings/presentation/bloc/tabbloc/tab_bloc.dart';
 import 'package:rentit/features/rental/data/datasource/rental_datasource.dart';
 import 'package:rentit/features/rental/data/repository/rental_repo_impl.dart';
 import 'package:rentit/features/rental/domain/repository/rental_repo.dart';
@@ -30,7 +30,6 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   // Initialize dependencies
   await init();
@@ -68,6 +67,7 @@ Future<void> main() async {
                   UpdateRentalRequestStatus(_.read<RentalRequestRepository>())),
         ),
         BlocProvider(create: (context) => NavigationBloc()),
+        BlocProvider(create: (context) => TabBloc()),
       ], child: const MyApp())));
 }
 
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
         // showPerformanceOverlay: true,
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: primary),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
         routerConfig: router,

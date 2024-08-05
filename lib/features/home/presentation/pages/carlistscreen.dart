@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/cardetail/cardetailpage.dart';
+import 'package:rentit/features/home/presentation/pages/cardetailpage.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carstates.dart';

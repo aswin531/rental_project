@@ -16,26 +16,33 @@ class RentalRequest {
   final String phone;
   final String address;
   final String licenseNumber;
-  final String? comment;
-  final bool status;
+  final String? comments;
+  final RentalRequestStatus status;
+  final String email;
+  final DateTime createdAt;
 
-  RentalRequest({
-    this.id,
-    required this.carId,
-    required this.userId,
-    required this.startDate,
-    required this.endDate,
-    required this.isPickup,
-    required this.isDelivery,
-    this.pickupTime,
-    this.pickupArrival,
-    this.deliveryTime,
-    this.deliveryPlace,
-    required this.name,
-    required this.phone,
-    required this.address,
-    required this.licenseNumber,
-    this.comment,
-    required this.status  //this.status = false, // Default status is false (pending)
-  });
+  RentalRequest(
+      {this.id,
+      required this.carId,
+      required this.userId,
+      required this.startDate,
+      required this.endDate,
+      required this.isPickup,
+      required this.isDelivery,
+      this.pickupTime,
+      this.pickupArrival,
+      this.deliveryTime,
+      this.deliveryPlace,
+      required this.name,
+      required this.phone,
+      required this.address,
+      required this.licenseNumber,
+      required this.email,
+      required this.createdAt,
+      this.comments,
+      required this.status //this.status = false, // Default status is false (pending)
+      });
 }
+
+
+enum RentalRequestStatus { pending, accepted, rejected }

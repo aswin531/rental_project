@@ -20,30 +20,37 @@ class RentalRequestModel extends RentalRequest {
     required super.phone,
     required super.address,
     required super.licenseNumber,
-    super.comment,
-    required super.status, 
+    required super.email,
+    required super.createdAt,
+    super.comments,
+    required super.status,
   });
 
   factory RentalRequestModel.fromJson(Map<String, dynamic> json, String id) {
     return RentalRequestModel(
-      id: id,
-      carId: json['carId'] as String,
-      userId: json['userId'] as String,
-      startDate: (json['startDate'] as Timestamp).toDate(),
-      endDate: (json['endDate'] as Timestamp).toDate(),
-      isPickup: json['isPickup'] as bool,
-      isDelivery: json['isDelivery'] as bool,
-      pickupTime: json['pickupTime'] as String?,
-      pickupArrival: json['pickupArrival'] as String?,
-      deliveryTime: json['deliveryTime'] as String?,
-      deliveryPlace: json['deliveryPlace'] as String?,
-      name: json['name'] as String,
-      phone: json['phone'] as String,
-      address: json['address'] as String,
-      licenseNumber: json['licenseNumber'] as String,
-      comment: json['comment'] as String?,
-      status: json['status']
-    );
+        id: id,
+        carId: json['carId'] as String,
+        userId: json['userId'] as String,
+        startDate: (json['startDate'] as Timestamp).toDate(),
+        endDate: (json['endDate'] as Timestamp).toDate(),
+        isPickup: json['isPickup'] as bool,
+        isDelivery: json['isDelivery'] as bool,
+        pickupTime: json['pickupTime'] as String?,
+        pickupArrival: json['pickupArrival'] as String?,
+        deliveryTime: json['deliveryTime'] as String?,
+        deliveryPlace: json['deliveryPlace'] as String?,
+        name: json['name'] as String,
+        phone: json['phone'] as String,
+        address: json['address'] as String,
+        licenseNumber: json['licenseNumber'] as String,
+        email: json['email'] as String,
+        comments: json['comments'] as String?,
+        createdAt: json['createdAt'] as DateTime,
+        status: RentalRequestStatus.values.firstWhere(
+            (element) =>
+                element.toString() ==
+                'RentalRequestStatus.${json['status']}', //Constructs a string in the format "RentalRequestStatus.<status>"
+            orElse: () => RentalRequestStatus.pending));
   }
 
   Map<String, dynamic> toJson() {
@@ -62,8 +69,10 @@ class RentalRequestModel extends RentalRequest {
       'phone': phone,
       'address': address,
       'licenseNumber': licenseNumber,
-      'comment': comment,
-      'status':status,
+      'email': email,
+      'comments': comments,
+      'createdAt': createdAt,
+      'status': status.toString().split('.').last, //splitting status.toString() => RentalRequestStatus.<status>
     };
   }
 
@@ -85,8 +94,10 @@ class RentalRequestModel extends RentalRequest {
       phone: entity.phone,
       address: entity.address,
       licenseNumber: entity.licenseNumber,
-      comment: entity.comment,
-      status: entity.status
+      email: entity.email,
+      comments: entity.comments,
+      createdAt: entity.createdAt,
+      status: entity.status,
     );
   }
 }
