@@ -1,4 +1,5 @@
 import 'package:rentit/features/rental/data/datasource/rental_datasource.dart';
+import 'package:rentit/features/rental/data/model/combined.dart';
 import 'package:rentit/features/rental/data/model/request_form_model.dart';
 import 'package:rentit/features/rental/domain/repository/rental_repo.dart';
 
@@ -13,7 +14,7 @@ class RentalRequestRepositoryImpl implements RentalRequestRepository {
   }
 
   @override
-  Future<List<RentalRequestModel>> getUserRentalRequests(String userId) {
+  Future<List<RentalRequestWithCarDetails>> getUserRentalRequests(String userId) {
     return dataSource.getUserRentalRequests(userId);
   }
 

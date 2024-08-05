@@ -21,7 +21,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
      this.authRepository
   }) : super(RentalRequestInitial()) {
     on<CreateRentalRequestEvent>(_onCreateRentalRequest);
-    on<FetchUserRentalRequestsEvent>(_onFetchUserRentalRequests);
+    on<FetchUserRentalRequestsWithCarDetailsEvent>(_onFetchUserRentalRequestsWithCarDetails);
     on<UpdateRentalRequestStatusEvent>(_onUpdateRentalRequestStatus);
   }
 
@@ -38,14 +38,14 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     }
   }
 
-Future<void> _onFetchUserRentalRequests(
-  FetchUserRentalRequestsEvent event,
+Future<void> _onFetchUserRentalRequestsWithCarDetails(
+  FetchUserRentalRequestsWithCarDetailsEvent event,
   Emitter<RentalRequestState> emit,
 ) async {
   emit(RentalRequestLoading());
   try {
-    final requests = await getUserRentalRequests(event.userId);
-    emit(UserRentalRequestsLoaded(requests));
+    final requestsWithCarDetails = await getUserRentalRequests(event.userId);
+    emit(UserRentalRequestsWithCarDetailsLoaded(requestsWithCarDetails));
   } catch (e) {
     emit(RentalRequestError(e.toString()));
   }

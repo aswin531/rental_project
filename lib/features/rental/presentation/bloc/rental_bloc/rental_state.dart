@@ -1,3 +1,4 @@
+import 'package:rentit/features/rental/data/model/combined.dart';
 import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
 
 abstract class RentalRequestState {}
@@ -15,7 +16,8 @@ class RentalRequestError extends RentalRequestState {
   RentalRequestError(this.message);
 }
 
-// class CarDetailsLoaded extends RentalRequestState {
-//   final Car car;
-//   CarDetailsLoaded(this.car);
-// }
+class UserRentalRequestsWithCarDetailsLoaded extends RentalRequestState {
+  final List<RentalRequestWithCarDetails> requestsWithCarDetails;
+
+  UserRentalRequestsWithCarDetailsLoaded(this.requestsWithCarDetails);
+}

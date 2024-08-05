@@ -23,34 +23,36 @@ class RentalRequestModel extends RentalRequest {
     required super.createdAt,
     super.comments,
     required super.status,
+    //*************** */
   });
 
   factory RentalRequestModel.fromJson(Map<String, dynamic> json, String id) {
     return RentalRequestModel(
-        id: id,
-        carId: json['carId'] as String,
-        userId: json['userId'] as String,
-        startDate: (json['startDate'] as Timestamp).toDate(),
-        endDate: (json['endDate'] as Timestamp).toDate(),
-        isPickup: json['isPickup'] as bool,
-        isDelivery: json['isDelivery'] as bool,
-        pickupTime: json['pickupTime'] as String?,
-        pickupArrival: json['pickupArrival'] as String?,
-        deliveryTime: json['deliveryTime'] as String?,
-        deliveryPlace: json['deliveryPlace'] as String?,
-        name: json['name'] as String,
-        phone: json['phone'] as String,
-        address: json['address'] as String,
-        licenseNumber: json['licenseNumber'] as String,
-        email: json['email'] as String,
-        comments: json['comments'] as String?,
-        createdAt: (json['createdAt'] as Timestamp).toDate(),
-        status: RentalRequestStatus.values.firstWhere(
-            (element) =>
-                element.toString().split('.').last ==
-                json[
-                    'status'], //Constructs a string in the format "RentalRequestStatus.<status>"
-            orElse: () => RentalRequestStatus.pending));
+      id: id,
+      carId: json['carId'] as String,
+      userId: json['userId'] as String,
+      startDate: (json['startDate'] as Timestamp).toDate(),
+      endDate: (json['endDate'] as Timestamp).toDate(),
+      isPickup: json['isPickup'] as bool,
+      isDelivery: json['isDelivery'] as bool,
+      pickupTime: json['pickupTime'] as String?,
+      pickupArrival: json['pickupArrival'] as String?,
+      deliveryTime: json['deliveryTime'] as String?,
+      deliveryPlace: json['deliveryPlace'] as String?,
+      name: json['name'] as String,
+      phone: json['phone'] as String,
+      address: json['address'] as String,
+      licenseNumber: json['licenseNumber'] as String,
+      email: json['email'] as String,
+      comments: json['comments'] as String?,
+      createdAt: (json['createdAt'] as Timestamp).toDate(),
+      status: RentalRequestStatus.values.firstWhere(
+          (element) =>
+              element.toString().split('.').last ==
+              json[
+                  'status'], //Constructs a string in the format "RentalRequestStatus.<status>"
+          orElse: () => RentalRequestStatus.pending),
+    );
   }
 
   Map<String, dynamic> toJson() {

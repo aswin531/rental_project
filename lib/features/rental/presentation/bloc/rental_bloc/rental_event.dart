@@ -18,10 +18,11 @@ class UpdateRentalRequestStatusEvent extends RentalRequestEvent {
   UpdateRentalRequestStatusEvent(this.requestId, this.status);
 }
 
-class FetchCarDetailsEvent extends RentalRequestEvent {
-  final String carId;
-  FetchCarDetailsEvent(this.carId);
+class FetchUserRentalRequestsWithCarDetailsEvent extends RentalRequestEvent {
+  final String userId;
+  FetchUserRentalRequestsWithCarDetailsEvent(this.userId);
 }
+
 
 
 
