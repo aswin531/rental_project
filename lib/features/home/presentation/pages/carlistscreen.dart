@@ -1,43 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/home/presentation/pages/cardetailpage.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carstates.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/location_widget.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/popular_section.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/searchbar.dart';
+import 'package:rentit/utils/shimmer_effects.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CarListScreen extends StatelessWidget {
   const CarListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.blue,
+      statusBarIconBrightness: Brightness.light,
+    ));
+
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<CarBloc, CarState>(
           builder: (context, state) {
-            if (state is CarInitial) {
+            if (state is CarInitial || state is CarLoading) {
               context.read<CarBloc>().add(FetchCars());
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is CarLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is CarLoaded) {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const LocationWidget(),
-                      const SizedBox(height: 16),
-                      const SearchBar(),
-                      const SizedBox(height: 24),
-                      BrandsSection(),
-                      const SizedBox(height: 24),
-                      PopularCarSection(cars: state.cars),
-                    ],
+              return Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: ListView.builder(
+                  itemCount: 5,
+                  itemBuilder: (context, index) => const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: ShimmerCarCard(),
                   ),
                 ),
+              );
+            } else if (state is CarLoaded) {
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    pinned: true,
+                    backgroundColor: Colors.blue,
+                    expandedHeight: 170.0,
+                    flexibleSpace: FlexibleSpaceBar(
+                      collapseMode: CollapseMode.none,
+                      background: Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).padding.top),
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            LocationWidget(),
+                            SizedBox(height: 8),
+                            SearchBarWidget(),
+                            SizedBox(height: 16),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverFillRemaining(
+                    fillOverscroll: true,
+                    hasScrollBody: true,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 24),
+                            PopularCarSection(cars: state.cars),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               );
             } else if (state is CarError) {
               return Center(child: Text(state.message));
@@ -46,49 +86,48 @@ class CarListScreen extends StatelessWidget {
           },
         ),
       ),
-      backgroundColor: Colors.blue,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read<CarBloc>().add(FetchCars()),
-        child: const Icon(Icons.refresh),
-      ),
+      backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
     );
   }
 }
 
-class BrandsSection extends StatelessWidget {
-  final List<String> brands = [
-    'Alfa Romeo',
-    'BMW',
-    'Audi',
-  ];
+// class BrandsSection extends StatelessWidget {
+//   const BrandsSection({super.key});
 
-  BrandsSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Brands',
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: brands.map((brand) => BrandLogo(brand: brand)).toList(),
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<CarBloc, CarState>(
+//       builder: (context, state) {
+//         if (state is CarInitial || state is BrandLoading) {
+//           return Shimmer.fromColors(
+//             baseColor: Colors.grey.shade300,
+//             highlightColor: Colors.grey.shade100,
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: List.generate(5, (index) => const ShimmerBrandLogo()),
+//             ),
+//           );
+//         } else if (state is BrandsLoaded) {
+//           return Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children:
+//                 state.brands.map((brand) => BrandLogo(brand: brand)).toList(),
+//           );
+//         } else if (state is CarError) {
+//           return Center(
+//             child: Text('Error: ${state.message}'),
+//           );
+//         } else {
+//          return const Text("No  available");
+//         }
+//       },
+//     );
+//   }
+// }
 
 class BrandLogo extends StatelessWidget {
   final String brand;
-
   const BrandLogo({super.key, required this.brand});
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -101,107 +140,6 @@ class BrandLogo extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: Center(child: Text(brand[0])),
-      ),
-    );
-  }
-}
-
-class CarCard extends StatelessWidget {
-  final String carId;
-  final double rating;
-  final String imageUrl;
-  final String carType;
-  final String carName;
-  final RangeValues pricePerHour;
-  final String fuelType;
-  final int seats;
-  final String? transmission;
-
-  const CarCard({
-    super.key,
-    required this.carId,
-    required this.rating,
-    required this.imageUrl,
-    required this.carType,
-    required this.carName,
-    required this.pricePerHour,
-    required this.fuelType,
-    required this.seats,
-    this.transmission,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CarDetailPage(
-                  carId: carId,
-                  carName: carName,
-                  carType: carType,
-                  imageUrl: imageUrl,
-                  rating: rating,
-                  pricePerHour: pricePerHour,
-                  fuelType: fuelType,
-                  seats: seats,
-                  transmission: "Manual"),
-            ));
-      },
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.yellow),
-                    Text('$rating'),
-                  ],
-                ),
-                const Icon(Icons.favorite_border),
-              ],
-            ),
-            Image.network(imageUrl, height: 120),
-            Text(carType, style: const TextStyle(color: Colors.grey)),
-            Text(carName,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '\$${pricePerHour.start.toStringAsFixed(2)}/hr',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.local_gas_station, size: 16),
-                    Text(fuelType),
-                    const SizedBox(width: 8),
-                    const Icon(Icons.person, size: 16),
-                    Text('$seats Seats'),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text('+ $transmission', style: const TextStyle(color: Colors.grey)),
-          ],
-        ),
       ),
     );
   }

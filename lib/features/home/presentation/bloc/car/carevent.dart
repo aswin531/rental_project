@@ -17,9 +17,9 @@ class FilterCars extends CarEvent {
   List<Object> get props => [];
 }
 
-class FetchBrands extends CarEvent {
-  const FetchBrands();
+// class FetchBrands extends CarEvent {
+//   const FetchBrands();
 
-  @override
-  List<Object> get props => [];
-}
+//   @override
+//   List<Object> get props => [];
+// }

@@ -10,6 +10,8 @@ abstract class CarState extends Equatable {
 class CarInitial extends CarState {}
 
 class CarLoading extends CarState {}
+class BrandLoading extends CarState {}
+
 
 class CarLoaded extends CarState {
 

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
-import 'package:rentit/features/home/presentation/pages/carlistscreen.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/car_cards_home.dart';
 
 class PopularCarSection extends StatelessWidget {
   final List<CarVehicleEntity> cars;
@@ -23,12 +23,12 @@ class PopularCarSection extends StatelessWidget {
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                  color: Colors.black),
             ),
             TextButton(
               onPressed: () => context.read<CarBloc>().add(FetchCars()),
               child:
-                  const Text('View All', style: TextStyle(color: Colors.white)),
+                  const Text('View All', style: TextStyle(color: Colors.blue)),
             ),
           ],
         ),
