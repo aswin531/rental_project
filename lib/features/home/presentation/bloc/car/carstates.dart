@@ -28,11 +28,11 @@ class CarError extends CarState {
   List<Object> get props => [message];
 }
 
-class BrandsLoaded extends CarState {
-  final List<String> brands;
+// class BrandsLoaded extends CarState {
+//   final List<String> brands;
 
-  const BrandsLoaded(this.brands);
+//   const BrandsLoaded(this.brands);
 
-  @override
-  List<Object> get props => [brands];
-}
+//   @override
+//   List<Object> get props => [brands];
+// }

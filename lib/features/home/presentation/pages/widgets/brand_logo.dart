@@ -1,27 +1,38 @@
-// import 'package:dartz/dartz_streaming.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
-// import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
+import 'package:flutter/material.dart';
 
-// class BrandLogo extends StatelessWidget {
-//   final String brand;
+class BrandLogoWidget extends StatelessWidget {
+  final String logoUrl;
+  final String brandName;
+  final VoidCallback onTap;
 
-//   const BrandLogo({super.key, required this.brand});
+  const BrandLogoWidget({
+    super.key,
+    required this.logoUrl,
+    required this.brandName,
+    required this.onTap,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () => context.read<CarBloc>().add(FilterCars(brand)),
-//       child: Container(
-//         width: 60,
-//         height: 60,
-//         decoration: const BoxDecoration(
-//           color: Colors.white,
-//           shape: BoxShape.circle,
-//         ),
-//         child: Center(child: Text(brand[0])),
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          ClipOval(
+            child: Image.network(
+              logoUrl,
+              width: 60,
+              height: 60,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            brandName,
+            style: const TextStyle(fontSize: 12), 
+          ),
+        ],
+      ),
+    );
+  }
+}

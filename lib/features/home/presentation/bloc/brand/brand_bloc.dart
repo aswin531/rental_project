@@ -1,25 +1,37 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
+import 'package:rentit/features/home/domain/usecases/carbybrand_usecase.dart';
+import 'package:rentit/features/home/domain/usecases/getbrand_usecase.dart';
 import 'package:rentit/features/home/presentation/bloc/brand/brand_event.dart';
 import 'package:rentit/features/home/presentation/bloc/brand/brand_states.dart';
 
 class BrandsBloc extends Bloc<BrandsEvent, BrandsState> {
-  final GetcarUsecase getcarUsecase;
+  final GetBrandUsecase getBrandUsecase;
+  final GetCarsByBrandUsecase getCarsByBrandUsecase;
 
-  BrandsBloc({required this.getcarUsecase}) : super(BrandsInitial()) {
+  BrandsBloc(
+      {required this.getCarsByBrandUsecase, required this.getBrandUsecase})
+      : super(BrandsInitial()) {
     on<FetchBrands>(onFetchBrands);
+    on<FetchCarsByBrand>(onFetchCarsByBrand);
   }
 
-  Future<void> onFetchBrands(FetchBrands event, Emitter<BrandsState> emit) async {
+  Future<void> onFetchBrands(
+      FetchBrands event, Emitter<BrandsState> emit) async {
     emit(BrandsLoading());
     try {
-      final cars = await getcarUsecase.execute();
-      final brands = cars.map((car) => car.make).toSet().toList();
-      if (brands.isNotEmpty) {
-        emit(BrandsLoaded(brands));
-      } else {
-        emit(const BrandsError('No brands available'));
-      }
+      final brands = await getBrandUsecase.execute();
+      emit(BrandsLoaded(brands));
+    } catch (e) {
+      emit(BrandsError(e.toString()));
+    }
+  }
+
+  Future<void> onFetchCarsByBrand(
+      FetchCarsByBrand event, Emitter<BrandsState> emit) async {
+    emit(BrandsLoading());
+    try {
+      final cars = await getCarsByBrandUsecase.execute(event.brandName);
+      emit(CarsLoadedByBrand(cars));
     } catch (e) {
       emit(BrandsError(e.toString()));
     }

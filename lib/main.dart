@@ -14,7 +14,10 @@ import 'package:rentit/features/bottomnav/presentation/bloc/navigation_bloc.dart
 import 'package:rentit/features/home/data/datasource/car_datasource.dart';
 import 'package:rentit/features/home/data/repository/car_repos_impl.dart';
 import 'package:rentit/features/home/domain/repository/car_rental_repo.dart';
+import 'package:rentit/features/home/domain/usecases/carbybrand_usecase.dart';
+import 'package:rentit/features/home/domain/usecases/getbrand_usecase.dart';
 import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
+import 'package:rentit/features/home/presentation/bloc/brand/brand_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/rental/data/datasource/rental_datasource.dart';
 import 'package:rentit/features/rental/data/repository/rental_repo_impl.dart';
@@ -69,6 +72,12 @@ Future<void> main() async {
         ),
         BlocProvider(create: (context) => NavigationBloc()),
         BlocProvider(create: (context) => TabBloc()),
+        BlocProvider(
+            create: (context) => BrandsBloc(
+                getBrandUsecase: GetBrandUsecase(
+                    carRepository: context.read<CarRepository>()),
+                getCarsByBrandUsecase: GetCarsByBrandUsecase(
+                    carRepository: context.read<CarRepository>()))),
       ], child: const MyApp())));
 }
 
@@ -77,9 +86,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, 
-      statusBarIconBrightness:
-          Brightness.light,
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
     ));
     return ScreenUtilSetup(
       child: MaterialApp.router(

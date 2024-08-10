@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentit/features/home/presentation/bloc/brand/brand_bloc.dart';
+import 'package:rentit/features/home/presentation/bloc/brand/brand_event.dart';
+import 'package:rentit/features/home/presentation/bloc/brand/brand_states.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carstates.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/all_brands_page.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/brand_section.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/location_widget.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/popular_section.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/searchbar.dart';
@@ -40,6 +45,8 @@ class CarListScreen extends StatelessWidget {
                 ),
               );
             } else if (state is CarLoaded) {
+              context.read<BrandsBloc>().add(const FetchBrands());
+
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -63,6 +70,42 @@ class CarListScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  BlocBuilder<BrandsBloc, BrandsState>(
+                    builder: (context, state) {
+                      if (state is BrandsLoading) {
+                        return const SliverToBoxAdapter(
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      } else if (state is BrandsLoaded) {
+                        debugPrint('CarListScreen: Brands loaded successfully');
+
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: BrandListWidget(
+                              brands: state.brands,
+                              onViewAll: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const AllBrandsPage(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      } else if (state is BrandsError) {
+                        debugPrint(
+                            'CarListScreen: Failed to load brands - ${state.message}');
+
+                        return SliverToBoxAdapter(
+                          child: Center(child: Text(state.message)),
+                        );
+                      }
+                      return const SliverToBoxAdapter();
+                    },
+                  ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) => const Padding(
@@ -81,6 +124,9 @@ class CarListScreen extends StatelessWidget {
                 ],
               );
             } else if (state is CarError) {
+              debugPrint(
+                  'CarListScreen: Failed to load cars - ${state.message}');
+
               return Center(child: Text(state.message));
             }
             return Container();
@@ -88,26 +134,6 @@ class CarListScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: const Color.fromRGBO(246, 246, 246, 1),
-    );
-  }
-}
-
-class BrandLogo extends StatelessWidget {
-  final String brand;
-  const BrandLogo({super.key, required this.brand});
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => context.read<CarBloc>().add(FilterCars(brand)),
-      child: Container(
-        width: 60,
-        height: 60,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
-        child: Center(child: Text(brand[0])),
-      ),
     );
   }
 }

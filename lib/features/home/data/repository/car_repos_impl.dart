@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rentit/core/errors/server_exception.dart';
 import 'package:rentit/features/home/data/datasource/car_datasource.dart';
+import 'package:rentit/features/home/data/model/carvehicle_model.dart';
+import 'package:rentit/features/home/domain/entity/brand_entity.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
 import 'package:rentit/features/home/domain/repository/car_rental_repo.dart';
 
@@ -9,9 +11,8 @@ class CarReposImpl implements CarRepository {
 
   CarReposImpl({required this.remoteDataSource});
 
-  
   @override
-    Future<List<CarVehicleEntity>> getCars() async {
+  Future<List<CarVehicleEntity>> getCars() async {
     try {
       final carModels = await remoteDataSource.getCars();
       return carModels
@@ -32,6 +33,18 @@ class CarReposImpl implements CarRepository {
     } on FirebaseException catch (e) {
       throw ServerException(e.message ?? 'Failed to Fetch Cars');
     }
+  }
+
+  @override
+  Future<List<BrandEntity>> getBrands() async {
+    final brandModels = await remoteDataSource.getBrands();
+    return brandModels.map((model) => model.toEntity()).toList();
+  }
+
+  @override
+  Future<List<CarVehicleModel>> getCarsByBrand(String brand) async {
+    final cars = await remoteDataSource.getCars();
+    return cars.where((car) => car.make == brand).toList();
   }
 }
 
