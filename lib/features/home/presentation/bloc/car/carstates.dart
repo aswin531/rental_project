@@ -10,16 +10,22 @@ abstract class CarState extends Equatable {
 class CarInitial extends CarState {}
 
 class CarLoading extends CarState {}
-class BrandLoading extends CarState {}
 
+// class BrandLoading extends CarState {}
 
 class CarLoaded extends CarState {
-
   final List<CarVehicleEntity> cars;
 
   const CarLoaded(this.cars);
   @override
   List<Object> get props => [cars];
+}
+
+class CarError extends CarState {
+  final String message;
+  const CarError(this.message);
+  @override
+  List<Object> get props => [message];
 }
 
 class BrandsLoaded extends CarState {
@@ -29,11 +35,4 @@ class BrandsLoaded extends CarState {
 
   @override
   List<Object> get props => [brands];
-}
-
-class CarError extends CarState {
-  final String message;
-  const CarError(this.message);
-  @override
-  List<Object> get props => [message];
 }

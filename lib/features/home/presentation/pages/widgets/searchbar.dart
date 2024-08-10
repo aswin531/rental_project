@@ -7,6 +7,7 @@ class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    //final screenHeight = MediaQuery.of(context).size.height;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +23,7 @@ class SearchBarWidget extends StatelessWidget {
                 color: Colors.blue,
               ),
               hintText: 'Search',
-              hintStyle:const TextStyle(color: Colors.grey),
+              hintStyle: const TextStyle(color: Colors.grey),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -37,7 +38,8 @@ class SearchBarWidget extends StatelessWidget {
                 color: Colors.white, borderRadius: BorderRadius.circular(12)),
             child: IconButton(
               icon: SvgPicture.asset(
-                'assets/icons/filter.svg',
+                'assets/icons/filter.svg', height: 30, width: 30,
+                // ignore: deprecated_member_use
                 color: Colors.blue,
               ),
               onPressed: () {},

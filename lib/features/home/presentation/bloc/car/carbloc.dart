@@ -10,7 +10,7 @@ class CarBloc extends Bloc<CarEvent, CarState> {
   CarBloc({required this.getcarUsecase}) : super(CarInitial()) {
     on<FetchCars>(onFetchCars);
     on<RefreshCars>(onRefreshCars);
-    on<FilterCars>(onFilterCars);
+    //on<FilterCars>(onFilterCars);
    // on<FetchBrands>(onFetchBrands);
   }
 
@@ -36,18 +36,18 @@ class CarBloc extends Bloc<CarEvent, CarState> {
     }
   }
 
-  Future<void> onFilterCars(FilterCars event, Emitter<CarState> emit) async {
-    emit(BrandLoading());
-    try {
-      final cars = await getcarUsecase.execute();
-      final filteredBrands =
-          cars.where((car) => car.make == event.brand).toList();
-      emit(CarLoaded(filteredBrands));
-    } catch (e) {
-      debugPrint("Error in onFilterCars: $e");
-      emit(CarError(e.toString()));
-    }
-  }
+  // Future<void> onFilterCars(FilterCars event, Emitter<CarState> emit) async {
+  //   emit(BrandLoading());
+  //   try {
+  //     final cars = await getcarUsecase.execute();
+  //     final filteredBrands =
+  //         cars.where((car) => car.make == event.brand).toList();
+  //     emit(CarLoaded(filteredBrands));
+  //   } catch (e) {
+  //     debugPrint("Error in onFilterCars: $e");
+  //     emit(CarError(e.toString()));
+  //   }
+  // }
 
   // Future<void> onFetchBrands(FetchBrands event, Emitter<CarState> emit) async {
   //   debugPrint("onFetchBrands called");

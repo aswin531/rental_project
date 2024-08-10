@@ -20,9 +20,9 @@ class TestCarListScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 32), // For status bar space
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Icon(Icons.location_on, color: Colors.white),
                           Text(
                             "New York, USA",
@@ -78,7 +78,7 @@ class TestCarListScreen extends StatelessWidget {
                       height: 100, // Height for the brand icons section
                       child: ListView(
                         scrollDirection: Axis.horizontal,
-                        children: [
+                        children: const [
                           BrandIconWidget(brandName: "BMW"),
                           BrandIconWidget(brandName: "Toyota"),
                           BrandIconWidget(brandName: "Mercedes"),
@@ -101,39 +101,34 @@ class TestCarListScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    PopularCarWidget(
-                      imageUrl:
-                          "assets/car_image.png", // Replace with your image path
+                    const PopularCarWidget(
+                      imageUrl: "",
                       carName: "Hyundai Verna",
                       carType: "Sedan",
                       pricePerHour: "\$25.00/hr",
                       rating: "4.9",
                     ),
-                    PopularCarWidget(
-                      imageUrl:
-                          "assets/car_image.png", // Replace with your image path
+                    const PopularCarWidget(
+                      imageUrl: "",
                       carName: "Hyundai Verna",
                       carType: "Sedan",
                       pricePerHour: "\$25.00/hr",
                       rating: "4.9",
                     ),
-                    PopularCarWidget(
-                      imageUrl:
-                          "assets/car_image.png", // Replace with your image path
+                    const PopularCarWidget(
+                      imageUrl: "",
                       carName: "Hyundai Verna",
                       carType: "Sedan",
                       pricePerHour: "\$25.00/hr",
                       rating: "4.9",
                     ),
-                    PopularCarWidget(
-                      imageUrl:
-                          "assets/car_image.png", // Replace with your image path
+                    const PopularCarWidget(
+                      imageUrl: "",
                       carName: "Hyundai Verna",
                       carType: "Sedan",
                       pricePerHour: "\$25.00/hr",
                       rating: "4.9",
                     ),
-                    // Add more PopularCarWidget if needed
                   ],
                 ),
               ),
@@ -160,7 +155,7 @@ class BrandIconWidget extends StatelessWidget {
             radius: 30,
             backgroundColor:
                 Colors.grey[200], // Background color for brand icon
-            child: Icon(Icons.directions_car,
+            child: const Icon(Icons.directions_car,
                 size: 30, color: Colors.blue), // Placeholder for brand icon
           ),
           const SizedBox(height: 8),
@@ -196,7 +191,7 @@ class PopularCarWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(imageUrl), // Image of the car
+           // Image.asset('imageUrl'), // Image of the car
             const SizedBox(height: 8),
             Text(carType, style: const TextStyle(color: Colors.grey)),
             Text(carName,

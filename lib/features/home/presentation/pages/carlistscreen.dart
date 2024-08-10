@@ -24,8 +24,10 @@ class CarListScreen extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<CarBloc, CarState>(
           builder: (context, state) {
-            if (state is CarInitial || state is CarLoading) {
+            if (state is CarInitial) {
               context.read<CarBloc>().add(FetchCars());
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is CarLoading) {
               return Shimmer.fromColors(
                 baseColor: Colors.grey.shade300,
                 highlightColor: Colors.grey.shade100,
@@ -41,11 +43,11 @@ class CarListScreen extends StatelessWidget {
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
-                    pinned: true,
+                    pinned: false,
+                    floating: true,
                     backgroundColor: Colors.blue,
                     expandedHeight: 170.0,
                     flexibleSpace: FlexibleSpaceBar(
-                      collapseMode: CollapseMode.none,
                       background: Padding(
                         padding: EdgeInsets.only(
                             top: MediaQuery.of(context).padding.top),
@@ -61,22 +63,21 @@ class CarListScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SliverFillRemaining(
-                    fillOverscroll: true,
-                    hasScrollBody: true,
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 24),
-                            PopularCarSection(cars: state.cars),
+                            SizedBox(height: 24),
+                            PopularCarSection(),
                           ],
                         ),
                       ),
+                      childCount: 1,
                     ),
-                  )
+                  ),
                 ],
               );
             } else if (state is CarError) {
@@ -90,40 +91,6 @@ class CarListScreen extends StatelessWidget {
     );
   }
 }
-
-// class BrandsSection extends StatelessWidget {
-//   const BrandsSection({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<CarBloc, CarState>(
-//       builder: (context, state) {
-//         if (state is CarInitial || state is BrandLoading) {
-//           return Shimmer.fromColors(
-//             baseColor: Colors.grey.shade300,
-//             highlightColor: Colors.grey.shade100,
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: List.generate(5, (index) => const ShimmerBrandLogo()),
-//             ),
-//           );
-//         } else if (state is BrandsLoaded) {
-//           return Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children:
-//                 state.brands.map((brand) => BrandLogo(brand: brand)).toList(),
-//           );
-//         } else if (state is CarError) {
-//           return Center(
-//             child: Text('Error: ${state.message}'),
-//           );
-//         } else {
-//          return const Text("No  available");
-//         }
-//       },
-//     );
-//   }
-// }
 
 class BrandLogo extends StatelessWidget {
   final String brand;
