@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
+import 'package:rentit/utils/appcolors.dart';
 
 class TabBarSection extends StatefulWidget {
-    final CarVehicleEntity car;
+  final CarVehicleEntity car;
 
   // final String carType;
   // final String fuelType;
@@ -11,7 +12,8 @@ class TabBarSection extends StatefulWidget {
   // final String transmission;
   // final String imageUrl;
   const TabBarSection({
-    super.key, required this.car,
+    super.key,
+    required this.car,
     // required this.carType,
     // required this.fuelType,
     // required this.seats,
@@ -59,12 +61,16 @@ class _TabBarSectionState extends State<TabBarSection> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+              color: isSelected
+                  ? ExternalAppColors.blue
+                  : ExternalAppColors.black),
+          color: isSelected ? Colors.transparent : Colors.transparent,
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Text(
           text,
-          style: TextStyle(color: isSelected ? Colors.white : Colors.black),
+          style: TextStyle(color: isSelected ? Colors.blue : Colors.black),
         ),
       ),
     );
@@ -85,11 +91,12 @@ class _TabBarSectionState extends State<TabBarSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // buildSpecItem(Icons.directions_car, 'Type',),
-        // buildSpecItem(Icons.local_gas_station, 'Fuel Type', widget.fuelType),
-        // buildSpecItem(Icons.event_seat, 'Seats', widget.seats.toString()),
-        // buildSpecItem(Icons.speed, 'Transmission', widget.transmission),
-        // buildSpecItem(Icons.star, 'Rating', widget.rating.toString()),
+        buildSpecItem(Icons.directions_car, 'Type', widget.car.make),
+        buildSpecItem(Icons.local_gas_station, 'Fuel Type', widget.car.engine),
+        buildSpecItem(
+            Icons.event_seat, 'Seats', widget.car.seatCapacity.toString()),
+        buildSpecItem(Icons.speed, 'Transmission', "Manual"),
+        buildSpecItem(Icons.star, 'Rating', widget.car.color),
       ],
     );
   }

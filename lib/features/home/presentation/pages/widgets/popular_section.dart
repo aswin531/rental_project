@@ -4,6 +4,8 @@ import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carstates.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/car_cards_home.dart';
+import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class PopularCarSection extends StatelessWidget {
   const PopularCarSection({
@@ -22,12 +24,11 @@ class PopularCarSection extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Popular Car',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                  PrimaryText(
+                    text: "Popular Cars",
+                    color: ExternalAppColors.black,
+                    fontWeight: FontWeight.w700,
+                    size: 25,
                   ),
                   TextButton(
                     onPressed: () => context.read<CarBloc>().add(FetchCars()),
@@ -36,13 +37,13 @@ class PopularCarSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 5),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: cars.length,
                 itemBuilder: (context, index) {
-                  final car = cars[index];
+                  //final car = cars[index];
                   return CarCard(
                     // carId: car.carId,
                     // rating: 4.9,
@@ -53,7 +54,7 @@ class PopularCarSection extends StatelessWidget {
                     // fuelType: car.engine,
                     // seats: car.seatCapacity,
                     // transmission: 'Manual',
-                     car: cars[index], 
+                    car: cars[index],
                   );
                 },
               ),

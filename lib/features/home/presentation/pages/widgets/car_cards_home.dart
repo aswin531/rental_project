@@ -128,6 +128,7 @@ class CarCard extends StatelessWidget {
                     child: Text(car.body,
                         style: const TextStyle(color: Colors.blue)),
                   )),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -172,8 +173,7 @@ class CarCard extends StatelessWidget {
                     color: Colors.blue,
                   ),
                   const SizedBox(width: 8),
-                  const Text('Manual',
-                      style:  TextStyle(color: Colors.black)),
+                  const Text('Manual', style: TextStyle(color: Colors.black)),
                 ],
               ),
             ],

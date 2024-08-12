@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ExternalAppColors {
-  Color primary = const Color(0xff1f41bb);
-  Color grey = Colors.grey;
-  Color black = Colors.black;
-  Color blue = Colors.blue;
-  static Color bg = Color.fromRGBO(246, 246, 246, 1);
+  static Color primary = const Color(0xff1f41bb);
+  static Color grey = Colors.grey;
+  static Color black = Colors.black;
+  static Color blue = Colors.blue;
+  static Color bg = const Color.fromRGBO(246, 246, 246, 1);
+  static Color white = Colors.white;
 }

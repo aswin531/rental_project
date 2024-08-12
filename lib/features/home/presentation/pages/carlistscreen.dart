@@ -46,7 +46,6 @@ class CarListScreen extends StatelessWidget {
               );
             } else if (state is CarLoaded) {
               context.read<BrandsBloc>().add(const FetchBrands());
-
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -78,7 +77,6 @@ class CarListScreen extends StatelessWidget {
                         );
                       } else if (state is BrandsLoaded) {
                         debugPrint('CarListScreen: Brands loaded successfully');
-
                         return SliverToBoxAdapter(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -98,7 +96,6 @@ class CarListScreen extends StatelessWidget {
                       } else if (state is BrandsError) {
                         debugPrint(
                             'CarListScreen: Failed to load brands - ${state.message}');
-
                         return SliverToBoxAdapter(
                           child: Center(child: Text(state.message)),
                         );
@@ -109,11 +106,12 @@ class CarListScreen extends StatelessWidget {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) => const Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 24),
+                            SizedBox(height: 3),
                             PopularCarSection(),
                           ],
                         ),

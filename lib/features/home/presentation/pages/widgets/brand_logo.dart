@@ -29,7 +29,7 @@ class BrandLogoWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             brandName,
-            style: const TextStyle(fontSize: 12), 
+            style: const TextStyle(fontSize: 12),
           ),
         ],
       ),

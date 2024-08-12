@@ -11,7 +11,7 @@ class CarBloc extends Bloc<CarEvent, CarState> {
     on<FetchCars>(onFetchCars);
     on<RefreshCars>(onRefreshCars);
     //on<FilterCars>(onFilterCars);
-   // on<FetchBrands>(onFetchBrands);
+    // on<FetchBrands>(onFetchBrands);
   }
 
   Future<void> onFetchCars(FetchCars event, Emitter<CarState> emit) async {

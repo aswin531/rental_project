@@ -5,7 +5,7 @@ import 'package:rentit/features/rental/presentation/pages/rental/widgets/booking
 import 'package:rentit/utils/appcolors.dart';
 
 class CarDetailPage extends StatelessWidget {
-    final CarVehicleEntity car;
+  final CarVehicleEntity car;
 
   // final String carId;
   // final String carName;
@@ -18,7 +18,8 @@ class CarDetailPage extends StatelessWidget {
   // final String transmission;
 
   const CarDetailPage({
-    super.key, required this.car,
+    super.key,
+    required this.car,
     // required this.carId,
     // required this.carName,
     // required this.carType,
@@ -49,45 +50,51 @@ class CarDetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                height: 300,
-                child: Image.network(car.imageUrls.first, fit: BoxFit.cover),
-              ),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(car.imageUrls.first, fit: BoxFit.cover)),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(car.model,
-                      style: const TextStyle(fontSize: 18, color: Colors.grey)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ExternalAppColors.white),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(246, 246, 246, 1),
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(car.body,
+                                    style: const TextStyle(color: Colors.blue)),
+                              )),
+                          const Row(
+                            children: [
+                              Icon(Icons.star, color: Colors.amber),
+                              Text("4.9")
+                            ],
+                          ),
+                        ],
+                      ),
                       Text(car.make,
                           style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold)),
-                      Row(
-                        children: [
-                          const Icon(Icons.star, color: Colors.amber),
-                          Text(car.rentalPriceRange.toString(),
-                              style: const TextStyle(fontSize: 18)),
-                        ],
-                      ),
+                      const SizedBox(height: 16),
+                      TabBarSection(
+                        car: car,
+                      )
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  TabBarSection(car: car,
-                    // carType: carName,
-                    // fuelType: fuelType,
-                    // seats: seats,
-                    // rating: 4.9,
-                    // transmission: 'Manual',
-                    // imageUrl: imageUrl,
-                  )
-                ],
+                ),
               ),
             ),
             Padding(
@@ -95,7 +102,8 @@ class CarDetailPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Price: \$${car.rentalPriceRange.start.toStringAsFixed(2)}/hr',
+                  Text(
+                      'Price: \$${car.rentalPriceRange.start.toStringAsFixed(2)}/hr',
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)),
                   BookingButton(carId: car.carId)

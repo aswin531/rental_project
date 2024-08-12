@@ -30,7 +30,6 @@ class AllBrandsPage extends StatelessWidget {
                   logoUrl: brand.logoUrl,
                   brandName: brand.brandName,
                   onTap: () {
-                    // Handle navigation to brand-specific cars
                   },
                 );
               },
