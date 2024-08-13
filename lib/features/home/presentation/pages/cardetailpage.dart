@@ -1,34 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/rating.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/tapbar.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/widgets/booking_button.dart';
 import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class CarDetailPage extends StatelessWidget {
   final CarVehicleEntity car;
 
-  // final String carId;
-  // final String carName;
-  // final String carType;
-  // final String imageUrl;
-  // final RangeValues pricePerHour;
-  // final String fuelType;
-  // final int seats;
-  // final double rating;
-  // final String transmission;
-
   const CarDetailPage({
     super.key,
     required this.car,
-    // required this.carId,
-    // required this.carName,
-    // required this.carType,
-    // required this.imageUrl,
-    // required this.pricePerHour,
-    // required this.fuelType,
-    // required this.seats,
-    // required this.rating,
-    // required this.transmission,
   });
 
   @override
@@ -36,97 +19,162 @@ class CarDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: ExternalAppColors.bg,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+        backgroundColor: ExternalAppColors.bg,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: ExternalAppColors.white),
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
         ),
+        title: PrimaryText(
+          text: "Car Details",
+          color: ExternalAppColors.black,
+        ),
+        centerTitle: true,
         actions: [
-          IconButton(icon: const Icon(Icons.share), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.favorite_border), onPressed: () {}),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: ExternalAppColors.white),
+                child: IconButton(
+                    icon: const Icon(Icons.share), onPressed: () {})),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: ExternalAppColors.white),
+                child: IconButton(
+                    icon: const Icon(Icons.favorite_outline),
+                    onPressed: () {})),
+          ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.network(car.imageUrls.first, fit: BoxFit.cover)),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ExternalAppColors.white),
-                child: Padding(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 100),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child:
+                          Image.network(car.imageUrls.first, fit: BoxFit.cover),
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: ExternalAppColors.white),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(246, 246, 246, 1),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(car.body,
-                                    style: const TextStyle(color: Colors.blue)),
-                              )),
-                          const Row(
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(Icons.star, color: Colors.amber),
-                              Text("4.9")
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(246, 246, 246, 1),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: PrimaryText(
+                                      text: car.body.toUpperCase(),
+                                      size: 17,
+                                      color: Colors.blue),
+                                ),
+                              ),
+                              const StarRating(
+                                rating: 4.9,
+                              ),
                             ],
+                          ),
+                          const SizedBox(height: 20),
+                          PrimaryText(
+                            text: car.make.toUpperCase(),
+                            size: 24,
+                            fontWeight: FontWeight.bold,
+                            color: ExternalAppColors.black,
+                          ),
+                          const SizedBox(height: 16),
+                          TabBarSection(
+                            car: car,
                           ),
                         ],
                       ),
-                      Text(car.make,
-                          style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 16),
-                      TabBarSection(
-                        car: car,
-                      )
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 1,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                splashColor: Colors.amber,
+                tileColor: ExternalAppColors.white,
+                contentPadding: const EdgeInsets.all(15),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                title: const Text(
+                  'Price:',
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text:
+                            '\$${car.rentalPriceRange.start.toStringAsFixed(2)}',
+                        style: TextStyle(
+                          color: ExternalAppColors.blue,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: '/hrs',
+                        style: TextStyle(
+                            color: ExternalAppColors.grey,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ],
                   ),
                 ),
+                trailing: BookingButton(carId: car.carId),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                      'Price: \$${car.rentalPriceRange.start.toStringAsFixed(2)}/hr',
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  BookingButton(carId: car.carId)
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-}
-
-Widget buildTabButton(String text, {bool isSelected = false}) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    decoration: BoxDecoration(
-      color: isSelected ? Colors.blue : Colors.transparent,
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: Text(
-      text,
-      style: TextStyle(color: isSelected ? Colors.white : Colors.black),
-    ),
-  );
 }

@@ -4,6 +4,8 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/rental_form.dart';
+import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class BookingButton extends StatelessWidget {
   final String carId;
@@ -16,7 +18,8 @@ class BookingButton extends StatelessWidget {
       listener: (context, state) {
         if (state is RentalRequestCreated) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Rental request created successfully!')),
+            const SnackBar(
+                content: Text('Rental request created successfully!')),
           );
         } else if (state is RentalRequestError) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -29,10 +32,22 @@ class BookingButton extends StatelessWidget {
           onPressed: state is RentalRequestLoading
               ? null
               : () => _showRentalForm(context),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20))),
           child: state is RentalRequestLoading
-              ? const CircularProgressIndicator(color: Colors.white)
-              : const Text('Book Now'),
+              ? const CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PrimaryText(
+                    text: 'Book Now',
+                    color: ExternalAppColors.white,
+                    size: 20,
+                  ),
+                ),
         );
       },
     );
@@ -45,7 +60,9 @@ class BookingButton extends StatelessWidget {
         return RentalFormWidget(
           carId: carId,
           onSubmit: (request) {
-            context.read<RentalRequestBloc>().add(CreateRentalRequestEvent(request));
+            context
+                .read<RentalRequestBloc>()
+                .add(CreateRentalRequestEvent(request));
           },
         );
       },

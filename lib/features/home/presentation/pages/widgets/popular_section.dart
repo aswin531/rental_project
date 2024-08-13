@@ -45,15 +45,7 @@ class PopularCarSection extends StatelessWidget {
                 itemBuilder: (context, index) {
                   //final car = cars[index];
                   return CarCard(
-                    // carId: car.carId,
-                    // rating: 4.9,
-                    // imageUrl: car.imageUrls.last,
-                    // carType: car.model,
-                    // carName: '${car.make} ${car.model}',
-                    // pricePerHour: car.rentalPriceRange,
-                    // fuelType: car.engine,
-                    // seats: car.seatCapacity,
-                    // transmission: 'Manual',
+                   
                     car: cars[index],
                   );
                 },

@@ -10,7 +10,7 @@ class CarBloc extends Bloc<CarEvent, CarState> {
   CarBloc({required this.getcarUsecase}) : super(CarInitial()) {
     on<FetchCars>(onFetchCars);
     on<RefreshCars>(onRefreshCars);
-    //on<FilterCars>(onFilterCars);
+    //on<CarSelected>(onFilterCars);
     // on<FetchBrands>(onFetchBrands);
   }
 
@@ -24,6 +24,10 @@ class CarBloc extends Bloc<CarEvent, CarState> {
       emit(CarError(e.toString()));
     }
   }
+
+  /*on<CarSelected>(
+      (event, emit) => emit(CarSelectedState(event.car)),
+    );*/
 
   Future<void> onRefreshCars(RefreshCars event, Emitter<CarState> emit) async {
     emit(CarLoading());

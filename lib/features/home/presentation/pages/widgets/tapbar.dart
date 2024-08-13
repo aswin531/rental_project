@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/about_tab.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/review_tab.dart';
 import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class TabBarSection extends StatefulWidget {
   final CarVehicleEntity car;
-
-  // final String carType;
-  // final String fuelType;
-  // final int seats;
-  // final double rating;
-  // final String transmission;
-  // final String imageUrl;
   const TabBarSection({
     super.key,
     required this.car,
-    // required this.carType,
-    // required this.fuelType,
-    // required this.seats,
-    // required this.rating,
-    // required this.transmission,
-    // required this.imageUrl,
   });
 
   @override
@@ -48,6 +38,10 @@ class _TabBarSectionState extends State<TabBarSection> {
             _buildTabButton('Review', 2),
           ],
         ),
+        const SizedBox(height: 5),
+        Divider(
+          color: ExternalAppColors.grey.withOpacity(0.4),
+        ),
         const SizedBox(height: 16),
         _buildTabContent(),
       ],
@@ -59,18 +53,25 @@ class _TabBarSectionState extends State<TabBarSection> {
     return GestureDetector(
       onTap: () => _onTabSelected(index),
       child: Container(
+        width: 110,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          border: Border.all(
-              color: isSelected
-                  ? ExternalAppColors.blue
-                  : ExternalAppColors.black),
+          border: Border(
+            bottom: BorderSide(
+                style: BorderStyle.solid,
+                color: isSelected ? ExternalAppColors.blue : Colors.transparent,
+                width: 5),
+          ),
           color: isSelected ? Colors.transparent : Colors.transparent,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
         ),
-        child: Text(
-          text,
-          style: TextStyle(color: isSelected ? Colors.blue : Colors.black),
+        child: Align(
+          alignment: Alignment.center,
+          child: PrimaryText(
+              text: text,
+              color: isSelected ? Colors.blue : Colors.black,
+              fontWeight: FontWeight.w600,
+              size: 19),
         ),
       ),
     );
@@ -88,17 +89,7 @@ class _TabBarSectionState extends State<TabBarSection> {
   }
 
   Widget _buildAboutTab() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        buildSpecItem(Icons.directions_car, 'Type', widget.car.make),
-        buildSpecItem(Icons.local_gas_station, 'Fuel Type', widget.car.engine),
-        buildSpecItem(
-            Icons.event_seat, 'Seats', widget.car.seatCapacity.toString()),
-        buildSpecItem(Icons.speed, 'Transmission', "Manual"),
-        buildSpecItem(Icons.star, 'Rating', widget.car.color),
-      ],
-    );
+    return const AboutTabWidget();
   }
 
   Widget _buildGalleryTab() {
@@ -111,12 +102,7 @@ class _TabBarSectionState extends State<TabBarSection> {
   }
 
   Widget _buildReviewTab() {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Reviews', style: TextStyle(fontSize: 16)),
-      ],
-    );
+    return const ReviewTabWidget();
   }
 
   Widget buildSpecItem(IconData icon, String label, String value) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rentit/features/home/domain/entity/brand_entity.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/brand_logo.dart';
+import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
 
 class BrandListWidget extends StatelessWidget {
@@ -30,9 +31,14 @@ class BrandListWidget extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
               TextButton(
-                onPressed: onViewAll,
-                child: const Text('View All'),
-              ),
+                  onPressed: onViewAll,
+                  child: PrimaryText(
+                    text: 'See All',
+                    color: ExternalAppColors.blue,
+                    size: 15,
+                  )
+                  //const Text('View All'),
+                  ),
             ],
           ),
           const SizedBox(height: 16),

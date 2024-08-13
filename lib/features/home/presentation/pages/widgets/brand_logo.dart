@@ -18,12 +18,19 @@ class BrandLogoWidget extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          ClipOval(
-            child: Image.network(
-              logoUrl,
-              width: 60,
-              height: 60,
-              fit: BoxFit.cover,
+          Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: Colors.grey.shade200),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                backgroundColor: Colors.grey.shade200,
+                radius: 35,
+                child: Image.network(
+                  logoUrl,
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 8),

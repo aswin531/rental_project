@@ -5,28 +5,12 @@ import 'package:rentit/utils/appcolors.dart';
 
 class CarCard extends StatelessWidget {
   final CarVehicleEntity car;
-  //  final String carId;
-  // final String imageUrl;
-  // final String carType;
-  // final String carName;
-  // final RangeValues pricePerHour;
-  // final String fuelType;
-  // final int seats;
-  // final double rating;
-  // final String? transmission;
+
 
   const CarCard({
     super.key,
     required this.car,
-    // required this.carId,
-    // required this.imageUrl,
-    // required this.carType,
-    // required this.carName,
-    // required this.pricePerHour,
-    // required this.fuelType,
-    // required this.seats,
-    // required this.rating,
-    // this.transmission,
+
   });
 
   @override
@@ -38,15 +22,7 @@ class CarCard extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => CarDetailPage(
                 car: car,
-                // carId: carId,
-                // carName: carName,
-                // carType: carType,
-                // imageUrl: imageUrl,
-                // pricePerHour: pricePerHour,
-                // fuelType: fuelType,
-                // seats: seats,
-                // rating: rating,
-                // transmission: transmission ?? "Manual"
+               
               ),
             ));
       },
