@@ -1,21 +1,13 @@
-import 'package:flutter/foundation.dart';
-import 'package:rentit/core/errors/server_exception.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
 import 'package:rentit/features/home/domain/repository/car_rental_repo.dart';
 
-class GetcarUsecase {
+class GetCarsStreamUseCase {
   final CarRepository repository;
 
-  GetcarUsecase({required this.repository});
+  GetCarsStreamUseCase({required this.repository});
 
-  Future<List<CarVehicleEntity>> execute() async {
-    try {
-      return await repository.getCars();
-    } on ServerException catch (e) {
-      // Handle the exception or rethrow it
-      debugPrint('Error fetching cars: ${e.message}');
-      rethrow;
-    }
+  Stream<List<CarVehicleEntity>> execute() {
+    return repository.getCars();
   }
 }
 

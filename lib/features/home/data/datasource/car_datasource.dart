@@ -3,7 +3,7 @@ import 'package:rentit/features/home/data/model/brand_model.dart';
 import 'package:rentit/features/home/data/model/carvehicle_model.dart';
 
 abstract class CarRemoteDataSource {
-  Future<List<CarVehicleModel>> getCars();
+  Stream<List<CarVehicleModel>> getCars();
   Future<List<BrandModel>> getBrands();
 }
 
@@ -13,11 +13,12 @@ class CarRemoteDataSourceImpl implements CarRemoteDataSource {
   CarRemoteDataSourceImpl(this._firebaseFirestore);
 
   @override
-  Future<List<CarVehicleModel>> getCars() async {
-    final snapshot = await _firebaseFirestore.collection('cars').get();
-    return snapshot.docs
-        .map((doc) => CarVehicleModel.fromFirestoreDcument(doc.data(), doc.id))
-        .toList();
+  Stream<List<CarVehicleModel>> getCars()  {
+  return _firebaseFirestore.collection('cars').snapshots().map((snapshot) {
+      return snapshot.docs
+          .map((doc) => CarVehicleModel.fromFirestoreDcument(doc.data(), doc.id))
+          .toList();
+    });
   }
 
   @override

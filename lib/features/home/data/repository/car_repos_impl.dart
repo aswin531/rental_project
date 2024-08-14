@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rentit/core/errors/server_exception.dart';
+import 'package:flutter/material.dart';
 import 'package:rentit/features/home/data/datasource/car_datasource.dart';
 import 'package:rentit/features/home/data/model/carvehicle_model.dart';
 import 'package:rentit/features/home/domain/entity/brand_entity.dart';
@@ -12,26 +11,32 @@ class CarReposImpl implements CarRepository {
   CarReposImpl({required this.remoteDataSource});
 
   @override
-  Future<List<CarVehicleEntity>> getCars() async {
+  Stream<List<CarVehicleEntity>> getCars() {
     try {
-      final carModels = await remoteDataSource.getCars();
-      return carModels
-          .map((model) => CarVehicleEntity(
-              carId: model.carId,
-              make: model.make,
-              engine: model.engine,
-              seatCapacity: model.seatCapacity,
-              model: model.model,
-              body: model.body,
-              year: model.year,
-              color: model.color,
-              rentalPriceRange: model.rentalPriceRange,
-              status: model.status,
-              imageUrls: model.imageUrls,
-              mainImageUrl: model.mainImageUrl))
-          .toList();
-    } on FirebaseException catch (e) {
-      throw ServerException(e.message ?? 'Failed to Fetch Cars');
+      return remoteDataSource.getCars().map((carModels) {
+        return carModels.map((model) {
+          return CarVehicleEntity(
+            carId: model.carId,
+            make: model.make,
+            engine: model.engine,
+            seatCapacity: model.seatCapacity,
+            model: model.model,
+            body: model.body,
+            year: model.year,
+            color: model.color,
+            rentalPriceRange: model.rentalPriceRange,
+            status: model.status,
+            imageUrls: model.imageUrls,
+            mainImageUrl: model.mainImageUrl,
+          );
+        }).toList();
+      }).handleError((error) {
+        debugPrint('Error occurred in getCarsStream: $error');
+        throw Exception('Failed to fetch car stream.');
+      });
+    } catch (error) {
+      debugPrint('Error in getCarsStream: $error');
+      return Stream.error('Failed to fetch car stream.');
     }
   }
 
@@ -40,12 +45,17 @@ class CarReposImpl implements CarRepository {
     final brandModels = await remoteDataSource.getBrands();
     return brandModels.map((model) => model.toEntity()).toList();
   }
-
+  
   @override
-  Future<List<CarVehicleModel>> getCarsByBrand(String brand) async {
-    final cars = await remoteDataSource.getCars();
-    return cars.where((car) => car.make == brand).toList();
+  Future<List<CarVehicleModel>> getCarsByBrand(String brandName) {
+    throw UnimplementedError();
   }
+
+  // @override
+  // Future<List<CarVehicleModel>> getCarsByBrand(String brand) async {
+  //   final cars = await remoteDataSource.getCars();
+  //   return cars.where((car) => car.make == brand).toList();
+  // }
 }
 
 

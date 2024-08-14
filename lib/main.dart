@@ -59,8 +59,8 @@ Future<void> main() async {
         ),
         BlocProvider<CarBloc>(
             create: (_) => CarBloc(
-                getcarUsecase:
-                    GetcarUsecase(repository: _.read<CarRepository>()))),
+                getCarsStreamUseCase:
+                    GetCarsStreamUseCase(repository: _.read<CarRepository>()))),
         BlocProvider(
           create: (_) => RentalRequestBloc(
               createRentalRequest:

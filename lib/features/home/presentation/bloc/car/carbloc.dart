@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentit/features/home/domain/entity/car_entity.dart';
 import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carstates.dart';
 
 class CarBloc extends Bloc<CarEvent, CarState> {
-  final GetcarUsecase getcarUsecase;
+  final GetCarsStreamUseCase getCarsStreamUseCase;
 
-  CarBloc({required this.getcarUsecase}) : super(CarInitial()) {
+  CarBloc({required this.getCarsStreamUseCase}) : super(CarInitial()) {
     on<FetchCars>(onFetchCars);
     on<RefreshCars>(onRefreshCars);
     //on<CarSelected>(onFilterCars);
@@ -17,8 +18,12 @@ class CarBloc extends Bloc<CarEvent, CarState> {
   Future<void> onFetchCars(FetchCars event, Emitter<CarState> emit) async {
     emit(CarLoading());
     try {
-      final cars = await getcarUsecase.execute();
-      emit(CarLoaded(cars));
+      final cars = getCarsStreamUseCase.execute();
+      await emit.forEach<List<CarVehicleEntity>>(
+        cars,
+        onData: (cars) => CarLoaded(cars),
+        onError: (error, stackTrace) => CarError(error.toString()),
+      );
     } catch (e) {
       debugPrint("Error in onFetchCars: $e");
       emit(CarError(e.toString()));
@@ -32,8 +37,12 @@ class CarBloc extends Bloc<CarEvent, CarState> {
   Future<void> onRefreshCars(RefreshCars event, Emitter<CarState> emit) async {
     emit(CarLoading());
     try {
-      final cars = await getcarUsecase.execute();
-      emit(CarLoaded(cars));
+      final cars = getCarsStreamUseCase.execute();
+      await emit.forEach<List<CarVehicleEntity>>(
+        cars,
+        onData: (cars) => CarLoaded(cars),
+        onError: (error, stackTrace) => CarError(error.toString()),
+      );
     } catch (e) {
       debugPrint("Error in onRefreshCars: $e");
       emit(CarError(e.toString()));
