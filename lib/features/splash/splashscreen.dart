@@ -13,7 +13,6 @@ class SplashScreen extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Background Image
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -57,7 +56,7 @@ class SplashScreenListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, Authstate>(
       listener: (context, state) {
-        Future.delayed(const Duration(seconds: 3), () {
+        Future.delayed(const Duration(seconds: 1), () {
           if (state is AuthAuthenticated) {
             context.go('/navBarBottom');
           } else if (state is AuthUnAuthenticated) {

@@ -45,7 +45,6 @@ class PopularCarSection extends StatelessWidget {
                 itemBuilder: (context, index) {
                   //final car = cars[index];
                   return CarCard(
-                   
                     car: cars[index],
                   );
                 },

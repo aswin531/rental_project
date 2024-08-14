@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
+import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
+import 'package:rentit/features/home/presentation/bloc/selectedcar/selectedcar_event.dart';
 import 'package:rentit/features/home/presentation/pages/cardetailpage.dart';
 import 'package:rentit/utils/appcolors.dart';
 
 class CarCard extends StatelessWidget {
   final CarVehicleEntity car;
 
-
   const CarCard({
     super.key,
     required this.car,
-
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        context.read<SelectedCarBloc>().add(SelectCar(car));
+
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CarDetailPage(
-                car: car,
-               
-              ),
+              builder: (context) => const CarDetailPage(),
             ));
       },
       child: Padding(
@@ -49,7 +49,7 @@ class CarCard extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
                         child: Image.network(
-                          car.imageUrls.first,
+                          car.imageUrls.last,
                           width: double.infinity,
                           height: 200,
                           fit: BoxFit.cover,

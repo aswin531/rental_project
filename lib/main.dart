@@ -19,6 +19,7 @@ import 'package:rentit/features/home/domain/usecases/getbrand_usecase.dart';
 import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
 import 'package:rentit/features/home/presentation/bloc/brand/brand_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
+import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
 import 'package:rentit/features/rental/data/datasource/rental_datasource.dart';
 import 'package:rentit/features/rental/data/repository/rental_repo_impl.dart';
 import 'package:rentit/features/rental/domain/repository/rental_repo.dart';
@@ -72,6 +73,7 @@ Future<void> main() async {
         ),
         BlocProvider(create: (context) => NavigationBloc()),
         BlocProvider(create: (context) => TabBloc()),
+        BlocProvider(create: (context) => SelectedCarBloc()),
         BlocProvider(
             create: (context) => BrandsBloc(
                 getBrandUsecase: GetBrandUsecase(
