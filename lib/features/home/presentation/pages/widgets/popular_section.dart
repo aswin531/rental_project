@@ -37,7 +37,6 @@ class PopularCarSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 5),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

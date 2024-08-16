@@ -8,6 +8,7 @@ import 'package:rentit/features/bottomnav/presentation/pages/bottomnav_with_anic
 import 'package:rentit/features/home/presentation/pages/carlistscreen.dart';
 import 'package:rentit/features/profile/pages/profile.dart';
 import 'package:rentit/features/profile/widgets/account_page.dart';
+import 'package:rentit/features/rental/presentation/pages/rental/widgets/booking_continue_page.dart';
 import 'package:rentit/features/splash/splashscreen.dart';
 
 final GoRouter router = GoRouter(initialLocation: '/splash', routes: [
@@ -50,5 +51,9 @@ final GoRouter router = GoRouter(initialLocation: '/splash', routes: [
   GoRoute(
     path: '/navBarBottom',
     builder: (context, state) => PersistentBottomNav(),
+  ),
+  GoRoute(
+    path: '/bookingContinuePage',
+    builder: (context, state) => const BookingContinuePage(),
   ),
 ]);

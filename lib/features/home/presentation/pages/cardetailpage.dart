@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selectedcar_state.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/rating.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/tapbar.dart';
-import 'package:rentit/features/rental/presentation/pages/rental/widgets/booking_button.dart';
+import 'package:rentit/features/rental/presentation/pages/rental/widgets/booknowbutton.dart';
 import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
 
@@ -32,7 +33,7 @@ class CarDetailPage extends StatelessWidget {
                       shape: BoxShape.circle, color: ExternalAppColors.white),
                   child: IconButton(
                     icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => context.go("/home"),
                   ),
                 ),
               ),
@@ -115,11 +116,21 @@ class CarDetailPage extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 20),
-                                PrimaryText(
-                                  text: car.make.toUpperCase(),
-                                  size: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: ExternalAppColors.black,
+                                Row(
+                                  children: [
+                                    PrimaryText(
+                                      text: car.make.toUpperCase(),
+                                      size: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: ExternalAppColors.black,
+                                    ),
+                                    PrimaryText(
+                                      text: ' - ${car.model.toUpperCase()}',
+                                      size: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: ExternalAppColors.black,
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(height: 16),
                                 const TabBarSection(),
@@ -137,42 +148,47 @@ class CarDetailPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    splashColor: Colors.amber,
-                    tileColor: ExternalAppColors.white,
-                    contentPadding: const EdgeInsets.all(15),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    title: const Text(
-                      'Price:',
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
+                      splashColor: Colors.amber,
+                      tileColor: ExternalAppColors.white,
+                      contentPadding: const EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      title: const Text(
+                        'Price:',
+                        style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    subtitle: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text:
-                                '\$${car.rentalPriceRange.start.toStringAsFixed(2)}',
-                            style: TextStyle(
-                              color: ExternalAppColors.blue,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                      subtitle: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  '\$${car.rentalPriceRange.start.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                color: ExternalAppColors.blue,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: '/hrs',
-                            style: TextStyle(
-                                color: ExternalAppColors.grey,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
+                            TextSpan(
+                              text: '/hrs',
+                              style: TextStyle(
+                                  color: ExternalAppColors.grey,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    trailing: BookingButton(carId: car.carId),
-                  ),
+                      trailing: BookNowButton(
+                        onPressed: () {
+                          context.go("/bookingContinuePage");
+                        },
+                      )
+                      // BookingButton(carId: car.carId),
+                      ),
                 ),
               ],
             ),

@@ -26,7 +26,6 @@ class CarListScreen extends StatelessWidget {
     ));
 
     return Scaffold(
-      
       body: BlocBuilder<CarBloc, CarState>(
         builder: (context, state) {
           if (state is CarInitial) {
@@ -111,7 +110,6 @@ class CarListScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 3),
                           PopularCarSection(),
                         ],
                       ),
@@ -122,9 +120,8 @@ class CarListScreen extends StatelessWidget {
               ],
             );
           } else if (state is CarError) {
-            debugPrint(
-                'CarListScreen: Failed to load cars - ${state.message}');
-      
+            debugPrint('CarListScreen: Failed to load cars - ${state.message}');
+
             return Center(child: Text(state.message));
           }
           return Container();

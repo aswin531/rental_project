@@ -91,7 +91,7 @@ class _TabBarSectionState extends State<TabBarSection> {
   }
 
   Widget _buildGalleryTab() {
-    return  GalleryTabWidget();
+    return const GalleryTabWidget();
   }
 
   Widget _buildReviewTab() {
