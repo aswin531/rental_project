@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class BrandLogoWidget extends StatelessWidget {
   final String logoUrl;
@@ -34,9 +36,11 @@ class BrandLogoWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            brandName,
-            style: const TextStyle(fontSize: 12),
+          PrimaryText(
+            text: brandName,
+            size: 16,
+            color: ExternalAppColors.black,
+            fontWeight: FontWeight.w500,
           ),
         ],
       ),

@@ -9,11 +9,8 @@ import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
 
 class CarDetailPage extends StatelessWidget {
-  //final CarVehicleEntity car;
-
   const CarDetailPage({
     super.key,
-    // required this.car,
   });
 
   @override
@@ -22,6 +19,8 @@ class CarDetailPage extends StatelessWidget {
       builder: (context, state) {
         if (state is CarSelected) {
           final car = state.car;
+          debugPrint('Car updated: ${state.car.make} ${state.car.model}');
+
           return Scaffold(
             backgroundColor: ExternalAppColors.bg,
             appBar: AppBar(
@@ -64,12 +63,11 @@ class CarDetailPage extends StatelessWidget {
                 ),
               ],
             ),
-            body: Stack(
+            body: Column(
               children: [
-                SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 100),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Expanded(
+                  child: ListView(
+                    //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
                         child: Padding(
@@ -124,9 +122,7 @@ class CarDetailPage extends StatelessWidget {
                                   color: ExternalAppColors.black,
                                 ),
                                 const SizedBox(height: 16),
-                                TabBarSection(
-                                  car: car,
-                                ),
+                                const TabBarSection(),
                               ],
                             ),
                           ),
@@ -138,49 +134,44 @@ class CarDetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Positioned(
-                  bottom: 1,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      splashColor: Colors.amber,
-                      tileColor: ExternalAppColors.white,
-                      contentPadding: const EdgeInsets.all(15),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      title: const Text(
-                        'Price:',
-                        style: TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold,
-                        ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    splashColor: Colors.amber,
+                    tileColor: ExternalAppColors.white,
+                    contentPadding: const EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    title: const Text(
+                      'Price:',
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
                       ),
-                      subtitle: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text:
-                                  '\$${car.rentalPriceRange.start.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                color: ExternalAppColors.blue,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '/hrs',
-                              style: TextStyle(
-                                  color: ExternalAppColors.grey,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                      ),
-                      trailing: BookingButton(carId: car.carId),
                     ),
+                    subtitle: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                '\$${car.rentalPriceRange.start.toStringAsFixed(2)}',
+                            style: TextStyle(
+                              color: ExternalAppColors.blue,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '/hrs',
+                            style: TextStyle(
+                                color: ExternalAppColors.grey,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    ),
+                    trailing: BookingButton(carId: car.carId),
                   ),
                 ),
               ],
@@ -193,3 +184,24 @@ class CarDetailPage extends StatelessWidget {
     );
   }
 }
+
+/*class BookingButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        final state = context.read<SelectedCarBloc>().state;
+        if (state is CarSelected) {
+          final car = state.car;
+          // Use car data to start booking process
+          startBookingProcess(context, car);
+        }
+      },
+      child: Text('Book Now'),
+    );
+  }
+
+  void startBookingProcess(BuildContext context, CarVehicleEntity car) {
+    // Implement booking logic
+  }
+}*/

@@ -47,8 +47,9 @@ class CarVehicleModel {
     };
   }
 
-  factory CarVehicleModel.fromFirestoreDcument(Map<String, dynamic> map, String id) {
-    debugPrint('===Start ==Document Data: $map, $id  ===End==');
+  factory CarVehicleModel.fromFirestoreDcument(
+      Map<String, dynamic> map, String id) {
+    //debugPrint('===Start ==Document Data: $map, $id  ===End==');
     return CarVehicleModel(
         carId: id,
         make: map["make"] ?? "Toyota",

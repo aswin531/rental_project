@@ -1,7 +1,10 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rentit/core/constants/colors.dart';
+import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
+import 'package:rentit/features/home/presentation/bloc/selectedcar/selectedcar_state.dart';
 import 'package:rentit/features/profile/widgets/container_section.dart';
 import 'package:rentit/features/profile/widgets/profile_text_styles.dart';
 import 'package:rentit/features/profile/widgets/prof_detail.dart';
@@ -13,13 +16,7 @@ class MainProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: RentItColors.background,
-      // body: Container(
-      //   decoration:const BoxDecoration(
-      //     image: DecorationImage(
-      //       image: AssetImage("assets/images/grey.jpg"),
-      //       fit: BoxFit.cover, // Cover the entire container
-      //     ),
-      //   ),
+     
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -63,9 +60,18 @@ class MainProfileScreen extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Text(
-              "Esther Howard",
-              style: CustomProfileTextStyles.nameStyle,
+            BlocBuilder<SelectedCarBloc, SelectedCarState>(
+              builder: (context, state) {
+                if (state is CarSelected) {
+                  final car = state.car;
+                  return Text(
+                    car.make,
+                    style: CustomProfileTextStyles.nameStyle,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
             SizedBox(
               height: 10.h,

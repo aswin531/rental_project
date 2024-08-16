@@ -9,7 +9,7 @@ import 'package:rentit/utils/appcolors.dart';
 class CarCard extends StatelessWidget {
   final CarVehicleEntity car;
 
-  const CarCard({
+  const  CarCard({
     super.key,
     required this.car,
   });

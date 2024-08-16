@@ -10,7 +10,7 @@ class BrandModel {
 
   factory BrandModel.fromFirestoreDocument(
       Map<String, dynamic> map, String id) {
-    debugPrint('===BRANDLOGO ==Document Data: $map, $id  ===End==');
+   // debugPrint('===BRANDLOGO ==Document Data: $map, $id  ===End==');
     return BrandModel(brandName: map['name'] ?? 'Brand Name', logoUrl: map['logoUrl'] ?? 'BrandLogo URL');
   }
 

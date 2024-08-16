@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:rentit/features/home/domain/entity/car_entity.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/about_tab.dart';
+import 'package:rentit/features/home/presentation/pages/widgets/gallery_tab.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/review_tab.dart';
 import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
 
 class TabBarSection extends StatefulWidget {
-  final CarVehicleEntity car;
   const TabBarSection({
     super.key,
-    required this.car,
   });
 
   @override
@@ -93,12 +91,7 @@ class _TabBarSectionState extends State<TabBarSection> {
   }
 
   Widget _buildGalleryTab() {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Gallery', style: TextStyle(fontSize: 16)),
-      ],
-    );
+    return  GalleryTabWidget();
   }
 
   Widget _buildReviewTab() {

@@ -41,7 +41,7 @@ class BrandListWidget extends StatelessWidget {
                   ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(

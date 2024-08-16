@@ -12,6 +12,7 @@ class SelectedCarInitial extends SelectedCarState {}
 
 class CarSelected extends SelectedCarState {
   final CarVehicleEntity car;
+  // final List<CarVehicleEntity> cars;
 
   const CarSelected(this.car);
   @override
