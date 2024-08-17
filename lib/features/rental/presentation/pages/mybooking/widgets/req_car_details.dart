@@ -22,8 +22,7 @@ class CarDetails extends StatelessWidget {
         } else if (state is RentalRequestLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is UserRentalRequestsWithCarDetailsLoaded) {
-          final rentalRequestWithCarDetails =
-              state.requestsWithCarDetails.first;
+          final rentalRequestWithCarDetails = state.requestsWithCarDetails.last;
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

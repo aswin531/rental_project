@@ -8,6 +8,7 @@ import 'package:rentit/features/home/presentation/pages/widgets/tapbar.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/widgets/booknowbutton.dart';
 import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
+import 'package:rentit/widgets/custom_carbody_container.dart';
 
 class CarDetailPage extends StatelessWidget {
   const CarDetailPage({
@@ -33,7 +34,7 @@ class CarDetailPage extends StatelessWidget {
                       shape: BoxShape.circle, color: ExternalAppColors.white),
                   child: IconButton(
                     icon: const Icon(Icons.arrow_back),
-                    onPressed: () => context.go("/home"),
+                    onPressed: () => context.pop(),
                   ),
                 ),
               ),
@@ -96,20 +97,10 @@ class CarDetailPage extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromRGBO(
-                                            246, 246, 246, 1),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: PrimaryText(
-                                            text: car.body.toUpperCase(),
-                                            size: 17,
-                                            color: Colors.blue),
-                                      ),
+                                    CustomCarBodyContainer(
+                                      text: car.body.toUpperCase(),
                                     ),
+                                    
                                     const StarRating(
                                       rating: 4.9,
                                     ),
@@ -184,7 +175,7 @@ class CarDetailPage extends StatelessWidget {
                       ),
                       trailing: BookNowButton(
                         onPressed: () {
-                          context.go("/bookingContinuePage");
+                          context.push("/bookingContinuePage");
                         },
                       )
                       // BookingButton(carId: car.carId),

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selectedcar_event.dart';
-import 'package:rentit/features/home/presentation/pages/cardetailpage.dart';
 import 'package:rentit/utils/appcolors.dart';
 
 class CarCard extends StatelessWidget {
   final CarVehicleEntity car;
 
-  const  CarCard({
+  const CarCard({
     super.key,
     required this.car,
   });
@@ -19,12 +19,13 @@ class CarCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.read<SelectedCarBloc>().add(SelectCar(car));
+        context.push('/carDetailPage');
 
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const CarDetailPage(),
-            ));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => const CarDetailPage(),
+        //     ));
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -111,11 +112,26 @@ class CarCard extends StatelessWidget {
                   Text(car.make,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 18)),
-                  Text(
-                    '\$${car.rentalPriceRange.start.toStringAsFixed(2)}/hr',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              '\$${car.rentalPriceRange.start.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            color: ExternalAppColors.blue,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text: '/hrs',
+                          style: TextStyle(
+                              color: ExternalAppColors.grey,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
                     ),
                   ),
                 ],

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:googleapis/authorizedbuyersmarketplace/v1.dart';
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/rental/domain/usecases/get_user_rental.dart';
 import 'package:rentit/features/rental/domain/usecases/update_request.dart';
@@ -7,22 +8,31 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_even
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 
 class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
+  DateTime? startDate;
+  DateTime? returnDate;
+  TimeOfDay? startTime;
+  TimeOfDay? returnTime;
+
   final CreateRentalRequest createRentalRequest;
   final GetUserRentalRequests getUserRentalRequests;
   final UpdateRentalRequestStatus updateRentalRequestStatus;
-    final AuthRepository? authRepository;
-    //final GetCarDetails getCarDetails;
+  final AuthRepository? authRepository;
+  //final GetCarDetails getCarDetails;
 
-
-  RentalRequestBloc({
-    required this.createRentalRequest,
-    required this.getUserRentalRequests,
-    required this.updateRentalRequestStatus,
-     this.authRepository
-  }) : super(RentalRequestInitial()) {
+  RentalRequestBloc(
+      {required this.createRentalRequest,
+      required this.getUserRentalRequests,
+      required this.updateRentalRequestStatus,
+      this.authRepository})
+      : super(RentalRequestInitial()) {
     on<CreateRentalRequestEvent>(_onCreateRentalRequest);
-    on<FetchUserRentalRequestsWithCarDetailsEvent>(_onFetchUserRentalRequestsWithCarDetails);
+    on<FetchUserRentalRequestsWithCarDetailsEvent>(
+        _onFetchUserRentalRequestsWithCarDetails);
     on<UpdateRentalRequestStatusEvent>(_onUpdateRentalRequestStatus);
+    on<UpdateStartDateEvent>(_onUpdateStartDate);
+    on<UpdateStartTimeEvent>(_onUpdateStartTime);
+    on<UpdateReturnDateEvent>(_onUpdateReturnDate);
+    on<UpdateReturnTimeEvent>(_onUpdateReturnTime);
   }
 
   Future<void> _onCreateRentalRequest(
@@ -38,19 +48,18 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     }
   }
 
-Future<void> _onFetchUserRentalRequestsWithCarDetails(
-  FetchUserRentalRequestsWithCarDetailsEvent event,
-  Emitter<RentalRequestState> emit,
-) async {
-  emit(RentalRequestLoading());
-  try {
-    final requestsWithCarDetails = await getUserRentalRequests(event.userId);
-    emit(UserRentalRequestsWithCarDetailsLoaded(requestsWithCarDetails));
-  } catch (e) {
-    emit(RentalRequestError(e.toString()));
+  Future<void> _onFetchUserRentalRequestsWithCarDetails(
+    FetchUserRentalRequestsWithCarDetailsEvent event,
+    Emitter<RentalRequestState> emit,
+  ) async {
+    emit(RentalRequestLoading());
+    try {
+      final requestsWithCarDetails = await getUserRentalRequests(event.userId);
+      emit(UserRentalRequestsWithCarDetailsLoaded(requestsWithCarDetails));
+    } catch (e) {
+      emit(RentalRequestError(e.toString()));
+    }
   }
-}
-
 
   Future<void> _onUpdateRentalRequestStatus(
     UpdateRentalRequestStatusEvent event,
@@ -65,16 +74,55 @@ Future<void> _onFetchUserRentalRequestsWithCarDetails(
     }
   }
 
-  // Future<void> _onFetchCarDetails(
-  //   FetchCarDetailsEvent event,
-  //   Emitter<RentalRequestState> emit,
-  // ) async {
-  //   emit(RentalRequestLoading());
-  //   try {
-  //     final car = await getCarDetails(event.carId);
-  //     emit(CarDetailsLoaded(car));
-  //   } catch (e) {
-  //     emit(RentalRequestError(e.toString()));
-  //   }
-  // }
+   void _onUpdateStartDate(
+    UpdateStartDateEvent event,
+    Emitter<RentalRequestState> emit,
+  ) {
+    startDate = event.startDate;
+    emit(RentalRequestDateTimeState(
+      startDate: startDate,
+      startTime: startTime,
+      returnDate: returnDate,
+      returnTime: returnTime,
+    ));
+  }
+
+  void _onUpdateStartTime(
+    UpdateStartTimeEvent event,
+    Emitter<RentalRequestState> emit,
+  ) {
+    startTime = event.startTime;
+    emit(RentalRequestDateTimeState(
+      startDate: startDate,
+      startTime: startTime,
+      returnDate: returnDate,
+      returnTime: returnTime,
+    ));
+  }
+
+  void _onUpdateReturnDate(
+    UpdateReturnDateEvent event,
+    Emitter<RentalRequestState> emit,
+  ) {
+    returnDate = event.returnDate;
+    emit(RentalRequestDateTimeState(
+      startDate: startDate,
+      startTime: startTime,
+      returnDate: returnDate,
+      returnTime: returnTime,
+    ));
+  }
+
+  void _onUpdateReturnTime(
+    UpdateReturnTimeEvent event,
+    Emitter<RentalRequestState> emit,
+  ) {
+    returnTime = event.returnTime;
+    emit(RentalRequestDateTimeState(
+      startDate: startDate,
+      startTime: startTime,
+      returnDate: returnDate,
+      returnTime: returnTime,
+    ));
+  }
 }
