@@ -30,13 +30,13 @@ class UserRentalRequestsWithCarDetailsLoaded extends RentalRequestState {
 // class RentalRequestDateTimeUpdated extends RentalRequestState {}
 
 class RentalRequestDateTimeState extends RentalRequestState {
-  final DateTime? startDate;
+  final DateTime? pickupDate;
   final DateTime? startTime;
   final DateTime? returnDate;
   final DateTime? returnTime;
 
   RentalRequestDateTimeState({
-    this.startDate,
+    this.pickupDate,
     this.startTime,
     this.returnDate,
     this.returnTime,

@@ -31,32 +31,13 @@ class BookingContinuePage extends StatelessWidget {
                 CustomCachedNetworkImage(
                   imageUrl: car.imageUrls.last,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 8),
                 const Expanded(child: BookcarDetailspick()),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(15)),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: BookingButton(
+                    carId: car.carId,
                   ),
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: BookingButton(
-                        carId: car.carId,
-                      )),
                 ),
               ],
             );

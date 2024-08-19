@@ -20,14 +20,7 @@ class BookcarDetailspick extends StatelessWidget {
           final car = state.car;
           return Container(
             decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 2,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
+               
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(20)),
                 color: ExternalAppColors.white),
@@ -81,7 +74,7 @@ class BookcarDetailspick extends StatelessWidget {
                     height: 20,
                   ),
                   const DriverSelectionWidget(),
-                 const  DateTimeSelectionScreen()
+                  const DateTimeSelectionScreen()
                 ],
               ),
             ),

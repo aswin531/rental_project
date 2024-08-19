@@ -1,17 +1,11 @@
-// In lib/features/rental/domain/entity/rental_entity.dart
-
 class RentalRequest {
-  final String? id; 
+  final String? id;
   final String carId;
   final String userId;
-  final DateTime startDate;
-   final DateTime endDate;
-//   final bool? isPickup;
-//   final bool? isDelivery;
-   final DateTime? pickupTime;
-//   final String? pickupArrival;
-   final DateTime? deliveryTime;
-//   final String? deliveryPlace;
+  final DateTime pickupDate;
+  final DateTime returnDate;
+  final DateTime? pickupTime;
+  final DateTime? returnTime;
   final String name;
   final String phone;
   final String address;
@@ -25,14 +19,10 @@ class RentalRequest {
       {this.id,
       required this.carId,
       required this.userId,
-      required this.startDate,
-      required this.endDate,
-      // required this.isPickup,
-      // required this.isDelivery,
-     this.pickupTime,
-      // this.pickupArrival,
-      this.deliveryTime,
-      // this.deliveryPlace,
+      required this.pickupDate,
+      required this.returnDate,
+      this.pickupTime,
+      this.returnTime,
       required this.name,
       required this.phone,
       required this.address,
@@ -43,6 +33,5 @@ class RentalRequest {
       required this.status //this.status = false, // Default status is false (pending)
       });
 }
-
 
 enum RentalRequestStatus { pending, accepted, rejected }

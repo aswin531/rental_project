@@ -18,14 +18,12 @@ class DateTimeSelectionScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-
           PrimaryText(
             text: "Pick-Up Date & Time",
             size: 20,
             color: ExternalAppColors.black,
           ),
           const SizedBox(height: 10),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -35,27 +33,26 @@ class DateTimeSelectionScreen extends StatelessWidget {
                     title: 'Start Date',
                     onDateSelected: (date) {
                       context.read<RentalRequestBloc>().add(
-                            UpdateStartDateEvent(startDate: date),
+                            UpdateStartDateEvent(pickupDate: date),
                           );
                     },
                   ),
                 ],
               ),
               TimePicker(
-                title: 'Return Time',
+                title: 'Select Time',
                 onTimeSelected: (TimeOfDay time) {
                   final now = DateTime.now();
                   final dateTime = DateTime(
                       now.year, now.month, now.day, time.hour, time.minute);
                   context.read<RentalRequestBloc>().add(
-                        UpdateReturnTimeEvent(returnTime: dateTime),
+                        UpdateStartTimeEvent(startTime: dateTime),
                       );
                 },
               ),
             ],
           ),
           const SizedBox(height: 20),
-
           PrimaryText(
             text: "Return Date & Time",
             size: 20,
@@ -74,12 +71,11 @@ class DateTimeSelectionScreen extends StatelessWidget {
                 },
               ),
               TimePicker(
-                title: 'Return Time',
+                title: 'Select Time',
                 onTimeSelected: (TimeOfDay time) {
                   final now = DateTime.now();
                   final dateTime = DateTime(
                       now.year, now.month, now.day, time.hour, time.minute);
-                  // debugPrint(dateTime.toString);
                   context.read<RentalRequestBloc>().add(
                         UpdateReturnTimeEvent(returnTime: dateTime),
                       );
@@ -87,20 +83,7 @@ class DateTimeSelectionScreen extends StatelessWidget {
               ),
             ],
           ),
-
           const SizedBox(height: 40),
-          // Next Button
-          // ElevatedButton(
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         builder: (context) => RentalFormScreen(),
-          //       ),
-          //     );
-          //   },
-          //   child: const Text('Next'),
-          // ),
         ],
       ),
     );

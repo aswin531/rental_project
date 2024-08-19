@@ -24,14 +24,14 @@ class FetchUserRentalRequestsWithCarDetailsEvent extends RentalRequestEvent {
 }
 
 // class UpdateStartDateTimeEvent extends RentalRequestEvent {
-//   final DateTime startDateTime;
-//   UpdateStartDateTimeEvent({required this.startDateTime});
+//   final DateTime pickupDateTime;
+//   UpdateStartDateTimeEvent({required this.pickupDateTime});
 // }
 
 // Event for updating the start date================
 class UpdateStartDateEvent extends RentalRequestEvent {
-  final DateTime startDate;
-  UpdateStartDateEvent({required this.startDate});
+  final DateTime pickupDate;
+  UpdateStartDateEvent({required this.pickupDate});
 }
 
 // Event for updating the start time=================

@@ -61,7 +61,6 @@ class CarDetails extends StatelessWidget {
                           color: Colors.black.withOpacity(0.5),
                           child: Text(
                             rentalRequestWithCarDetails.car.body,
-                            //rentalRequestWithCarDetails.rentalRequest.carId,
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),

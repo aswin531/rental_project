@@ -20,14 +20,14 @@ class RentalForm extends StatelessWidget {
           // buildDateTimePicker(
           //   context,
           //   'Start Date & Time',
-          //   formState.startDate,
-          //   (date) => formState.startDate = date,
+          //   formState.pickupDate,
+          //   (date) => formState.pickupDate = date,
           // ),
           // buildDateTimePicker(
           //   context,
           //   'End Date & Time',
-          //   formState.endDate,
-          //   (date) => formState.endDate = date,
+          //   formState.returnDate,
+          //   (date) => formState.returnDate = date,
           // ),
           // buildRadioButton(
           //   'Pickup',
@@ -51,7 +51,7 @@ class RentalForm extends StatelessWidget {
           // ),
           // if (formState.isDelivery) ...[
           //   buildTextField(
-          //     controller: formState.deliveryTimeController,
+          //     controller: formState.returnTimeController,
           //     labelText: 'Delivery Time',
           //   ),
           //   buildTextField(

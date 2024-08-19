@@ -28,26 +28,30 @@ class BookingButton extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return ElevatedButton(
-          onPressed: state is RentalRequestLoading
-              ? null
-              : () => _showRentalForm(context),
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20))),
-          child: state is RentalRequestLoading
-              ? const CircularProgressIndicator(
-                  color: Colors.white,
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: PrimaryText(
-                    text: 'Book Now',
-                    color: ExternalAppColors.white,
-                    size: 20,
+        return SizedBox(
+          width: double.infinity,
+          height: 65,
+          child: ElevatedButton(
+            onPressed: state is RentalRequestLoading
+                ? null
+                : () => _showRentalForm(context),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20))),
+            child: state is RentalRequestLoading
+                ? const CircularProgressIndicator(
+                    color: Colors.blue,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: PrimaryText(
+                      text: 'Continue',
+                      color: ExternalAppColors.white,
+                      size: 20,
+                    ),
                   ),
-                ),
+          ),
         );
       },
     );

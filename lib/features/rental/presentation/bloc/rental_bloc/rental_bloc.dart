@@ -7,7 +7,7 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_even
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 
 class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
-  DateTime? startDate;
+  DateTime? pickupDate;
   DateTime? returnDate;
   DateTime? startTime;
   DateTime? returnTime;
@@ -77,12 +77,12 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     UpdateStartDateEvent event,
     Emitter<RentalRequestState> emit,
   ) {
-    startDate = event.startDate;
+    pickupDate = event.pickupDate;
     emit(RentalRequestDateTimeState(
-      startDate: startDate,
+      pickupDate: pickupDate,
       startTime: startTime,
       returnDate: returnDate,
-      returnTime: returnTime ,
+      returnTime: returnTime,
     ));
   }
 
@@ -92,7 +92,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   ) {
     startTime = event.startTime;
     emit(RentalRequestDateTimeState(
-      startDate: startDate,
+      pickupDate: pickupDate,
       startTime: startTime,
       returnDate: returnDate,
       returnTime: returnTime,
@@ -105,7 +105,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   ) {
     returnDate = event.returnDate;
     emit(RentalRequestDateTimeState(
-      startDate: startDate,
+      pickupDate: pickupDate,
       startTime: startTime,
       returnDate: returnDate,
       returnTime: returnTime,
@@ -118,7 +118,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   ) {
     returnTime = event.returnTime;
     emit(RentalRequestDateTimeState(
-      startDate: startDate,
+      pickupDate: pickupDate,
       startTime: startTime,
       returnDate: returnDate,
       returnTime: returnTime,

@@ -96,36 +96,41 @@ class _DriverSelectionWidgetState extends State<DriverSelectionWidget> {
         if (!isSelfDriverSelected)
           Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.blue[50],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: RichText(
-                text: TextSpan(
-                  style: DefaultTextStyle.of(context).style,
-                  children: <TextSpan>[
-                    const TextSpan(
-                      text:
-                          'Youve selected an additional driver. You will be charged',
-                      style: TextStyle(color: Colors.black),
+            child: Column(
+              children: [
+                
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        const TextSpan(
+                          text:
+                              'Youve selected an additional driver. You will be charged',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        TextSpan(
+                          text: ' ₹100/hr',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold,
+                              color: ExternalAppColors.blue),
+                        ),
+                        const TextSpan(
+                          text: ' for this service.',
+                        ),
+                      ],
                     ),
-                    TextSpan(
-                      text: ' ₹100/hr',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: ExternalAppColors.blue),
-                    ),
-                    const TextSpan(
-                      text: ' for this service.',
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
       ],
