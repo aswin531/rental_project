@@ -1,4 +1,3 @@
-import 'package:googleapis/authorizedbuyersmarketplace/v1.dart';
 import 'package:rentit/features/rental/data/model/combined.dart';
 import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
 
@@ -32,9 +31,9 @@ class UserRentalRequestsWithCarDetailsLoaded extends RentalRequestState {
 
 class RentalRequestDateTimeState extends RentalRequestState {
   final DateTime? startDate;
-  final TimeOfDay? startTime;
+  final DateTime? startTime;
   final DateTime? returnDate;
-  final TimeOfDay? returnTime;
+  final DateTime? returnTime;
 
   RentalRequestDateTimeState({
     this.startDate,

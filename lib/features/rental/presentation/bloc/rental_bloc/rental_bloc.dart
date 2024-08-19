@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:googleapis/authorizedbuyersmarketplace/v1.dart';
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/rental/domain/usecases/get_user_rental.dart';
 import 'package:rentit/features/rental/domain/usecases/update_request.dart';
@@ -10,8 +9,8 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_stat
 class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   DateTime? startDate;
   DateTime? returnDate;
-  TimeOfDay? startTime;
-  TimeOfDay? returnTime;
+  DateTime? startTime;
+  DateTime? returnTime;
 
   final CreateRentalRequest createRentalRequest;
   final GetUserRentalRequests getUserRentalRequests;
@@ -74,7 +73,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     }
   }
 
-   void _onUpdateStartDate(
+  void _onUpdateStartDate(
     UpdateStartDateEvent event,
     Emitter<RentalRequestState> emit,
   ) {
@@ -83,7 +82,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
       startDate: startDate,
       startTime: startTime,
       returnDate: returnDate,
-      returnTime: returnTime,
+      returnTime: returnTime ,
     ));
   }
 

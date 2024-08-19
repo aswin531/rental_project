@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selectedcar_state.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/rating.dart';
+import 'package:rentit/features/rental/presentation/pages/rental/widgets/date_selection_widget.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/widgets/driver_selection_widget.dart';
 import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
@@ -22,8 +23,8 @@ class BookcarDetailspick extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 4,
-                    blurRadius: 5,
+                    spreadRadius: 2,
+                    blurRadius: 2,
                     offset: const Offset(0, 5),
                   ),
                 ],
@@ -80,6 +81,7 @@ class BookcarDetailspick extends StatelessWidget {
                     height: 20,
                   ),
                   const DriverSelectionWidget(),
+                 const  DateTimeSelectionScreen()
                 ],
               ),
             ),

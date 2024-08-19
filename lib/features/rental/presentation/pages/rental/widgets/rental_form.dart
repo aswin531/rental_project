@@ -17,48 +17,48 @@ class RentalForm extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildDateTimePicker(
-            context,
-            'Start Date & Time',
-            formState.startDate,
-            (date) => formState.startDate = date,
-          ),
-          buildDateTimePicker(
-            context,
-            'End Date & Time',
-            formState.endDate,
-            (date) => formState.endDate = date,
-          ),
-          buildRadioButton(
-            'Pickup',
-            formState.isPickup,
-            (value) => formState.isPickup = value!,
-          ),
-          if (formState.isPickup) ...[
-            buildTextField(
-              controller: formState.pickupTimeController,
-              labelText: 'Pickup Time',
-            ),
-            buildTextField(
-              controller: formState.pickupArrivalController,
-              labelText: 'Arrival',
-            ),
-          ],
-          buildRadioButton(
-            'Delivery',
-            formState.isDelivery,
-            (value) => formState.isDelivery = value!,
-          ),
-          if (formState.isDelivery) ...[
-            buildTextField(
-              controller: formState.deliveryTimeController,
-              labelText: 'Delivery Time',
-            ),
-            buildTextField(
-              controller: formState.deliveryPlaceController,
-              labelText: 'Delivery Place',
-            ),
-          ],
+          // buildDateTimePicker(
+          //   context,
+          //   'Start Date & Time',
+          //   formState.startDate,
+          //   (date) => formState.startDate = date,
+          // ),
+          // buildDateTimePicker(
+          //   context,
+          //   'End Date & Time',
+          //   formState.endDate,
+          //   (date) => formState.endDate = date,
+          // ),
+          // buildRadioButton(
+          //   'Pickup',
+          //   formState.isPickup,
+          //   (value) => formState.isPickup = value!,
+          // ),
+          // if (formState.isPickup) ...[
+          //   buildTextField(
+          //     controller: formState.pickupTimeController,
+          //     labelText: 'Pickup Time',
+          //   ),
+          //   buildTextField(
+          //     controller: formState.pickupArrivalController,
+          //     labelText: 'Arrival',
+          //   ),
+          // ],
+          // buildRadioButton(
+          //   'Delivery',
+          //   formState.isDelivery,
+          //   (value) => formState.isDelivery = value!,
+          // ),
+          // if (formState.isDelivery) ...[
+          //   buildTextField(
+          //     controller: formState.deliveryTimeController,
+          //     labelText: 'Delivery Time',
+          //   ),
+          //   buildTextField(
+          //     controller: formState.deliveryPlaceController,
+          //     labelText: 'Delivery Place',
+          //   ),
+          // ],
           buildTextField(
             controller: formState.nameController,
             labelText: 'Full Name',

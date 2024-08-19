@@ -1,17 +1,17 @@
 // In lib/features/rental/domain/entity/rental_entity.dart
 
 class RentalRequest {
-  final String? id; // Added id field
+  final String? id; 
   final String carId;
   final String userId;
   final DateTime startDate;
-  final DateTime endDate;
-  final bool isPickup;
-  final bool isDelivery;
-  final String? pickupTime;
-  final String? pickupArrival;
-  final String? deliveryTime;
-  final String? deliveryPlace;
+   final DateTime endDate;
+//   final bool? isPickup;
+//   final bool? isDelivery;
+   final DateTime? pickupTime;
+//   final String? pickupArrival;
+   final DateTime? deliveryTime;
+//   final String? deliveryPlace;
   final String name;
   final String phone;
   final String address;
@@ -27,12 +27,12 @@ class RentalRequest {
       required this.userId,
       required this.startDate,
       required this.endDate,
-      required this.isPickup,
-      required this.isDelivery,
-      this.pickupTime,
-      this.pickupArrival,
+      // required this.isPickup,
+      // required this.isDelivery,
+     this.pickupTime,
+      // this.pickupArrival,
       this.deliveryTime,
-      this.deliveryPlace,
+      // this.deliveryPlace,
       required this.name,
       required this.phone,
       required this.address,

@@ -1,4 +1,3 @@
-import 'package:googleapis/authorizedbuyersmarketplace/v1.dart';
 import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
 
 abstract class RentalRequestEvent {}
@@ -37,7 +36,7 @@ class UpdateStartDateEvent extends RentalRequestEvent {
 
 // Event for updating the start time=================
 class UpdateStartTimeEvent extends RentalRequestEvent {
-  final TimeOfDay startTime;
+  final DateTime startTime;
   UpdateStartTimeEvent({required this.startTime});
 }
 
@@ -49,6 +48,7 @@ class UpdateReturnDateEvent extends RentalRequestEvent {
 
 // Event for updating the return time
 class UpdateReturnTimeEvent extends RentalRequestEvent {
-  final TimeOfDay returnTime;
+  final DateTime returnTime;
+
   UpdateReturnTimeEvent({required this.returnTime});
 }
