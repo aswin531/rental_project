@@ -1,20 +1,20 @@
-import 'package:rentit/features/location/domain/entity/location_entity.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:rentit/features/location/domain/repositories/location_repository.dart';
 
 class GetCurrentLocationUseCase {
   final LocationRepository repository;
   GetCurrentLocationUseCase({required this.repository});
 
-  Future<LocationEntity> call() async {
+  Future<Position> call() async {
     return await repository.getCurrentLocation();
   }
 }
 
-class GetSearchLocation {
+class GetSearchLocationUseCase {
   final LocationRepository repository;
-  GetSearchLocation({required this.repository});
+  GetSearchLocationUseCase({required this.repository});
 
-  Future<LocationEntity> call(String query) async {
+  Future<Map<String, dynamic>> call(String query) async {
     return await repository.getSearchLocation(query);
   }
 }

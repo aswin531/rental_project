@@ -8,11 +8,11 @@ import 'package:rentit/features/home/presentation/bloc/car/carstates.dart';
 class CarBloc extends Bloc<CarEvent, CarState> {
   final GetCarsStreamUseCase getCarsStreamUseCase;
 
+//==========Constructor DI===========================
   CarBloc({required this.getCarsStreamUseCase}) : super(CarInitial()) {
+//============EVENT HANDER=========================
     on<FetchCars>(onFetchCars);
     on<RefreshCars>(onRefreshCars);
-    //on<CarSelected>(onFilterCars);
-    // on<FetchBrands>(onFetchBrands);
   }
 
   Future<void> onFetchCars(FetchCars event, Emitter<CarState> emit) async {
@@ -30,10 +30,6 @@ class CarBloc extends Bloc<CarEvent, CarState> {
     }
   }
 
-  /*on<CarSelected>(
-      (event, emit) => emit(CarSelectedState(event.car)),
-    );*/
-
   Future<void> onRefreshCars(RefreshCars event, Emitter<CarState> emit) async {
     emit(CarLoading());
     try {
@@ -48,35 +44,4 @@ class CarBloc extends Bloc<CarEvent, CarState> {
       emit(CarError(e.toString()));
     }
   }
-
-  // Future<void> onFilterCars(FilterCars event, Emitter<CarState> emit) async {
-  //   emit(BrandLoading());
-  //   try {
-  //     final cars = await getcarUsecase.execute();
-  //     final filteredBrands =
-  //         cars.where((car) => car.make == event.brand).toList();
-  //     emit(CarLoaded(filteredBrands));
-  //   } catch (e) {
-  //     debugPrint("Error in onFilterCars: $e");
-  //     emit(CarError(e.toString()));
-  //   }
-  // }
-
-  // Future<void> onFetchBrands(FetchBrands event, Emitter<CarState> emit) async {
-  //   debugPrint("onFetchBrands called");
-  //  // emit(CarLoading());
-  //   try {
-  //     final cars = await getcarUsecase.execute();
-  //     final brands = cars.map((car) => car.make).toSet().toList();
-  //     debugPrint("Fetched brands: $brands");
-  //     if (brands.isNotEmpty) {
-  //       emit(BrandsLoaded(brands));
-  //     } else {
-  //       emit(const CarError('No brands available'));
-  //     }
-  //   } catch (e) {
-  //     debugPrint("Error fetching brands: $e");
-  //     emit(CarError(e.toString()));
-  //   }
-  // }
 }

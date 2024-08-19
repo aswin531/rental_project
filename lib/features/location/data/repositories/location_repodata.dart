@@ -1,9 +1,9 @@
 import 'package:rentit/features/location/data/datasources/location_datasource.dart';
-import 'package:rentit/features/location/data/models/location_model.dart';
+import 'package:geolocator/geolocator.dart';
 
 abstract class LocationRepository {
-  Future<LocationModel> getCurrentLocation();
-  Future<LocationModel> getSearchtLocation(String query);
+  Future<Position> getCurrentLocation();
+  Future<Map<String, dynamic>> getSearchtLocation(String query);
 }
 
 class LocationRepositoryDataImpl implements LocationRepository {
@@ -12,12 +12,12 @@ class LocationRepositoryDataImpl implements LocationRepository {
   LocationRepositoryDataImpl({required this.datasource});
 
   @override
-  Future<LocationModel> getCurrentLocation() async {
+  Future<Position> getCurrentLocation() async {
     return await datasource.getCurrentLocation();
   }
 
   @override
-  Future<LocationModel> getSearchtLocation(String query) async {
+  Future<Map<String, dynamic>> getSearchtLocation(String query) async {
     return await datasource.getSearchtLocation(query);
   }
 }

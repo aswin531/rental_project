@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -100,28 +99,28 @@ class AccountScreenWidget extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    const AndroidNotificationDetails
-                        androidPlatformChannelSpecifics =
-                        AndroidNotificationDetails(
-                      'your channel id',
-                      'your channel name',
-                      importance: Importance.max,
-                      priority: Priority.high,
-                    );
-                    const NotificationDetails platformChannelSpecifics =
-                        NotificationDetails(
-                            android: androidPlatformChannelSpecifics);
-                    await FlutterLocalNotificationsPlugin().show(
-                      0,
-                      'Test Notification',
-                      'This is a test notification',
-                      platformChannelSpecifics,
-                    );
-                  },
-                  child: Text('Send Test Notification'),
-                ),
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     const AndroidNotificationDetails
+                //         androidPlatformChannelSpecifics =
+                //         AndroidNotificationDetails(
+                //       'your channel id',
+                //       'your channel name',
+                //       importance: Importance.max,
+                //       priority: Priority.high,
+                //     );
+                //     const NotificationDetails platformChannelSpecifics =
+                //         NotificationDetails(
+                //             android: androidPlatformChannelSpecifics);
+                //     await FlutterLocalNotificationsPlugin().show(
+                //       0,
+                //       'Test Notification',
+                //       'This is a test notification',
+                //       platformChannelSpecifics,
+                //     );
+                //   },
+                //   child: Text('Send Test Notification'),
+                // ),
                 SizedBox(height: 30.h),
                 const LogoutButtonWidget()
               ],

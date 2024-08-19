@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:rentit/features/home/domain/entity/brand_entity.dart';
 
 class BrandModel {
