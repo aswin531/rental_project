@@ -6,14 +6,14 @@ import 'package:rentit/features/location/presentation/bloc/location_state.dart';
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final GetCurrentLocationUseCase getCurrentLocationUseCase;
-  final GetSearchLocationUseCase searchLocationUseCase;
+  final GetSearchLocationUseCase getSearchLocationUseCase;
 
   LocationBloc(
       {required this.getCurrentLocationUseCase,
-      required this.searchLocationUseCase})
+      required this.getSearchLocationUseCase})
       : super(LocationInitial()) {
     on<GetCurrentLocationEvent>(onGetCurrentLocation);
-    on<SearchLocationEvent>(onGetsearchLocation);
+    on<SearchLocationEvent>(onGetSearchLocation);
   }
 
   Future<void> onGetCurrentLocation(
@@ -28,11 +28,11 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     }
   }
 
-  Future<void> onGetsearchLocation(
+  Future<void> onGetSearchLocation(
       SearchLocationEvent event, Emitter<LocationState> emit) async {
     emit(LocationLoading());
     try {
-      final searchResult = await searchLocationUseCase.call(event.query);
+      final searchResult = await getSearchLocationUseCase.call(event.query);
       emit(SearchLocationLoaded(searchResult));
     } catch (e) {
       debugPrint("Error in onGetsearchLocation: $e");

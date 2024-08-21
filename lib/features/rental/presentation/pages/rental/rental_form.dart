@@ -40,7 +40,7 @@ class RentalFormWidget extends StatelessWidget {
                 side: WidgetStateProperty.all(
                     BorderSide(color: ExternalAppColors.blue)),
                 foregroundColor:
-                    WidgetStateProperty.all<Color>(Colors.blue), // Text color
+                    WidgetStateProperty.all<Color>(Colors.blue), 
                 
                 padding: WidgetStateProperty.all<EdgeInsets>(
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -50,7 +50,7 @@ class RentalFormWidget extends StatelessWidget {
                 ), 
                 shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0), // Rounded corners
+                    borderRadius: BorderRadius.circular(5.0), 
                   ),
                 ),
               ),
@@ -96,8 +96,8 @@ class RentalFormWidget extends StatelessWidget {
           userId: user!.uid,
           pickupDate: rentalRequestBloc.pickupDate!,
           returnDate: rentalRequestBloc.returnDate!,
-          pickupTime: rentalRequestBloc.startTime,
-          returnTime: rentalRequestBloc.returnTime,
+          pickupTime: rentalRequestBloc.startTime!,
+          returnTime: rentalRequestBloc.returnTime!,
           name: formState.nameController.text,
           phone: formState.phoneController.text,
           email: formState.emailController.text,

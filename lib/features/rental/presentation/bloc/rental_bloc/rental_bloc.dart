@@ -54,6 +54,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     emit(RentalRequestLoading());
     try {
       final requestsWithCarDetails = await getUserRentalRequests(event.userId);
+      
       emit(UserRentalRequestsWithCarDetailsLoaded(requestsWithCarDetails));
     } catch (e) {
       emit(RentalRequestError(e.toString()));

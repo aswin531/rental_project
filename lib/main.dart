@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/core/constants/screen_util_setup.dart';
+import 'package:rentit/features/location/data/repositories/location_repodata.dart';
+import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
+import 'package:rentit/utils/screen_util_setup.dart';
 import 'package:rentit/core/di/dependency_injection.dart';
 import 'package:rentit/core/router/approutes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,9 +22,6 @@ import 'package:rentit/features/home/domain/usecases/getcar_usecase.dart';
 import 'package:rentit/features/home/presentation/bloc/brand/brand_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
-import 'package:rentit/features/location/domain/repositories/location_repository.dart';
-import 'package:rentit/features/location/domain/usecases/location_usecases.dart';
-import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rentit/features/rental/data/datasource/rental_datasource.dart';
 import 'package:rentit/features/rental/data/repository/rental_repo_impl.dart';
 import 'package:rentit/features/rental/domain/repository/rental_repo.dart';
@@ -38,11 +37,13 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   // Initialize dependencies
   await init();
   runApp(MultiRepositoryProvider(
       providers: [
+         RepositoryProvider<LocationRepository>(
+          create: (_) => sl<LocationRepository>(),
+        ),
         RepositoryProvider<AuthRepository>(
           create: (_) => sl<AuthRepository>(),
         ),
@@ -58,6 +59,9 @@ Future<void> main() async {
         ),
       ],
       child: MultiBlocProvider(providers: [
+        BlocProvider<LocationBloc>(
+          create: (context) => sl<LocationBloc>(),
+        ),
         BlocProvider<AuthBloc>(
           create: (_) => sl<AuthBloc>()..add(CheckStatusEvent()),
         ),
@@ -77,12 +81,9 @@ Future<void> main() async {
         BlocProvider(create: (context) => NavigationBloc()),
         BlocProvider(create: (context) => TabBloc()),
         BlocProvider(create: (context) => SelectedCarBloc()),
-        BlocProvider(
-            create: (context) => LocationBloc(
-                getCurrentLocationUseCase: GetCurrentLocationUseCase(
-                    repository: context.read<LocationRepository>()),
-                searchLocationUseCase: GetSearchLocationUseCase(
-                    repository: context.read<LocationRepository>()))),
+        BlocProvider<LocationBloc>(
+          create: (_) => sl<LocationBloc>(),
+        ),
         BlocProvider(
             create: (context) => BrandsBloc(
                 getBrandUsecase: GetBrandUsecase(

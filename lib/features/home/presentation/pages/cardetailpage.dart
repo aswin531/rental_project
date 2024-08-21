@@ -69,7 +69,6 @@ class CarDetailPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView(
-                    //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
                         child: Padding(
@@ -191,24 +190,3 @@ class CarDetailPage extends StatelessWidget {
     );
   }
 }
-
-/*class BookingButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        final state = context.read<SelectedCarBloc>().state;
-        if (state is CarSelected) {
-          final car = state.car;
-          // Use car data to start booking process
-          startBookingProcess(context, car);
-        }
-      },
-      child: Text('Book Now'),
-    );
-  }
-
-  void startBookingProcess(BuildContext context, CarVehicleEntity car) {
-    // Implement booking logic
-  }
-}*/

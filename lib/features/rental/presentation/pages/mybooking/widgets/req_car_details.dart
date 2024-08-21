@@ -23,6 +23,7 @@ class CarDetails extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else if (state is UserRentalRequestsWithCarDetailsLoaded) {
           final rentalRequestWithCarDetails = state.requestsWithCarDetails.last;
+          debugPrint(rentalRequestWithCarDetails.toString());
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

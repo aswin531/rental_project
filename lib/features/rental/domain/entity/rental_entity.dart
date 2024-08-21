@@ -4,8 +4,8 @@ class RentalRequest {
   final String userId;
   final DateTime pickupDate;
   final DateTime returnDate;
-  final DateTime? pickupTime;
-  final DateTime? returnTime;
+  final DateTime pickupTime;
+  final DateTime returnTime;
   final String name;
   final String phone;
   final String address;
@@ -21,8 +21,8 @@ class RentalRequest {
       required this.userId,
       required this.pickupDate,
       required this.returnDate,
-      this.pickupTime,
-      this.returnTime,
+      required this.pickupTime,
+      required this.returnTime,
       required this.name,
       required this.phone,
       required this.address,

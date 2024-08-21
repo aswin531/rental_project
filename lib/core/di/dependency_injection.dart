@@ -7,36 +7,37 @@ import 'package:rentit/features/authentication/data/repositories/auth_repo_imple
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/authentication/domain/usecases/auth_use_case.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:rentit/features/location/data/datasources/location_datasource.dart';
+import 'package:rentit/features/location/data/repositories/location_repodata.dart';
+import 'package:rentit/features/location/domain/usecases/location_usecases.dart';
+import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  //SharedPreferences
+  //SharedPreferences============================================
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
-// FirebaseAuth
+// FirebaseAuth===========================================
   final firebaseAuth = FirebaseAuth.instance;
   sl.registerLazySingleton(() => firebaseAuth);
-// GoogleSignIn
+// GoogleSignIn===========================================
   final googleSignIn = GoogleSignIn();
   sl.registerLazySingleton(() => googleSignIn);
-
-  // DataSources
+  // DataSources===========================================
   sl.registerLazySingleton<LocalStorageDatasource>(
     () => SharedPreferencesDataSource(sl()),
   );
-
   sl.registerLazySingleton<FirebaseDataSource>(
     () => FirebaseDataSource(
         firebaseAuth: sl<FirebaseAuth>(), googleSignIn: sl<GoogleSignIn>()),
   );
-
-// Repositories
+// Repositories===========================================================================================
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
-      firebaseDataSource: sl<FirebaseDataSource>(), localStorageDatasource: sl<LocalStorageDatasource>()));
-
-//Usecases
+      firebaseDataSource: sl<FirebaseDataSource>(),
+      localStorageDatasource: sl<LocalStorageDatasource>()));
+//Usecases======================================================================
   sl.registerLazySingleton(() => SignInWithGoogle(repositrory: sl()));
   sl.registerLazySingleton(() => SignInWithEmailAndPassword(repository: sl()));
   sl.registerLazySingleton(() => SignUpWithEmailAndPassword(repository: sl()));
@@ -48,7 +49,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetAuthToken(repository: sl()));
   sl.registerLazySingleton(() => ClearAuthToken(repository: sl()));
 
-//BLoC
+//BLoC==================================
   sl.registerFactory(() => AuthBloc(
         signInWithGoogle: sl(),
         signInWithEmailAndPassword: sl(),
@@ -60,6 +61,19 @@ Future<void> init() async {
         saveAuthToken: sl(),
         getAuthToken: sl(),
         clearAuthToken: sl(),
+      ));
+
+//LOCATION================================================
+  sl.registerLazySingleton<LocationDatasource>(() => LocationDataSourceImpl());
+  sl.registerLazySingleton<LocationRepository>(
+      () => LocationRepositoryDataImpl(datasource: sl<LocationDatasource>()));
+
+  sl.registerLazySingleton(() => GetCurrentLocationUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetSearchLocationUseCase(repository: sl()));
+
+  sl.registerFactory(() => LocationBloc(
+        getCurrentLocationUseCase: sl(),
+        getSearchLocationUseCase: sl(),
       ));
 }
 
