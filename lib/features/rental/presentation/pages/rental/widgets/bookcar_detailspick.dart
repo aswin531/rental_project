@@ -74,7 +74,9 @@ class BookcarDetailspick extends StatelessWidget {
                     height: 20,
                   ),
                   const DriverSelectionWidget(),
+                  const DateTimeSelectionScreen(),
                   const DateTimeSelectionScreen()
+                  
                 ],
               ),
             ),

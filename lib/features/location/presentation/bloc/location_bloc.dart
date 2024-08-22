@@ -1,42 +1,38 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rentit/features/location/domain/usecases/location_usecases.dart';
 import 'package:rentit/features/location/presentation/bloc/location_event.dart';
 import 'package:rentit/features/location/presentation/bloc/location_state.dart';
 
-class LocationBloc extends Bloc<LocationEvent, LocationState> {
-  final GetCurrentLocationUseCase getCurrentLocationUseCase;
-  final GetSearchLocationUseCase getSearchLocationUseCase;
+class LocationMapBloc extends Bloc<LocationEvent, LocationMapState> {
+  final GetCurrentLocationCameraPositionUseCase
+      _getCurrentLocationCameraPositionUseCase;
 
-  LocationBloc(
-      {required this.getCurrentLocationUseCase,
-      required this.getSearchLocationUseCase})
-      : super(LocationInitial()) {
-    on<GetCurrentLocationEvent>(onGetCurrentLocation);
-    on<SearchLocationEvent>(onGetSearchLocation);
+  LocationMapBloc(this._getCurrentLocationCameraPositionUseCase)
+      : super(LocationMapState(
+            cameraPosition:
+                const CameraPosition(target: LatLng(0, 0), zoom: 14))) {
+    on<InitializeMap>(_onInitializeMap);
+    on<MoveToCurrentLocation>(_onMoveToCurrentLocation);
   }
 
-  Future<void> onGetCurrentLocation(
-      GetCurrentLocationEvent event, Emitter<LocationState> emit) async {
-    emit(LocationLoading());
-    try {
-      final position = await getCurrentLocationUseCase.call();
-      emit(LocationLoaded(position));
-    } catch (e) {
-      debugPrint("Error in onGetCurrentLocation: $e");
-      emit(LocationError(message: e.toString()));
-    }
+  Future<void> _onInitializeMap(
+      InitializeMap event, Emitter<LocationMapState> emit) async {
+    emit(state.copyWith(mapController: event.googleMapController));
+    add(MoveToCurrentLocation());
   }
 
-  Future<void> onGetSearchLocation(
-      SearchLocationEvent event, Emitter<LocationState> emit) async {
-    emit(LocationLoading());
+  Future<void> _onMoveToCurrentLocation(
+      MoveToCurrentLocation event, Emitter<LocationMapState> emit) async {
     try {
-      final searchResult = await getSearchLocationUseCase.call(event.query);
-      emit(SearchLocationLoaded(searchResult));
+      final cameraPosition =
+          await _getCurrentLocationCameraPositionUseCase.call();
+      emit(state.copyWith(cameraPosition: cameraPosition));
+      await state.mapController
+          ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     } catch (e) {
-      debugPrint("Error in onGetsearchLocation: $e");
-      emit(LocationError(message: e.toString()));
+      debugPrint(e.toString());
     }
   }
 }

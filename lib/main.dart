@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/location/data/repositories/location_repodata.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rentit/utils/screen_util_setup.dart';
 import 'package:rentit/core/di/dependency_injection.dart';
@@ -41,9 +40,6 @@ Future<void> main() async {
   await init();
   runApp(MultiRepositoryProvider(
       providers: [
-         RepositoryProvider<LocationRepository>(
-          create: (_) => sl<LocationRepository>(),
-        ),
         RepositoryProvider<AuthRepository>(
           create: (_) => sl<AuthRepository>(),
         ),
@@ -59,9 +55,6 @@ Future<void> main() async {
         ),
       ],
       child: MultiBlocProvider(providers: [
-        BlocProvider<LocationBloc>(
-          create: (context) => sl<LocationBloc>(),
-        ),
         BlocProvider<AuthBloc>(
           create: (_) => sl<AuthBloc>()..add(CheckStatusEvent()),
         ),
@@ -81,15 +74,13 @@ Future<void> main() async {
         BlocProvider(create: (context) => NavigationBloc()),
         BlocProvider(create: (context) => TabBloc()),
         BlocProvider(create: (context) => SelectedCarBloc()),
-        BlocProvider<LocationBloc>(
-          create: (_) => sl<LocationBloc>(),
-        ),
         BlocProvider(
             create: (context) => BrandsBloc(
                 getBrandUsecase: GetBrandUsecase(
                     carRepository: context.read<CarRepository>()),
                 getCarsByBrandUsecase: GetCarsByBrandUsecase(
                     carRepository: context.read<CarRepository>()))),
+        BlocProvider(create: (_) => sl<LocationMapBloc>()),
       ], child: const MyApp())));
 }
 
@@ -115,6 +106,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-//context.read ==>> _.read<CarRepository>() is used to retrieve an instance of CarRepository from the dependency injection setup

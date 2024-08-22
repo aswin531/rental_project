@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
 
 abstract class LocationDatasource {
-  Future<Position> getCurrentLocation();
-  Future<Map<String, dynamic>>  getSearchtLocation(String query);
+  Future<Position> getCurrentLocation({LocationAccuracy accuracy});
+  Future<Map<String, dynamic>> getSearchtLocation(String query);
 }
 
 class LocationDataSourceImpl implements LocationDatasource {
@@ -11,7 +11,8 @@ class LocationDataSourceImpl implements LocationDatasource {
   final String googleApiKey = "googleAPIKey";
   @override
   //===Position class designed to hold =>latitude,longitude,timestamp,accuracy,altitude,speed,heading
-  Future<Position> getCurrentLocation() async {
+  Future<Position> getCurrentLocation(
+      {LocationAccuracy accuracy = LocationAccuracy.bestForNavigation}) async {
     bool serviceEnabled;
     LocationPermission permission;
 //=========  Checking location services are enabled===================
@@ -32,7 +33,7 @@ class LocationDataSourceImpl implements LocationDatasource {
     }
 
 //============= we have the permissions=========================
-    return await Geolocator.getCurrentPosition();
+    return await Geolocator.getCurrentPosition(desiredAccuracy: accuracy);
   }
 
   @override

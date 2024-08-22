@@ -9,6 +9,7 @@ import 'package:rentit/features/authentication/domain/usecases/auth_use_case.dar
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/location/data/datasources/location_datasource.dart';
 import 'package:rentit/features/location/data/repositories/location_repodata.dart';
+import 'package:rentit/features/location/domain/repositories/location_repository.dart';
 import 'package:rentit/features/location/domain/usecases/location_usecases.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,31 +65,20 @@ Future<void> init() async {
       ));
 
 //LOCATION================================================
+
+// // Data source=========================================
   sl.registerLazySingleton<LocationDatasource>(() => LocationDataSourceImpl());
+
+// Repository============================================
   sl.registerLazySingleton<LocationRepository>(
-      () => LocationRepositoryDataImpl(datasource: sl<LocationDatasource>()));
+      () => LocationRepositoryImpl(sl()));
 
-  sl.registerLazySingleton(() => GetCurrentLocationUseCase(repository: sl()));
-  sl.registerLazySingleton(() => GetSearchLocationUseCase(repository: sl()));
+// Usecase===============================================      
+  sl.registerLazySingleton(() => GetCurrentLocationCameraPositionUseCase(sl()));
 
-  sl.registerFactory(() => LocationBloc(
-        getCurrentLocationUseCase: sl(),
-        getSearchLocationUseCase: sl(),
-      ));
+// BLoC==================================================    
+  sl.registerFactory(() => LocationMapBloc(sl()));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Lazy singleton means the instance 

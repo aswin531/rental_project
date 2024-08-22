@@ -1,21 +1,23 @@
-import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class LocationState {}
 
 class LocationInitial extends LocationState {}
 
-class LocationLoading extends LocationState {}
+class LocationMapState extends LocationState {
+  final CameraPosition cameraPosition; //====current camera position on the map
+  final GoogleMapController? mapController; //===TO Interact with MAP
 
-class LocationLoaded extends LocationState {
-  final Position location;
-
-  LocationLoaded(this.location);
-}
-
-class SearchLocationLoaded extends LocationState {
-  final Map<String, dynamic> searchResult;
-
-  SearchLocationLoaded(this.searchResult);
+  LocationMapState({required this.cameraPosition, this.mapController});
+//object is created whenever the state changes
+  LocationMapState copyWith({
+    CameraPosition? cameraPosition,
+    GoogleMapController? mapController,
+  }) {
+    return LocationMapState(
+        cameraPosition: cameraPosition ?? this.cameraPosition,
+        mapController: mapController ?? this.mapController);
+  }
 }
 
 class LocationError extends LocationState {

@@ -1,4 +1,6 @@
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:rentit/features/location/domain/entity/location_entity.dart';
 import 'package:rentit/features/location/domain/repositories/location_repository.dart';
 
 class GetCurrentLocationUseCase {
@@ -10,11 +12,20 @@ class GetCurrentLocationUseCase {
   }
 }
 
-class GetSearchLocationUseCase {
+class GetLocationFromPlaceIdUseCase {
   final LocationRepository repository;
-  GetSearchLocationUseCase({required this.repository});
+  GetLocationFromPlaceIdUseCase({required this.repository});
 
-  Future<Map<String, dynamic>> call(String query) async {
-    return await repository.getSearchLocation(query);
+  Future<LocationEntity> call(String placeId) async {
+    return repository.getLocationFromPlaceId(placeId);
+  }
+}
+
+class GetCurrentLocationCameraPositionUseCase {
+  final LocationRepository locationRepository;
+  GetCurrentLocationCameraPositionUseCase(this.locationRepository);
+
+  Future<CameraPosition> call({double zoom = 14.0}) async {
+    return await locationRepository.getCameraPositionFromCurrentLocation(zoom: zoom);
   }
 }

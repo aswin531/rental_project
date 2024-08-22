@@ -31,7 +31,6 @@ PersistentTabView buildPersistentTabView(BuildContext context,
         curve: Curves.ease,
       ),
       screenTransitionAnimation: ScreenTransitionAnimationSettings(
-        // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         duration: Duration(milliseconds: 200),
         screenTransitionAnimationType: ScreenTransitionAnimationType.slide,

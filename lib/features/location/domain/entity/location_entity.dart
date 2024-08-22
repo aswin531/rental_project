@@ -1,7 +1,8 @@
+import 'package:googleapis/airquality/v1.dart';
+
 class LocationEntity {
-  final double latitude;
-  final double longitude;
+  final LatLng coordinates;
   final String address;
 
-  LocationEntity({required this.latitude, required this.longitude, required this.address});
+  LocationEntity({required this.coordinates, required this.address});
 }
