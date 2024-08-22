@@ -1,23 +1,41 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
+import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class RequestStatusCard extends StatefulWidget {
+  const RequestStatusCard({super.key});
+
   @override
   _RequestStatusCardState createState() => _RequestStatusCardState();
 }
 
-class _RequestStatusCardState extends State<RequestStatusCard> {
+class _RequestStatusCardState extends State<RequestStatusCard>
+    with SingleTickerProviderStateMixin {
   bool _isVisible = true;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
+
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(begin: 0.0, end: 20.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
     final user = FirebaseAuth.instance.currentUser!.uid;
     context
         .read<RentalRequestBloc>()
@@ -25,11 +43,21 @@ class _RequestStatusCardState extends State<RequestStatusCard> {
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ExternalAppColors.bg,
+      statusBarIconBrightness: Brightness.light,
+    ));
+
     return _isVisible
         ? BlocBuilder<RentalRequestBloc, RentalRequestState>(
             builder: (BuildContext context, RentalRequestState state) {
-              debugPrint('Current state: $state');
               if (state is UserRentalRequestsWithCarDetailsLoaded) {
                 final rentalRequestWithCarDetails =
                     state.requestsWithCarDetails.last;
@@ -40,74 +68,100 @@ class _RequestStatusCardState extends State<RequestStatusCard> {
                     rentalRequestWithCarDetails.rentalRequest.status ==
                         RentalRequestStatus.rejected;
 
-                debugPrint('Is accepted: $isAccepted');
-                debugPrint(
-                    'Request details: ${rentalRequestWithCarDetails.toString()}');
-
                 return Stack(
                   children: [
                     ModalBarrier(
-                        color: Colors.black.withOpacity(0.5),
-                        dismissible: false),
-                    Positioned(
-                      top: 50,
-                      right: 20,
-                      left: 20,
-                      child: Container(
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          elevation: 5,
-                          color: isAccepted
-                              ? Colors.green[100]
-                              : isRejected
-                                  ? Colors.red[100]
-                                  : Colors.grey[200],
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Lottie.asset(
-                                  isAccepted
-                                      ? 'assets/animation/success.json'
-                                      : isRejected
-                                          ? 'assets/animation/error.json'
-                                          : 'assets/animation/pending.json',
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
+                      color: Colors.black.withOpacity(0.5),
+                      dismissible: false,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Center(
+                        child: Container(
+                          width: double.infinity,
+                          height: 550,
+                          decoration: BoxDecoration(
+                            color: isAccepted
+                                ? const Color.fromARGB(255, 80, 123, 82)
+                                    .withOpacity(0.8)
+                                : const Color.fromARGB(255, 213, 130, 124),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SlideTransition(
+                                position: _animation.drive(
+                                  Tween<Offset>(
+                                      begin: const Offset(0, 0.02),
+                                      end: const Offset(0, 0)),
                                 ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Text(
+                                child: SizedBox(
+                                  width: 200,
+                                  height: 40,
+                                  child: Lottie.asset(
                                     isAccepted
-                                        ? 'Your request has been accepted!'
+                                        ? 'assets/animation/success.json'
                                         : isRejected
-                                            ? 'Your request has been rejected.'
-                                            : 'Your request is pending.',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: isAccepted
-                                          ? Colors.green[800]
-                                          : isRejected
-                                              ? Colors.red[800]
-                                              : Colors.grey[800],
-                                    ),
+                                            ? 'assets/animation/ani2.json'
+                                            : 'assets/animation/404.json',
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                GestureDetector(
-                                  onTap: () {
+                              ),
+                              const SizedBox(height: 100),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 50),
+                                child: Text(
+                                  isAccepted ? 'Yayy!!' : 'Oops!!',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 46,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Text(
+                                  isAccepted
+                                      ? 'Your request is accepted!\nContinue to go to the next step.'
+                                      : 'Your request was rejected.\nContinue.',
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              SizedBox(
+                                height: 50,
+                                width: 200,
+                                child: ElevatedButton(
+                                  onPressed: () {
                                     setState(() {
                                       _isVisible = false;
                                     });
                                   },
-                                  child: Icon(Icons.close,
-                                      color: Colors.grey[800]),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blue,
+                                    foregroundColor: isAccepted
+                                        ? Colors.white
+                                        : Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                  child: PrimaryText(
+                                    text: isAccepted ? 'Continue' : 'Continue',
+                                    size: 20,
+                                  ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
                           ),
                         ),
                       ),
@@ -115,17 +169,16 @@ class _RequestStatusCardState extends State<RequestStatusCard> {
                   ],
                 );
               } else if (state is RentalRequestLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state is RentalRequestError) {
-                debugPrint(state.message);
                 return Center(
                     child: Text(
-                        'Failed to load rental requests.: ${state.message}'));
+                        'Failed to load rental requests: ${state.message}'));
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             },
           )
-        : SizedBox.shrink();
+        : const SizedBox.shrink();
   }
 }
