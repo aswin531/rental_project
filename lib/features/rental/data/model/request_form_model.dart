@@ -19,6 +19,8 @@ class RentalRequestModel extends RentalRequest {
     required super.createdAt,
     super.comments,
     required super.status,
+    super.pickUpLocation,
+    super.dropOffLocation,
     //*************** */
   });
 
@@ -67,7 +69,11 @@ class RentalRequestModel extends RentalRequest {
       'status': status
           .toString()
           .split('.')
-          .last, //splitting status.toString() => RentalRequestStatus.<status>
+          .last,           //splitting status.toString() => RentalRequestStatus.<status>
+      'pickUpLocation': pickUpLocation,
+      'dropOffLocation': dropOffLocation,   
+
+          
     };
   }
 
@@ -89,6 +95,8 @@ class RentalRequestModel extends RentalRequest {
       comments: entity.comments,
       createdAt: entity.createdAt,
       status: entity.status,
+      pickUpLocation: entity.pickUpLocation,
+      dropOffLocation: entity.dropOffLocation
     );
   }
 }

@@ -6,6 +6,8 @@ Widget buildTextField({
   String? Function(String?)? validator,
   TextInputType? keyboardType,
   int maxLines = 1,
+   ValueChanged<String>? onChanged,
+   
 }) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0),

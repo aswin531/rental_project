@@ -11,12 +11,13 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   DateTime? returnDate;
   DateTime? startTime;
   DateTime? returnTime;
+  String? pickupLocation;
+  String? dropOffLocation;
 
   final CreateRentalRequest createRentalRequest;
   final GetUserRentalRequests getUserRentalRequests;
   final UpdateRentalRequestStatus updateRentalRequestStatus;
   final AuthRepository? authRepository;
-  //final GetCarDetails getCarDetails;
 
   RentalRequestBloc(
       {required this.createRentalRequest,
@@ -32,6 +33,8 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     on<UpdateStartTimeEvent>(_onUpdateStartTime);
     on<UpdateReturnDateEvent>(_onUpdateReturnDate);
     on<UpdateReturnTimeEvent>(_onUpdateReturnTime);
+    on<UpdatePickupLocationEvent>(_onUpdatePickupLocation);
+  on<UpdateDropOffLocationEvent>(_onUpdateDropOffLocation);
   }
 
   Future<void> _onCreateRentalRequest(
@@ -54,7 +57,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     emit(RentalRequestLoading());
     try {
       final requestsWithCarDetails = await getUserRentalRequests(event.userId);
-      
+
       emit(UserRentalRequestsWithCarDetailsLoaded(requestsWithCarDetails));
     } catch (e) {
       emit(RentalRequestError(e.toString()));
@@ -125,4 +128,34 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
       returnTime: returnTime,
     ));
   }
+
+  void _onUpdatePickupLocation(
+  UpdatePickupLocationEvent event,
+  Emitter<RentalRequestState> emit,
+) {
+  pickupLocation = event.pickupLocation;
+  emit(RentalRequestDateTimeState(
+    pickupDate: pickupDate,
+    startTime: startTime,
+    returnDate: returnDate,
+    returnTime: returnTime,
+    pickupLocation: pickupLocation,
+    dropOffLocation: dropOffLocation,
+  ));
+}
+
+void _onUpdateDropOffLocation(
+  UpdateDropOffLocationEvent event,
+  Emitter<RentalRequestState> emit,
+) {
+  dropOffLocation = event.dropOffLocation;
+  emit(RentalRequestDateTimeState(
+    pickupDate: pickupDate,
+    startTime: startTime,
+    returnDate: returnDate,
+    returnTime: returnTime,
+    pickupLocation: pickupLocation,
+    dropOffLocation: dropOffLocation,
+  ));
+}
 }

@@ -98,11 +98,13 @@ class _DriverSelectionWidgetState extends State<DriverSelectionWidget> {
             padding: const EdgeInsets.only(top: 20),
             child: Column(
               children: [
-                
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
+                    border: BorderDirectional(
+                        start: BorderSide(
+                            color: ExternalAppColors.blue, width: 8)),
                     color: Colors.blue[50],
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -112,7 +114,7 @@ class _DriverSelectionWidgetState extends State<DriverSelectionWidget> {
                       children: <TextSpan>[
                         const TextSpan(
                           text:
-                              'Youve selected an additional driver. You will be charged',
+                              "You've selected an additional driver. You will be charged extra",
                           style: TextStyle(color: Colors.black),
                         ),
                         TextSpan(

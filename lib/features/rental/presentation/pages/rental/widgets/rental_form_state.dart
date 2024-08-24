@@ -8,6 +8,9 @@ class RentalFormState {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController licenseController = TextEditingController();
   final TextEditingController commentController = TextEditingController();
+  final TextEditingController pickUpLocationController =
+      TextEditingController();
+  final TextEditingController dropOffController = TextEditingController();
 
   void dispose() {
     nameController.dispose();
@@ -16,5 +19,7 @@ class RentalFormState {
     addressController.dispose();
     licenseController.dispose();
     commentController.dispose();
+    pickUpLocationController.dispose();
+    dropOffController.dispose();
   }
 }

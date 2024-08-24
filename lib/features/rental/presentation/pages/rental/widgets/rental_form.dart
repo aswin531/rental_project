@@ -17,10 +17,10 @@ class RentalForm extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
           buildTextField(
+            keyboardType: TextInputType.streetAddress,
+            labelText: 'Name',
             controller: formState.nameController,
-            labelText: 'Full Name',
             validator: (value) => Validator.requiredValidator(value),
           ),
           Padding(

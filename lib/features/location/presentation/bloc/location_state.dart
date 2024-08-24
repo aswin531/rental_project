@@ -1,27 +1,25 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-abstract class LocationState {}
+class LocationMapState {
+  final CameraPosition cameraPosition;
+  final GoogleMapController? mapController;
+  final String? currentAddress;
 
-class LocationInitial extends LocationState {}
+  LocationMapState({
+    required this.cameraPosition,
+    this.mapController,
+    this.currentAddress,
+  });
 
-class LocationMapState extends LocationState {
-  final CameraPosition cameraPosition; //====current camera position on the map
-  final GoogleMapController? mapController; //===TO Interact with MAP
-
-  LocationMapState({required this.cameraPosition, this.mapController});
-//object is created whenever the state changes
   LocationMapState copyWith({
     CameraPosition? cameraPosition,
     GoogleMapController? mapController,
+    String? currentAddress,
   }) {
     return LocationMapState(
-        cameraPosition: cameraPosition ?? this.cameraPosition,
-        mapController: mapController ?? this.mapController);
+      cameraPosition: cameraPosition ?? this.cameraPosition,
+      mapController: mapController ?? this.mapController,
+      currentAddress: currentAddress ?? this.currentAddress,
+    );
   }
-}
-
-class LocationError extends LocationState {
-  final String message;
-
-  LocationError({required this.message});
 }

@@ -33,7 +33,10 @@ class LocationDataSourceImpl implements LocationDatasource {
     }
 
 //============= we have the permissions=========================
-    return await Geolocator.getCurrentPosition(desiredAccuracy: accuracy);
+    final position =
+        await Geolocator.getCurrentPosition(desiredAccuracy: accuracy);
+    print("Current location: ${position.latitude}, ${position.longitude}");
+    return position;
   }
 
   @override

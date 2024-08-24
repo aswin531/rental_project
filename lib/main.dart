@@ -27,7 +27,7 @@ import 'package:rentit/features/rental/domain/repository/rental_repo.dart';
 import 'package:rentit/features/rental/domain/usecases/get_user_rental.dart';
 import 'package:rentit/features/rental/domain/usecases/rental_usecase.dart';
 import 'package:rentit/features/rental/domain/usecases/update_request.dart';
-import 'package:rentit/features/rental/presentation/bloc/mybooking_bloc/bloc.dart';
+import 'package:rentit/features/rental/presentation/bloc/tab_blloc/bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'firebase_options.dart';
 

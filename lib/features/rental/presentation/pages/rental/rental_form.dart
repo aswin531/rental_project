@@ -94,6 +94,8 @@ class RentalFormWidget extends StatelessWidget {
           id: formState.licenseController.text,
           carId: carId,
           userId: user!.uid,
+          pickUpLocation: rentalRequestBloc.pickupLocation,
+          dropOffLocation: rentalRequestBloc.dropOffLocation,
           pickupDate: rentalRequestBloc.pickupDate!,
           returnDate: rentalRequestBloc.returnDate!,
           pickupTime: rentalRequestBloc.startTime!,

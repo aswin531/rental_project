@@ -52,3 +52,16 @@ class UpdateReturnTimeEvent extends RentalRequestEvent {
 
   UpdateReturnTimeEvent({required this.returnTime});
 }
+
+class UpdatePickupLocationEvent extends RentalRequestEvent {
+  final String pickupLocation;
+
+  UpdatePickupLocationEvent(this.pickupLocation);
+}
+
+class UpdateDropOffLocationEvent extends RentalRequestEvent {
+  final String dropOffLocation;
+
+  UpdateDropOffLocationEvent(this.dropOffLocation);
+}
+

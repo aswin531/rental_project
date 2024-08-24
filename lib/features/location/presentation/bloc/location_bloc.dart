@@ -1,38 +1,63 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:rentit/features/location/domain/usecases/location_usecases.dart';
 import 'package:rentit/features/location/presentation/bloc/location_event.dart';
 import 'package:rentit/features/location/presentation/bloc/location_state.dart';
 
 class LocationMapBloc extends Bloc<LocationEvent, LocationMapState> {
-  final GetCurrentLocationCameraPositionUseCase
-      _getCurrentLocationCameraPositionUseCase;
+  final GetCurrentLocationCameraPositionUseCase _getCurrentLocationCameraPositionUseCase;
+  GoogleMapController? _mapController;
 
   LocationMapBloc(this._getCurrentLocationCameraPositionUseCase)
       : super(LocationMapState(
-            cameraPosition:
-                const CameraPosition(target: LatLng(0, 0), zoom: 14))) {
+            cameraPosition: const CameraPosition(target: LatLng(0, 0), zoom: 14))) {
     on<InitializeMap>(_onInitializeMap);
     on<MoveToCurrentLocation>(_onMoveToCurrentLocation);
   }
 
-  Future<void> _onInitializeMap(
-      InitializeMap event, Emitter<LocationMapState> emit) async {
-    emit(state.copyWith(mapController: event.googleMapController));
+  Future<void> _onInitializeMap(InitializeMap event, Emitter<LocationMapState> emit) async {
+    _mapController = event.googleMapController;
+    print("Map initialized");
     add(MoveToCurrentLocation());
   }
 
-  Future<void> _onMoveToCurrentLocation(
-      MoveToCurrentLocation event, Emitter<LocationMapState> emit) async {
+  Future<void> _onMoveToCurrentLocation(MoveToCurrentLocation event, Emitter<LocationMapState> emit) async {
     try {
-      final cameraPosition =
-          await _getCurrentLocationCameraPositionUseCase.call();
-      emit(state.copyWith(cameraPosition: cameraPosition));
-      await state.mapController
-          ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      final cameraPosition = await _getCurrentLocationCameraPositionUseCase.call();
+      print("Moving to: ${cameraPosition.target.latitude}, ${cameraPosition.target.longitude}");
+      
+      if (_mapController != null) {
+        await _mapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+        print("Camera moved");
+      } else {
+        print("Map controller is null");
+      }
+
+      final address = await _getAddressFromLatLng(cameraPosition.target);
+      emit(state.copyWith(
+        cameraPosition: cameraPosition,
+        currentAddress: address,
+      ));
     } catch (e) {
-      debugPrint(e.toString());
+      print("Error moving to current location: $e");
+    }
+  }
+
+  Future<String> _getAddressFromLatLng(LatLng position) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks[0];
+        return "${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}";
+      }
+      return "Address not found";
+    } catch (e) {
+      print("Error fetching address: $e");
+      return "Error fetching address";
     }
   }
 }

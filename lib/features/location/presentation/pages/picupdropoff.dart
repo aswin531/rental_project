@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,9 +14,6 @@ class LocationMapTestWidget extends StatefulWidget {
 }
 
 class _LocationMapTestWidgetState extends State<LocationMapTestWidget> {
-  final Completer<GoogleMapController> googleMapCompleterController =
-      Completer<GoogleMapController>();
-  GoogleMapController? controllerGoogleMap;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -25,19 +21,55 @@ class _LocationMapTestWidgetState extends State<LocationMapTestWidget> {
       statusBarIconBrightness: Brightness.light,
     ));
     return BlocBuilder<LocationMapBloc, LocationMapState>(
-      builder: (context, state) {
-        debugPrint(state.cameraPosition.toString());
-        return GoogleMap(
-          padding: const EdgeInsets.only(top: 26, bottom: 0),
-          mapType: MapType.normal,
-          initialCameraPosition: state.cameraPosition,
-          onMapCreated: (GoogleMapController mapController) {
-            context.read<LocationMapBloc>().add(InitializeMap(mapController));
-            // controllerGoogleMap = mapController;
-            // googleMapCompleterController.complete(controllerGoogleMap);
-          },
-        );
-      },
-    );
+        builder: (context, state) {
+      print(
+          "Building map with state: ${state.cameraPosition.target.latitude}, ${state.cameraPosition.target.longitude}");
+
+      // final LatLng cameraTarget = state.cameraPosition.target;
+      // final Marker marker = Marker(
+      //   markerId: const MarkerId('currentLocationMarker'),
+      //   position: cameraTarget,
+      //   infoWindow: const InfoWindow(title: 'Current Location'),
+
+      return Stack(
+        children: [
+          GoogleMap(
+            key: ValueKey(
+                "${state.cameraPosition.target.latitude},${state.cameraPosition.target.longitude}"),
+            padding: const EdgeInsets.only(top: 26, bottom: 0),
+            mapType: MapType.normal,
+            initialCameraPosition: state.cameraPosition,
+            onMapCreated: (GoogleMapController mapController) {
+              context.read<LocationMapBloc>().add(InitializeMap(mapController));
+            },
+            markers: {
+              Marker(
+                markerId: const MarkerId('currentLocation'),
+                position: state.cameraPosition.target,
+                infoWindow: const InfoWindow(title: 'Current Location'),
+              ),
+            },
+            myLocationEnabled: true,
+            myLocationButtonEnabled: true,
+          ),
+          Positioned(
+            bottom: 16,
+            left: 16,
+            right: 16,
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                state.currentAddress ?? "Fetching address...",
+                style: const TextStyle(fontSize: 16),
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

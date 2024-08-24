@@ -5,12 +5,12 @@ class PhoneNumberField extends StatelessWidget {
   final ValueNotifier<String> phoneNumber = ValueNotifier('');
   final String labelText;
 
-   PhoneNumberField({super.key, required this.labelText});
+  PhoneNumberField({super.key, required this.labelText});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0.0),
       child: IntlPhoneField(
         initialValue: phoneNumber.value,
         onChanged: (phone) {
@@ -18,11 +18,9 @@ class PhoneNumberField extends StatelessWidget {
         },
         decoration: InputDecoration(
           labelText: labelText,
-          // ... other properties
         ),
         initialCountryCode: 'IN',
-        onCountryChanged: (country) {
-        },
+        onCountryChanged: (country) {},
       ),
     );
   }

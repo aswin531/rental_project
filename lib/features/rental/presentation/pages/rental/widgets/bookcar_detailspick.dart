@@ -5,6 +5,7 @@ import 'package:rentit/features/home/presentation/bloc/selectedcar/selectedcar_s
 import 'package:rentit/features/home/presentation/pages/widgets/rating.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/widgets/date_selection_widget.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/widgets/driver_selection_widget.dart';
+import 'package:rentit/features/rental/presentation/pages/rental/widgets/location_selection.dart';
 import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
 import 'package:rentit/widgets/custom_carbody_container.dart';
@@ -20,7 +21,6 @@ class BookcarDetailspick extends StatelessWidget {
           final car = state.car;
           return Container(
             decoration: BoxDecoration(
-               
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(20)),
                 color: ExternalAppColors.white),
@@ -74,8 +74,12 @@ class BookcarDetailspick extends StatelessWidget {
                     height: 20,
                   ),
                   const DriverSelectionWidget(),
+
                   const DateTimeSelectionScreen(),
-                  const DateTimeSelectionScreen()
+                  Divider(
+                    color: ExternalAppColors.grey.withOpacity(0.4),
+                  ),
+                  LocationSelectionWidget(),
                   
                 ],
               ),

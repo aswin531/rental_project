@@ -14,6 +14,8 @@ class RentalRequest {
   final RentalRequestStatus status;
   final String email;
   final DateTime createdAt;
+  final String? pickUpLocation;
+  final String? dropOffLocation;
 
   RentalRequest(
       {this.id,
@@ -30,7 +32,9 @@ class RentalRequest {
       required this.email,
       required this.createdAt,
       this.comments,
-      required this.status //this.status = false, // Default status is false (pending)
+      required this.status, //this.status = false, // Default status is false (pending)
+      this.pickUpLocation,
+      this.dropOffLocation,
       });
 }
 

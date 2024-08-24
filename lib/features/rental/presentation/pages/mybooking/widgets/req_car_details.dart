@@ -78,6 +78,7 @@ class CarDetails extends StatelessWidget {
                   child: Text(
                     rentalRequestWithCarDetails.rentalRequest.status
                         .toString()
+                        .toUpperCase()
                         .split('.')
                         .last,
                     style: TextStyle(
