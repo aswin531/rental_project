@@ -22,7 +22,7 @@ class _LocationMapTestWidgetState extends State<LocationMapTestWidget> {
     ));
     return BlocBuilder<LocationMapBloc, LocationMapState>(
         builder: (context, state) {
-      print(
+      debugPrint(
           "Building map with state: ${state.cameraPosition.target.latitude}, ${state.cameraPosition.target.longitude}");
 
       // final LatLng cameraTarget = state.cameraPosition.target;

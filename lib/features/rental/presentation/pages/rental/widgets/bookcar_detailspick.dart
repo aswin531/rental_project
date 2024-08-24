@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selectedcar_state.dart';
 import 'package:rentit/features/home/presentation/pages/widgets/rating.dart';
+import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
+import 'package:rentit/features/location/presentation/bloc/location_state.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/widgets/date_selection_widget.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/widgets/driver_selection_widget.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/widgets/location_selection.dart';
@@ -74,13 +76,16 @@ class BookcarDetailspick extends StatelessWidget {
                     height: 20,
                   ),
                   const DriverSelectionWidget(),
-
                   const DateTimeSelectionScreen(),
                   Divider(
                     color: ExternalAppColors.grey.withOpacity(0.4),
                   ),
-                  LocationSelectionWidget(),
-                  
+                  BlocBuilder<LocationMapBloc, LocationMapState>(
+                    builder: (context, state) {
+                          debugPrint("Current LocationMapState: ${state.currentAddress}"); // Add this line
+                      return LocationSelectionWidget(locationState: state);
+                    },
+                  )
                 ],
               ),
             ),
