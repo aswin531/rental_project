@@ -22,7 +22,7 @@ class PrimaryText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      overflow: TextOverflow.ellipsis,
+      //overflow: TextOverflow.ellipsis,
       style: TextStyle(
         color: color,
         height: height,

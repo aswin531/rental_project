@@ -19,6 +19,7 @@ class PopularCarSection extends StatelessWidget {
         if (state is CarLoaded) {
           final cars = state.cars;
           return Column(
+            // mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(

@@ -99,7 +99,6 @@ class CarDetailPage extends StatelessWidget {
                                     CustomCarBodyContainer(
                                       text: car.body.toUpperCase(),
                                     ),
-                                    
                                     const StarRating(
                                       rating: 4.9,
                                     ),
@@ -163,7 +162,7 @@ class CarDetailPage extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: '/hrs',
+                              text: '/hr',
                               style: TextStyle(
                                   color: ExternalAppColors.grey,
                                   fontSize: 18,

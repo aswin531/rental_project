@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/spec_item.dart';
 
 class CarSpecs extends StatelessWidget {
-  const CarSpecs({super.key});
+  final String transimission;
+  final String engine;
+  final int seatCapacity;
+  const CarSpecs(
+      {super.key,
+      required this.transimission,
+      required this.engine,
+      required this.seatCapacity});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        SpecItem(icon: Icons.settings, text: 'Manual'),
-        SpecItem(icon: Icons.local_gas_station, text: 'Petrol'),
-        SpecItem(icon: Icons.people, text: '5 Seats'),
+        SpecItem(icon: Icons.settings, text: transimission),
+        SpecItem(icon: Icons.local_gas_station, text: engine),
+        SpecItem(icon: Icons.people, text: seatCapacity.toString()),
       ],
     );
   }

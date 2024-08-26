@@ -4,6 +4,7 @@ import 'package:rentit/features/rental/presentation/bloc/tab_blloc/bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/event.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/state.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_components.dart';
+import 'package:rentit/utils/appcolors.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});
@@ -32,16 +33,17 @@ class _BookingPageState extends State<BookingPage>
   Widget build(BuildContext context) {
     return BlocBuilder<TabBloc, TabState>(
       builder: (context, state) {
-        _tabController.index =
-            state.currentIndex; // Update controller based on state
+        _tabController.index = state.currentIndex;
 
         return Scaffold(
+          backgroundColor: ExternalAppColors.bg,
           appBar: AppBar(
             title: const Text('My Booking'),
             bottom: TabBar(
-              dividerColor: Colors.transparent, indicatorColor: Colors.blue,
+              dividerColor: Colors.transparent,
+              indicatorColor: Colors.blue,
               labelColor: Colors.blue,
-              controller: _tabController, // Pass the TabController
+              controller: _tabController,
               onTap: (index) =>
                   context.read<TabBloc>().add(BookingTabChanged(index)),
               tabs: const [

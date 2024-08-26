@@ -1,101 +1,149 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/features/rental/data/model/request_form_model.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
+import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
+import 'package:rentit/widgets/custom_container.dart';
 
 class CarDetails extends StatelessWidget {
-  const CarDetails({super.key});
+  final String brand;
+  final String model;
+  final String rentalPrice;
+  final String body;
+  final String imageUrl;
+
+  const CarDetails(
+      {super.key,
+      required this.brand,
+      required this.model,
+      required this.rentalPrice,
+      required this.body,
+      required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RentalRequestBloc, RentalRequestState>(
-      builder: (context, state) {
-        if (state is RentalRequestInitial) {
-          final user = FirebaseAuth.instance.currentUser!.uid;
-          context
-              .read<RentalRequestBloc>()
-              .add(FetchUserRentalRequestsWithCarDetailsEvent(user));
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is RentalRequestLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is UserRentalRequestsWithCarDetailsLoaded) {
-          final rentalRequestWithCarDetails = state.requestsWithCarDetails.last;
-          debugPrint(rentalRequestWithCarDetails.toString());
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  color: const Color.fromARGB(255, 227, 231, 233),
-                  elevation: 3,
-                  child: Stack(
-                    children: [
-                      Image.network(
-                          rentalRequestWithCarDetails.car.imageUrls.last),
-                      Positioned(
-                        bottom: 8,
-                        left: 8,
-                        child: Row(
-                          children: [
-                            const Icon(Icons.star,
-                                color: Colors.yellow, size: 25),
-                            const SizedBox(width: 5),
-                            Text(
-                              rentalRequestWithCarDetails.car.model,
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            )
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 5,
-                        right: 8,
-                        child: Container(
-                          padding: const EdgeInsets.all(14),
-                          color: Colors.black.withOpacity(0.5),
-                          child: Text(
-                            rentalRequestWithCarDetails.car.body,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: ExternalAppColors.bg,
+                  borderRadius: BorderRadius.circular(15)),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.network(
+                          fit: BoxFit.cover,
+                          height: 220,
+                          width: double.infinity,
+                          imageUrl
+                          //rentalRequestWithCarDetails.car.imageUrls.last
                           ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  const Positioned(
+                    top: 15,
+                    left: 10,
+                    child: Row(
+                      children: [
+                        Icon(Icons.star, color: Colors.yellow, size: 25),
+                        SizedBox(width: 5),
+                        PrimaryText(
+                          text: '4.9',
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          size: 18,
+                        )
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 15,
+                      right: 15,
+                      child: CustomContainer(text: body)),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    rentalRequestWithCarDetails.rentalRequest.status
-                        .toString()
-                        .toUpperCase()
-                        .split('.')
-                        .last,
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: getStatusColor(
-                            rentalRequestWithCarDetails.rentalRequest.status)),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  CustomContainer(text: brand),
+                  const SizedBox(
+                    height: 8,
                   ),
+                  PrimaryText(
+                    text: model,
+                    size: 20,
+                    color: ExternalAppColors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ],
+              ),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: rentalPrice,
+                      //'\$${rentalRequestWithCarDetails.car.rentalPriceRange.start.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        color: ExternalAppColors.blue,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '/hr',
+                      style: TextStyle(
+                          color: ExternalAppColors.grey,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
               ),
             ],
-          );
-        } else if (state is RentalRequestError) {
-          return Center(child: Text(state.message));
-        }
-        return Container();
-      },
+          ),
+          Divider(
+            height: 20,
+            color: ExternalAppColors.bg,
+            thickness: 2,
+          )
+        ],
+      ),
     );
   }
 }
+
+
+
+// Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: Align(
+                //     alignment: Alignment.bottomLeft,
+                //     child: Container(
+                //       color: Colors.amber,
+                //       child: Padding(
+                //         padding: const EdgeInsets.all(8.0),
+                //         child: PrimaryText(
+                //             text: rentalRequestWithCarDetails
+                //                 .rentalRequest.status
+                //                 .toString()
+                //                 .toUpperCase()
+                //                 .split('.')
+                //                 .last,
+                //             size: 20,
+                //             fontWeight: FontWeight.bold,
+                //             color: getStatusColor(rentalRequestWithCarDetails
+                //                 .rentalRequest.status)),
+                //       ),
+                //     ),
+                //   ),
+                // ),

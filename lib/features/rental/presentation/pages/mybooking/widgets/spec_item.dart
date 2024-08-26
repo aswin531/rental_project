@@ -8,11 +8,14 @@ class SpecItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
         Icon(
           icon,
           color: Colors.blue,
+        ),
+        const SizedBox(
+          width: 8,
         ),
         Text(text),
       ],

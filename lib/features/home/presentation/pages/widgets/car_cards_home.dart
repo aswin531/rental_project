@@ -5,6 +5,7 @@ import 'package:rentit/features/home/domain/entity/car_entity.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selectedcar_event.dart';
 import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/widgets/custom_container.dart';
 
 class CarCard extends StatelessWidget {
   final CarVehicleEntity car;
@@ -21,11 +22,6 @@ class CarCard extends StatelessWidget {
         context.read<SelectedCarBloc>().add(SelectCar(car));
         context.push('/carDetailPage');
 
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => const CarDetailPage(),
-        //     ));
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -94,17 +90,8 @@ class CarCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
-              Container(
-                  decoration: BoxDecoration(
-                      color: const Color.fromRGBO(246, 246, 246, 1),
-                      // border: Border.all(color: Colors.blue),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(car.body,
-                        style: const TextStyle(color: Colors.blue)),
-                  )),
+              const SizedBox(height: 16),CustomContainer(text: car.body),
+            
               const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

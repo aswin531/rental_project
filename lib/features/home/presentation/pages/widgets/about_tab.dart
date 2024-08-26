@@ -85,7 +85,7 @@ class AboutTabWidget extends StatelessWidget {
               ),
               PrimaryText(
                 text:
-                    "Pioneering mass production and accessible vehicles. From the Model T to electric F-150, innovation drives their legacy. A legacy of innovation, built for the American spirit.Empowering everyday journeys with reliable performance.//\$rentalPriceRange.start.toStringAsFixed(2)}/hr//\$rentalPriceRange.start.toStringAsFixed(2)}/hr''",
+                    "Pioneering mass production and accessible vehicles. From the Model T to electric F-150, innovation drives their legacy. A legacy of innovation, built for the American spirit.Empowering everyday journeys with reliable performance.//\$rentalPriceRange.start.toStringAsFixed(2)}/hr//\$rentalPriceRange.start.toStringAsFixed(2)}/hrPioneering mass production and accessible vehicles. From the Model T to electric F-150, innovation''",
                 size: 18,
                 color: ExternalAppColors.grey,
                 fontWeight: FontWeight.w600,

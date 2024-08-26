@@ -28,7 +28,7 @@ class _DriverSelectionWidgetState extends State<DriverSelectionWidget> {
                 });
               },
               child: Container(
-                width: 200,
+                width: 190,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: isSelfDriverSelected ? Colors.blue : Colors.grey[300],
@@ -53,8 +53,8 @@ class _DriverSelectionWidgetState extends State<DriverSelectionWidget> {
               ),
             ),
             Icon(
-              FontAwesomeIcons.gripLinesVertical,
-              color: ExternalAppColors.blue.withOpacity(0.5),
+              FontAwesomeIcons.route,
+              color: ExternalAppColors.black.withOpacity(0.8),
             ),
             GestureDetector(
               onTap: () {
@@ -63,7 +63,7 @@ class _DriverSelectionWidgetState extends State<DriverSelectionWidget> {
                 });
               },
               child: Container(
-                width: 200,
+                width: 190,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: !isSelfDriverSelected

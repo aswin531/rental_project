@@ -16,12 +16,12 @@ class LogoAndFormText extends StatelessWidget {
           width: 210,
         ),
         const Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.center,
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'Car Rental Request Form',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                'Your Information Details',
+                style: TextStyle(fontWeight: FontWeight.w500),
               ),
             )),
       ],

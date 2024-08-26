@@ -23,20 +23,30 @@ class _TimePickerState extends State<TimePicker> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 180,
+      width: 190,
       decoration: BoxDecoration(
-          color: ExternalAppColors.bg, borderRadius: BorderRadius.circular(20)),
+          color: ExternalAppColors.bg, borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            PrimaryText(
-              text: _selectedTime != null
-                  ? _selectedTime!.format(context)
-                  : widget.title,
-              size: 16,
-              color: ExternalAppColors.black,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PrimaryText(
+                  text: "Time",
+                  size: 16,
+                  color: ExternalAppColors.grey,
+                ),
+                PrimaryText(
+                  text: _selectedTime != null
+                      ? _selectedTime!.format(context)
+                      : widget.title,
+                  size: 16,
+                  color: ExternalAppColors.black,
+                ),
+              ],
             ),
             IconButton(
               color: ExternalAppColors.blue,
@@ -52,7 +62,10 @@ class _TimePickerState extends State<TimePicker> {
                   widget.onTimeSelected(time);
                 }
               },
-              icon: const Icon(FontAwesomeIcons.clock),
+              icon: const Icon(
+                FontAwesomeIcons.stopwatch,
+                size: 25,
+              ),
             ),
           ],
         ),

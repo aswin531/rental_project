@@ -82,8 +82,9 @@ class BookcarDetailspick extends StatelessWidget {
                   ),
                   BlocBuilder<LocationMapBloc, LocationMapState>(
                     builder: (context, state) {
-                          debugPrint("Current LocationMapState: ${state.currentAddress}"); // Add this line
-                      return LocationSelectionWidget(locationState: state);
+                      debugPrint(
+                          "Current LocationMapState: ${state.currentAddress}"); // Add this line
+                      return LocationSelectionWidget();
                     },
                   )
                 ],
