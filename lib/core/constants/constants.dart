@@ -8,6 +8,9 @@ class ApiServices {
 
 
 
+const  stripePublishableKey = 'pk_test_51PsGwp2KVJeWIxbAUzEzr3lxrKyIHXYlPw4X8iAb1M0qHDG8uM0TccjLaH9xLWp6lDFIAQKOPkYOLzorCrW8Ek7M00DkDWwF8W';
+const stripeSecretKey = 'sk_test_51PsGwp2KVJeWIxbApis4rTmJEOwyeSPbqkg26DOnNu2e4PnFb3prQ3VPRj5CEUZByJyHJUK6sj59f9vJtOY44noe00869atM6y';
+
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // class ApiServices {

@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rentit/core/constants/constants.dart';
 import 'package:rentit/features/authentication/data/datasources/firebase_auth_datasource.dart';
 import 'package:rentit/features/authentication/data/datasources/local_storage_datasource.dart';
 import 'package:rentit/features/authentication/data/repositories/auth_repo_imple.dart';
@@ -12,9 +14,15 @@ import 'package:rentit/features/location/data/repositories/location_repodata.dar
 import 'package:rentit/features/location/domain/repositories/location_repository.dart';
 import 'package:rentit/features/location/domain/usecases/location_usecases.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
+import 'package:rentit/features/payments/data/repository/payment_repository_impl.dart';
+import 'package:rentit/features/payments/domain/repository/payment_repository.dart';
+import 'package:rentit/features/payments/domain/usecases/payment_usecases.dart';
+import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
+//final Dio dio = Dio();
+final FirebaseAuth firebaseAuthInstance = FirebaseAuth.instance;
 
 Future<void> init() async {
   //SharedPreferences============================================
@@ -73,14 +81,25 @@ Future<void> init() async {
   sl.registerLazySingleton<LocationRepository>(
       () => LocationRepositoryImpl(sl()));
 
-// Usecase===============================================      
+// Usecase===============================================
   sl.registerLazySingleton(() => GetCurrentLocationCameraPositionUseCase(sl()));
 
-// BLoC==================================================    
+// BLoC==================================================
   sl.registerFactory(() => LocationMapBloc(sl()));
+
+//========================================================
+// Setup method to register services
+//final dio = GetIt.instance<Dio>();
+  sl.registerLazySingleton<Dio>(() => Dio());
+
+  sl.registerLazySingleton(() => PaymentBloc(makePaymentUsecase: sl()));
+
+  sl.registerLazySingleton(() => MakePaymentUsecase(sl()));
+
+  sl.registerLazySingleton<PaymentRepository>(
+      () => StripePaymentRepository(stripeSecretKey: stripeSecretKey));
 }
 
-
-// Lazy singleton means the instance 
+// Lazy singleton means the instance
 //will be created only once when it is needed for the first time.
 //FirebaseDataSource and LocalStorageDataSource=> dependencies required by AuthRepositoryImpl

@@ -36,7 +36,6 @@ Future<List<RentalRequestWithCarDetails>> getUserRentalRequests(String userId) a
     final carDoc = await FirebaseFirestore.instance.collection('cars').doc(rentalRequest.carId).get();
     final carData = carDoc.data();
     final car = CarModel.fromJson(carData!, rentalRequest.carId);
-
     results.add(RentalRequestWithCarDetails(rentalRequest: rentalRequest, car: car));
   }
 

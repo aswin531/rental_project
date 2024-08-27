@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentit/core/services/stripe_services.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
+import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_bloc.dart';
 import 'package:rentit/utils/screen_util_setup.dart';
 import 'package:rentit/core/di/dependency_injection.dart';
 import 'package:rentit/core/router/approutes.dart';
@@ -33,11 +35,14 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await stripeSetUp();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // Initialize dependencies
   await init();
+
   runApp(MultiRepositoryProvider(
       providers: [
         RepositoryProvider<AuthRepository>(
@@ -71,16 +76,19 @@ Future<void> main() async {
               updateRentalRequestStatus:
                   UpdateRentalRequestStatus(_.read<RentalRequestRepository>())),
         ),
-        BlocProvider(create: (context) => NavigationBloc()),
-        BlocProvider(create: (context) => TabBloc()),
-        BlocProvider(create: (context) => SelectedCarBloc()),
         BlocProvider(
             create: (context) => BrandsBloc(
                 getBrandUsecase: GetBrandUsecase(
                     carRepository: context.read<CarRepository>()),
                 getCarsByBrandUsecase: GetCarsByBrandUsecase(
-                    carRepository: context.read<CarRepository>()))),
+                    carRepository: context.read<CarRepository>()))),  
+        BlocProvider(create: (context) => NavigationBloc()),
+        BlocProvider(create: (context) => TabBloc()),
+        BlocProvider(create: (context) => SelectedCarBloc()),
         BlocProvider(create: (_) => sl<LocationMapBloc>()),
+        BlocProvider<PaymentBloc>(
+          create: (context) => sl<PaymentBloc>(),
+        ),
       ], child: const MyApp())));
 }
 

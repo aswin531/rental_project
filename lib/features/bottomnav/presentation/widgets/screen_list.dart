@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rentit/core/testwidgets/review_summary/review_summary_card.dart';
+import 'package:rentit/core/testwidgets/gpay.dart';
+import 'package:rentit/features/profile/pages/profile_dash.dart';
 import 'package:rentit/features/home/presentation/pages/carlistscreen.dart';
 import 'package:rentit/features/location/presentation/pages/picupdropoff.dart';
-import 'package:rentit/features/profile/pages/profile.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/booking.dart';
 
 List<Widget> screens() {
@@ -10,7 +10,7 @@ List<Widget> screens() {
     const CarListScreen(),
     const LocationMapTestWidget(),
     const BookingPage(),
-    ReviewSummaryScreen(),
+    const GooglePayButtonWidget(amount: '333   ',currency: '30000',),
   //    CarRentalWidget(
   //      features: [
   //   CarFeature(icon: Icons.settings, text: 'Manual'),
@@ -18,6 +18,6 @@ List<Widget> screens() {
   //   CarFeature(icon: Icons.people, text: '7 Seats'),
   // ],
   //   ),
-    const MainProfileScreen(),
+    const ProfileDashboard(),
   ];
 }

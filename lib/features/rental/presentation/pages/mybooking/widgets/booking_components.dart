@@ -33,8 +33,8 @@ class BookingContent extends StatelessWidget {
               decoration: BoxDecoration(
                   color: ExternalAppColors.white,
                   borderRadius: BorderRadius.circular(15)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
+                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CarDetails(
                     body: rentalRequestWithCarDetails.car.body,
@@ -49,13 +49,16 @@ class BookingContent extends StatelessWidget {
                   CarSpecs(
                     transimission: "Manual",
                     engine: rentalRequestWithCarDetails.car.engine,
-                    seatCapacity:
-                        rentalRequestWithCarDetails.car.seatCapacity,
+                    seatCapacity: rentalRequestWithCarDetails.car.seatCapacity,
                   ),
                   const SizedBox(height: 20),
                   const LocationMap(),
                   const SizedBox(height: 20),
-                  const ActionButtons(),
+                  ActionButtons(
+                    rentalPrice: rentalRequestWithCarDetails
+                        .car.rentalPriceRange.start
+                        .toString(),
+                  ),
                 ],
               ),
             ),

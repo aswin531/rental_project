@@ -24,8 +24,11 @@
       "transactionInfo": {
         "totalPriceStatus": "FINAL",
         "totalPrice": "12.34",
-        "currencyCode": "USD",
-        "countryCode": "US"
+        "currencyCode": "INR",
+        "countryCode": "IN"
       }
     }
   }
+
+
+  

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentit/core/constants/colors.dart';
-import 'package:rentit/features/profile/widgets/profile_text_styles.dart';
 
 class ProfileDetails extends StatelessWidget {
   const ProfileDetails({super.key});
@@ -97,9 +96,9 @@ class ProfileDetails extends StatelessWidget {
             ),
           ),
           SizedBox(width: 15.w),
-          Expanded(
-            child: Text(title, style: CustomProfileTextStyles.bioprofStyle),
-          ),
+          // Expanded(
+          //   child: Text(title, style: CustomProfileTextStyles.bioprofStyle),
+          // ),
           IconButton(
             icon: const Icon(Icons.chevron_right, color: Colors.blue),
             onPressed: onPressed,

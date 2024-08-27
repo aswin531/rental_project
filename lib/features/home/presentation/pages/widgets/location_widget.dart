@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
+import 'package:rentit/features/location/presentation/bloc/location_state.dart';
 
 class LocationWidget extends StatelessWidget {
   const LocationWidget({super.key});
@@ -10,25 +13,31 @@ class LocationWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Location',
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
-              Row(
-                children: [
-                  Icon(Icons.location_on, color: Colors.white),
-                  SizedBox(width: 8),
-                  Text(
-                    'New York, USA',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
+              BlocBuilder<LocationMapBloc, LocationMapState>(
+                builder: (context, state) {
+                  debugPrint(
+                      "Building map with state: ${state.cameraPosition.target.latitude}, ${state.cameraPosition.target.longitude}");
+                  return Row(
+                    children: [
+                      const Icon(Icons.location_on, color: Colors.white),
+                      const SizedBox(width: 8),
+                      Text(
+                        state.currentAddress ?? "Fetching address...",
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
