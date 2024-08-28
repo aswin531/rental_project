@@ -15,6 +15,7 @@ class LocationMapBloc extends Bloc<LocationEvent, LocationMapState> {
       : super(LocationMapState(
             cameraPosition:
                 const CameraPosition(target: LatLng(0, 0), zoom: 14))) {
+                  on<LoadPageEvent>(_onLoadPageEvent);
     on<InitializeMap>(_onInitializeMap);
     on<MoveToCurrentLocation>(_onMoveToCurrentLocation);
   }
@@ -69,5 +70,11 @@ class LocationMapBloc extends Bloc<LocationEvent, LocationMapState> {
       debugPrint("Error fetching address: $e");
       return "Error fetching address";
     }
+  }
+
+  Future<void> _onLoadPageEvent(
+      LoadPageEvent event, Emitter<LocationMapState> emit) async {
+    // Trigger fetching the current location as soon as the page loads
+    add(MoveToCurrentLocation());
   }
 }

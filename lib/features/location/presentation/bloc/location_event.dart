@@ -11,3 +11,5 @@ class InitializeMap extends LocationEvent {
 
 //move the camera to the user's current location=============
 class MoveToCurrentLocation extends LocationEvent{}
+
+class LoadPageEvent extends LocationEvent {}

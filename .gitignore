@@ -45,3 +45,4 @@ app.*.map.json
 #FCM access Service Folder
 lib/core/services/
 lib/core/constants/
+lib/core/constants/constants.dart
