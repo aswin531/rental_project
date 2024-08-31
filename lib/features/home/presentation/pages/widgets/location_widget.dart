@@ -29,7 +29,8 @@ class LocationWidget extends StatelessWidget {
                       const Icon(Icons.location_on, color: Colors.white),
                       const SizedBox(width: 8),
                       Text(
-                        state.currentAddress ?? "Fetching address...",
+                        _extractCityFromAddress(state.currentAddress) ??
+                            "Fetching address...",
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -59,5 +60,18 @@ class LocationWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String? _extractCityFromAddress(String? address) {
+    if (address == null || address.isEmpty) {
+      return null;
+    }
+    List<String> parts = address.split(',');
+    // Check if there are at least two parts (Place and City)
+    if (parts.length > 1) {
+      // Trim spaces and return the second part (City)
+      return parts[2].trim();
+    }
+    return null;
   }
 }

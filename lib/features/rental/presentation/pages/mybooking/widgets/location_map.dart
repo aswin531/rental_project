@@ -6,8 +6,9 @@ class LocationMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: SizedBox(
         width: 250,
         height: 150,
         child: GoogleMap(

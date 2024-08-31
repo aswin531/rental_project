@@ -33,3 +33,6 @@ class AuthError extends Authstate {
   @override
   List<Object> get props => [message];
 }
+
+class AuthProfileUpdated extends Authstate {}
+

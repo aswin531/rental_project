@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -31,6 +32,9 @@ Future<void> init() async {
 // FirebaseAuth===========================================
   final firebaseAuth = FirebaseAuth.instance;
   sl.registerLazySingleton(() => firebaseAuth);
+
+   final firestore = FirebaseFirestore.instance;
+  sl.registerLazySingleton(() => firestore);
 // GoogleSignIn===========================================
   final googleSignIn = GoogleSignIn();
   sl.registerLazySingleton(() => googleSignIn);
@@ -98,6 +102,8 @@ Future<void> init() async {
 
   sl.registerLazySingleton<PaymentRepository>(
       () => StripePaymentRepository(stripeSecretKey: stripeSecretKey));
+
+  //sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
 }
 
 // Lazy singleton means the instance

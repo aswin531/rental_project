@@ -39,6 +39,7 @@ class CarInfoSection extends StatelessWidget {
               text: body,
               containerColor: Colors.white,
             ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 PrimaryText(
@@ -53,10 +54,10 @@ class CarInfoSection extends StatelessWidget {
                 ),
               ],
             ),
-            PrimaryText(
-              text: rentalPrice,
-              color: ExternalAppColors.black,
-            ),
+            // PrimaryText(
+            //   text: rentalPrice,
+            //   color: ExternalAppColors.black,
+            // ),
           ],
         ),
         const SizedBox(width: 8),
@@ -76,6 +77,7 @@ class DateTimeSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Divider(),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -173,6 +175,7 @@ class PricingSection extends StatelessWidget {
           ],
         ),
         const Divider(),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -181,12 +184,14 @@ class PricingSection extends StatelessWidget {
               color: ExternalAppColors.grey,
               size: 18,
             ),
-            const PrimaryText(
+            PrimaryText(
+              color: ExternalAppColors.black,
               text: '\$770.00',
             ),
           ],
         ),
         const Divider(),
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -198,16 +203,17 @@ class PaymentMethodSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
             color: Colors.blue,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: PrimaryText(
-            text: 'Paypal',
-            color: ExternalAppColors.grey,
+            text: 'Stripe',
+            color: ExternalAppColors.white,
             size: 18,
           ),
         ),
@@ -233,11 +239,24 @@ class ContinueButton extends StatelessWidget {
         onPressed: () {},
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
+          backgroundColor: Colors.blueAccent, // Button background color
+          foregroundColor: Colors.white, // Text color
+          shadowColor: Colors.blueAccent.withOpacity(0.5), // Shadow color
+          elevation: 5, // Button elevation
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12), // Rounded corners
+            side: const BorderSide(
+                color: Colors.blue, width: 2), // Border color and width
           ),
         ),
-        child: const Text('Continue'),
+        child: const Text(
+          'Continue',
+          style: TextStyle(
+            fontSize: 18, // Font size
+            fontWeight: FontWeight.bold, // Font weight
+            letterSpacing: 1.2, // Spacing between letters
+          ),
+        ),
       ),
     );
   }

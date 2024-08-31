@@ -6,7 +6,6 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_even
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_button.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/car_specs.dart';
-import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/location_map.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/req_car_details.dart';
 import 'package:rentit/utils/appcolors.dart';
 
@@ -25,7 +24,7 @@ class BookingContent extends StatelessWidget {
         }
         if (state is UserRentalRequestsWithCarDetailsLoaded) {
           final rentalRequestWithCarDetails =
-              state.requestsWithCarDetails.first;
+              state.requestsWithCarDetails.last;
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -52,7 +51,7 @@ class BookingContent extends StatelessWidget {
                     seatCapacity: rentalRequestWithCarDetails.car.seatCapacity,
                   ),
                   const SizedBox(height: 20),
-                  const LocationMap(),
+                 // const LocationMap(),
                   const SizedBox(height: 20),
                   ActionButtons(
                     rentalPrice: rentalRequestWithCarDetails

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 abstract class LocationDatasource {
@@ -35,7 +36,7 @@ class LocationDataSourceImpl implements LocationDatasource {
 //============= we have the permissions=========================
     final position =
         await Geolocator.getCurrentPosition(desiredAccuracy: accuracy);
-    print("Current location: ${position.latitude}, ${position.longitude}");
+    debugPrint("Current location: ${position.latitude}, ${position.longitude}");
     return position;
   }
 

@@ -64,3 +64,10 @@ class SignOutEvent extends AuthEvent {}
 class CheckStatusEvent extends AuthEvent {}
 
 class FetchCurrentUser extends AuthEvent {}
+
+
+
+class UpdateUserProfile extends AuthEvent {
+  final Map<String, dynamic> userDetails;
+  const UpdateUserProfile(this.userDetails);
+}

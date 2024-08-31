@@ -13,16 +13,12 @@ class RegisterForm extends StatelessWidget {
   const RegisterForm({
     super.key,
     required GlobalKey<FormState> formKey,
-    required this.nameController,
-    required this.lastNameController,
     required this.emailController,
     required this.passwordController,
     required this.confirmPassController,
   }) : _formKey = formKey;
 
   final GlobalKey<FormState> _formKey;
-  final TextEditingController nameController;
-  final TextEditingController lastNameController;
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController confirmPassController;
@@ -32,7 +28,7 @@ class RegisterForm extends StatelessWidget {
     return BlocListener<AuthBloc, Authstate>(
       listener: (context, state) {
         if (state is AuthAuthenticated) {
-          context.go('/navBarBottom');
+          context.go('/userIntroProfileDetailsScreen'); //
         } else if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.red,
@@ -46,19 +42,6 @@ class RegisterForm extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomTextFormField(
-                labelText: "Name",
-                controller: nameController,
-                keyboardType: TextInputType.name,
-                // validator: (p0) {},
-              ),
-              SizedBox(height: 20.h),
-              CustomTextFormField(
-                labelText: "Last name",
-                controller: lastNameController,
-                keyboardType: TextInputType.name,
-                // validator: (p0) {},
-              ),
               SizedBox(height: 20.h),
               CustomTextFormField(
                 labelText: "Email",

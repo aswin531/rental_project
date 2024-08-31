@@ -18,7 +18,7 @@ class SocialMediaLabel extends StatelessWidget {
         if (state is AuthAuthenticated) {
           context.go('/navBarBottom');
         } else if (state is AuthError) {
-           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.red,
               closeIconColor: primary,
               content: Text(state.message)));
@@ -49,25 +49,25 @@ class SocialMediaLabel extends StatelessWidget {
           SizedBox(
             width: 20.h,
           ),
-          Card(
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: SizedBox(
-              width: 70.w,
-              height: 40.h,
-              child: IconButton(
-                onPressed: () {
-                  context.go('/mobilereg');
-                },
-                icon: Icon(
-                  FontAwesomeIcons.mobileScreen,
-                  color: black,
-                ),
-              ),
-            ),
-          ),
+          // Card(
+          //   elevation: 5,
+          //   shape: RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.circular(15),
+          //   ),
+          //   child: SizedBox(
+          //     width: 70.w,
+          //     height: 40.h,
+          //     child: IconButton(
+          //       onPressed: () {
+          //         context.go('/mobilereg');
+          //       },
+          //       icon: Icon(
+          //         FontAwesomeIcons.mobileScreen,
+          //         color: black,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

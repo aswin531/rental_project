@@ -76,8 +76,8 @@ class RegisterScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(12.0),
                       child: RegisterForm(
                         formKey: _formKey,
-                        nameController: nameController,
-                        lastNameController: lastNameController,
+                        // nameController: nameController,
+                        // lastNameController: lastNameController,
                         emailController: emailController,
                         passwordController: passwordController,
                         confirmPassController: confirmPassController,

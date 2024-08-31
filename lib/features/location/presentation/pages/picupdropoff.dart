@@ -36,9 +36,8 @@ class LocationMapTestWidget extends StatelessWidget {
                 mapType: MapType.normal,
                 initialCameraPosition: state.cameraPosition,
                 onMapCreated: (GoogleMapController mapController) {
-                  context
-                      .read<LocationMapBloc>()
-                      .add(InitializeMap(mapController));
+                      context.read<LocationMapBloc>().add(InitializeMap(mapController));
+
                 },
                 markers: {
                   Marker(

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/core/testwidgets/review_summary/car_info_section.dart';
+import 'package:rentit/features/payments/presentation/pages/review_summary/car_info_section.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
@@ -26,12 +26,13 @@ class ReviewSummaryScreen extends StatelessWidget {
           backgroundColor: ExternalAppColors.bg,
           appBar: AppBar(
             backgroundColor: ExternalAppColors.bg,
-            leading: const BackButton(),
+            //leading: const BackButton(),
             title: const Text('Review Summary'),
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CarInfoSection(
@@ -50,6 +51,7 @@ class ReviewSummaryScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 const PaymentMethodSection(),
                 const Spacer(),
+                const SizedBox(height: 20),
                 const ContinueButton(),
               ],
             ),
