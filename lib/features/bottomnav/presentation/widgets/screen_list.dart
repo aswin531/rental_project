@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rentit/features/authentication/presentation/pages/profile_intro.dart';
-import 'package:rentit/features/profile/pages/profile_dash.dart';
+import 'package:rentit/features/profile/presentation/pages/profile_dash.dart';
 import 'package:rentit/features/home/presentation/pages/carlistscreen.dart';
 import 'package:rentit/features/location/presentation/pages/picupdropoff.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/booking.dart';

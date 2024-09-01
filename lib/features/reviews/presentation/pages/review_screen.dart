@@ -41,7 +41,7 @@ class ReviewForm extends StatelessWidget {
         children: [
           Center(
             child: Image.asset(
-              'assets/toyota_fortuner.png', // Replace with your image path
+              'assets/images/land.jpg',
               height: 120,
               width: 200,
               fit: BoxFit.contain,

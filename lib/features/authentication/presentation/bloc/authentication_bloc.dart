@@ -4,6 +4,8 @@ import 'package:rentit/core/services/user_services.dart';
 import 'package:rentit/features/authentication/domain/usecases/auth_use_case.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_state.dart';
+import 'package:rentit/features/profile/domain/entity/profile_setup_entity.dart';
+import 'package:rentit/features/profile/domain/usecases/profile_setup_saveuser_usecase.dart';
 
 class AuthBloc extends Bloc<AuthEvent, Authstate> {
   final SignInWithGoogle signInWithGoogle;
@@ -16,6 +18,8 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
   final SaveAuthToken saveAuthToken;
   final GetAuthToken getAuthToken;
   final ClearAuthToken clearAuthToken;
+  final SaveUserProfileUsecase saveUserProfileUsecase;
+
 
   AuthBloc({
     required this.signInWithGoogle,
@@ -28,6 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
     required this.saveAuthToken,
     required this.getAuthToken,
     required this.clearAuthToken,
+    required this.saveUserProfileUsecase, 
   }) : super(AuthInitial()) {
     on<FetchCurrentUser>((event, emit) {
       final user = getCurrentUser();
@@ -131,6 +136,34 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         emit(AuthError(message: e.toString()));
       }
     });
+    
+    //=====================SignOut-Event========================
+     on<CompleteProfileSetupEvent>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        final user = getCurrentUser();
+        if (user != null) {
+          final userProfile = UserProfile(
+            userId: user.uid,
+            name: event.profileData['name'],
+            location: event.profileData['location'],
+            cityState: event.profileData['cityState'],
+            phone: event.profileData['phone'],
+            license: event.profileData['license'],
+            dob: DateTime.parse(event.profileData['dob']),
+            homeLocation: event.profileData['homeLocation'],
+            imageUrl: event.profileData['imageUrl'],
+          );
+          await saveUserProfileUsecase(userProfile);
+          emit(AuthAuthenticated(user));
+        } else {
+          emit(AuthUnAuthenticated());
+        }
+      } catch (e) {
+        emit(AuthError(message: e.toString()));
+      }
+    });
+
   }
 
 

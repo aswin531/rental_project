@@ -1,7 +1,7 @@
 
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-import 'package:rentit/features/profile/widgets/stat_column.dart';
+import 'package:rentit/features/profile/presentation/widgets/stat_column.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({super.key});

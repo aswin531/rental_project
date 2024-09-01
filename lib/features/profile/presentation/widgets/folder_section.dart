@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rentit/features/profile/widgets/folder_item.dart';
-import 'package:rentit/features/profile/widgets/section_header.dart';
+import 'package:rentit/features/profile/presentation/widgets/folder_item.dart';
+import 'package:rentit/features/profile/presentation/widgets/section_header.dart';
 
 class FoldersSection extends StatelessWidget {
   const FoldersSection({super.key});

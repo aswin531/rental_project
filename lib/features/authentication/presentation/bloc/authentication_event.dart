@@ -67,7 +67,7 @@ class FetchCurrentUser extends AuthEvent {}
 
 
 
-class UpdateUserProfile extends AuthEvent {
-  final Map<String, dynamic> userDetails;
-  const UpdateUserProfile(this.userDetails);
+class CompleteProfileSetupEvent extends AuthEvent {
+  final Map<String, dynamic> profileData;
+  const CompleteProfileSetupEvent(this.profileData);
 }

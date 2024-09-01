@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rentit/features/profile/widgets/folder_section.dart';
-import 'package:rentit/features/profile/widgets/profile_card.dart';
-import 'package:rentit/features/profile/widgets/team_sections.dart';
+import 'package:rentit/features/profile/presentation/widgets/folder_section.dart';
+import 'package:rentit/features/profile/presentation/widgets/profile_card.dart';
+import 'package:rentit/features/profile/presentation/widgets/team_sections.dart';
 
 class ProfileDashboard extends StatelessWidget {
   const ProfileDashboard({super.key});

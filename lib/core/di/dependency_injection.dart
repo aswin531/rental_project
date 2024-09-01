@@ -33,7 +33,7 @@ Future<void> init() async {
   final firebaseAuth = FirebaseAuth.instance;
   sl.registerLazySingleton(() => firebaseAuth);
 
-   final firestore = FirebaseFirestore.instance;
+  final firestore = FirebaseFirestore.instance;
   sl.registerLazySingleton(() => firestore);
 // GoogleSignIn===========================================
   final googleSignIn = GoogleSignIn();
@@ -64,17 +64,17 @@ Future<void> init() async {
 
 //BLoC==================================
   sl.registerFactory(() => AuthBloc(
-        signInWithGoogle: sl(),
-        signInWithEmailAndPassword: sl(),
-        signUpWithEmailAndPassword: sl(),
-        verifyPhoneNumber: sl(),
-        signInWithPhoneNumber: sl(),
-        signOut: sl(),
-        getCurrentUser: sl(),
-        saveAuthToken: sl(),
-        getAuthToken: sl(),
-        clearAuthToken: sl(),
-      ));
+      signInWithGoogle: sl(),
+      signInWithEmailAndPassword: sl(),
+      signUpWithEmailAndPassword: sl(),
+      verifyPhoneNumber: sl(),
+      signInWithPhoneNumber: sl(),
+      signOut: sl(),
+      getCurrentUser: sl(),
+      saveAuthToken: sl(),
+      getAuthToken: sl(),
+      clearAuthToken: sl(),
+      saveUserProfileUsecase: sl()));
 
 //LOCATION================================================
 

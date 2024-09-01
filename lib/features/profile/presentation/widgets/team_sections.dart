@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rentit/features/profile/widgets/detailed_page.dart';
-import 'package:rentit/features/profile/widgets/section_header.dart';
-import 'package:rentit/features/profile/widgets/team_item.dart';
+import 'package:rentit/features/profile/presentation/widgets/detailed_page.dart';
+import 'package:rentit/features/profile/presentation/widgets/section_header.dart';
+import 'package:rentit/features/profile/presentation/widgets/team_item.dart';
 
 class TeamSection extends StatelessWidget {
   TeamSection({super.key});
