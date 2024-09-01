@@ -2,7 +2,6 @@ import 'package:go_router/go_router.dart';
 import 'package:rentit/features/authentication/presentation/pages/confirm_otp.dart';
 import 'package:rentit/features/authentication/presentation/pages/login_screen.dart';
 import 'package:rentit/features/authentication/presentation/pages/phone_number_register.dart';
-import 'package:rentit/features/authentication/presentation/pages/profile_intro.dart';
 import 'package:rentit/features/authentication/presentation/pages/register_screen.dart';
 import 'package:rentit/features/authentication/presentation/pages/reglog.dart';
 import 'package:rentit/features/bottomnav/presentation/pages/bottomnav_with_anicons.dart';
@@ -61,10 +60,7 @@ final GoRouter router = GoRouter(initialLocation: '/splash', routes: [
     path: '/carDetailPage',
     builder: (context, state) => const CarDetailPage(),
   ),
-  GoRoute(
-    path: '/userIntroProfileDetailsScreen',
-    builder: (context, state) => const UserIntroProfileDetailsScreen(),
-  ),
+
 ]);
 
 
