@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
@@ -23,8 +24,27 @@ class BookingContent extends StatelessWidget {
               .add(FetchUserRentalRequestsWithCarDetailsEvent(user));
         }
         if (state is UserRentalRequestsWithCarDetailsLoaded) {
-          final rentalRequestWithCarDetails =
-              state.requestsWithCarDetails.last;
+          if (state.requestsWithCarDetails.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    'assets/animation/no_user.json',
+                    width: 250,
+                    height: 250,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "You didn't request any rental",
+                    style: TextStyle(fontSize: 18, color: Colors.black54),
+                  ),
+                ],
+              ),
+            );
+          }
+          final rentalRequestWithCarDetails = state.requestsWithCarDetails.last;
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -51,7 +71,7 @@ class BookingContent extends StatelessWidget {
                     seatCapacity: rentalRequestWithCarDetails.car.seatCapacity,
                   ),
                   const SizedBox(height: 20),
-                 // const LocationMap(),
+                  // const LocationMap(),
                   const SizedBox(height: 20),
                   ActionButtons(
                     rentalPrice: rentalRequestWithCarDetails

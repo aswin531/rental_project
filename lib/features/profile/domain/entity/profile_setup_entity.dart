@@ -1,7 +1,7 @@
-
 class UserProfile {
   final String userId;
   final String name;
+  final String job;
   final String location;
   final String cityState;
   final String phone;
@@ -13,6 +13,7 @@ class UserProfile {
   UserProfile({
     required this.userId,
     required this.name,
+    required this.job,
     required this.location,
     required this.cityState,
     required this.phone,
@@ -20,5 +21,6 @@ class UserProfile {
     required this.dob,
     required this.homeLocation,
     this.imageUrl,
-  });
+ 
+ });
 }

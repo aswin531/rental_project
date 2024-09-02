@@ -7,8 +7,8 @@ import 'package:rentit/features/authentication/presentation/widgets/register_for
 import 'package:rentit/features/authentication/presentation/widgets/social_label.dart';
 
 class RegisterScreen extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
+  //final TextEditingController nameController = TextEditingController();
+  //final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();

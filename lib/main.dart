@@ -1,11 +1,18 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:rentit/core/di/profile_dependencies.dart';
 import 'package:rentit/core/services/stripe_services.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_bloc.dart';
+import 'package:rentit/features/profile/domain/usecases/profile_setup_getprofile_usecase.dart';
+import 'package:rentit/features/profile/domain/usecases/profile_setup_saveuser_usecase.dart';
+import 'package:rentit/features/profile/domain/usecases/profile_setup_update.dart';
+import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_bloc.dart';
 import 'package:rentit/utils/screen_util_setup.dart';
 import 'package:rentit/core/di/dependency_injection.dart';
 import 'package:rentit/core/router/approutes.dart';
@@ -36,7 +43,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await stripeSetUp();
-
+  await profileInit();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -57,6 +64,15 @@ Future<void> main() async {
           create: (_) => RentalRequestRepositoryImpl(
             FirebaseRentalRequestDataSource(FirebaseFirestore.instance),
           ),
+        ),
+        RepositoryProvider<SaveUserProfileUsecase>(
+          create: (_) => sl<SaveUserProfileUsecase>(),
+        ),
+        RepositoryProvider<GetUserProfile>(
+          create: (_) => sl<GetUserProfile>(),
+        ),
+        RepositoryProvider<UpdateUserProfile>(
+          create: (_) => sl<UpdateUserProfile>(),
         ),
       ],
       child: MultiBlocProvider(providers: [
@@ -81,13 +97,20 @@ Future<void> main() async {
                 getBrandUsecase: GetBrandUsecase(
                     carRepository: context.read<CarRepository>()),
                 getCarsByBrandUsecase: GetCarsByBrandUsecase(
-                    carRepository: context.read<CarRepository>()))),  
+                    carRepository: context.read<CarRepository>()))),
         BlocProvider(create: (context) => NavigationBloc()),
         BlocProvider(create: (context) => TabBloc()),
         BlocProvider(create: (context) => SelectedCarBloc()),
         BlocProvider(create: (_) => sl<LocationMapBloc>()),
         BlocProvider<PaymentBloc>(
           create: (context) => sl<PaymentBloc>(),
+        ),
+        BlocProvider<ProfileSetupBloc>(
+          create: (context) => ProfileSetupBloc(
+              firebaseAuth: GetIt.I<FirebaseAuth>(),
+              saveUserProfileUsecase: context.read<SaveUserProfileUsecase>(),
+              getUserProfileUsecase: context.read<GetUserProfile>(),
+              updateUserProfileUsecase: context.read<UpdateUserProfile>()),
         ),
       ], child: const MyApp())));
 }

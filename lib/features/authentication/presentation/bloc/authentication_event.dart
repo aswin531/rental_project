@@ -1,5 +1,3 @@
-// part of 'authentication_bloc.dart';
-
 import 'package:equatable/equatable.dart';
 
 abstract class AuthEvent extends Equatable {
@@ -53,7 +51,8 @@ class VerifyPhoneCodeEvent extends AuthEvent {
   final String verificationId;
   final String smsCode;
 
-  const VerifyPhoneCodeEvent({required this.verificationId, required this.smsCode});
+  const VerifyPhoneCodeEvent(
+      {required this.verificationId, required this.smsCode});
 
   @override
   List<Object> get props => [verificationId, smsCode];
@@ -65,9 +64,9 @@ class CheckStatusEvent extends AuthEvent {}
 
 class FetchCurrentUser extends AuthEvent {}
 
-
-
 class CompleteProfileSetupEvent extends AuthEvent {
   final Map<String, dynamic> profileData;
   const CompleteProfileSetupEvent(this.profileData);
+  @override
+  List<Object> get props => [profileData];
 }

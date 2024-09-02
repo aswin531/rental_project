@@ -1,16 +1,22 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rentit/features/profile/data/model/userprofile_model.dart';
 
 abstract class UserprofileDatasource {
   Future<void> saveuserProfile(UserProfileModel profile);
   Future<UserProfileModel?> getUserProfile(String userId);
   Future<void> updateUserProfile(UserProfileModel profile);
+    Future<String> uploadProfileImage(File imageFile);
+
 }
 
 class UserProfileDataSourceImple implements UserprofileDatasource {
   final FirebaseFirestore firebaseFirestore;
+    final FirebaseStorage firebaseStorage;
 
-  UserProfileDataSourceImple(this.firebaseFirestore);
+
+  UserProfileDataSourceImple(this.firebaseFirestore,this.firebaseStorage);
 
   @override
   Future<void> saveuserProfile(UserProfileModel profile) async {
@@ -36,5 +42,19 @@ class UserProfileDataSourceImple implements UserprofileDatasource {
         .collection('user_profiles')
         .doc(profile.userId)
         .update(profile.toJson());
+  }
+  
+  @override
+  Future<String> uploadProfileImage(File imageFile) async {
+    try {
+      final storageRef = firebaseStorage
+          .ref()
+          .child('profile_images/${imageFile.uri.pathSegments.last}');
+      final uploadTask = await storageRef.putFile(imageFile);
+      final downloadUrl = await uploadTask.ref.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      throw Exception('Failed to upload image: $e');
+    }
   }
 }

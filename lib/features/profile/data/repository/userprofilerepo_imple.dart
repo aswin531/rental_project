@@ -12,6 +12,7 @@ class UserprofilerepoImple implements UserProfileRepository {
     final userProfileModel = UserProfileModel(
         userId: profile.userId,
         name: profile.name,
+        job: profile.job,
         location: profile.location,
         cityState: profile.cityState,
         phone: profile.phone,
@@ -33,6 +34,7 @@ class UserprofilerepoImple implements UserProfileRepository {
     final userProfileModel = UserProfileModel(
       userId: profile.userId,
       name: profile.name,
+      job: profile.job,
       location: profile.location,
       cityState: profile.cityState,
       phone: profile.phone,

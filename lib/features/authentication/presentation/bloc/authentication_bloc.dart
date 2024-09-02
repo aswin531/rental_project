@@ -20,7 +20,6 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
   final ClearAuthToken clearAuthToken;
   final SaveUserProfileUsecase saveUserProfileUsecase;
 
-
   AuthBloc({
     required this.signInWithGoogle,
     required this.signInWithEmailAndPassword,
@@ -32,7 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
     required this.saveAuthToken,
     required this.getAuthToken,
     required this.clearAuthToken,
-    required this.saveUserProfileUsecase, 
+    required this.saveUserProfileUsecase,
   }) : super(AuthInitial()) {
     on<FetchCurrentUser>((event, emit) {
       final user = getCurrentUser();
@@ -79,8 +78,8 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         await saveAuthToken(token ?? '');
         final user = getCurrentUser();
         final userId = user?.uid;
-    final userService = UserService();
-    userService.setUserId(userId ?? '');
+        final userService = UserService();
+        userService.setUserId(userId ?? '');
         debugPrint('User ID set:$userId');
         emit(AuthAuthenticated(user!));
       } catch (e) {
@@ -97,7 +96,16 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         await saveAuthToken(token ?? '');
         final user = getCurrentUser();
 
-        emit(AuthAuthenticated(user!));
+        if (user != null) {
+          emit(AuthProfileIncomplete(user));
+        } else {
+          emit(AuthUnAuthenticated());
+        }
+        if (user != null) {
+          emit(AuthProfileIncomplete(user));
+        } else {
+          emit(AuthUnAuthenticated());
+        }
       } catch (e) {
         emit(AuthError(message: e.toString()));
       }
@@ -136,9 +144,9 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         emit(AuthError(message: e.toString()));
       }
     });
-    
+
     //=====================SignOut-Event========================
-     on<CompleteProfileSetupEvent>((event, emit) async {
+    on<CompleteProfileSetupEvent>((event, emit) async {
       emit(AuthLoading());
       try {
         final user = getCurrentUser();
@@ -146,6 +154,7 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
           final userProfile = UserProfile(
             userId: user.uid,
             name: event.profileData['name'],
+            job: event.profileData['job'],
             location: event.profileData['location'],
             cityState: event.profileData['cityState'],
             phone: event.profileData['phone'],
@@ -163,8 +172,5 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         emit(AuthError(message: e.toString()));
       }
     });
-
   }
-
-
 }

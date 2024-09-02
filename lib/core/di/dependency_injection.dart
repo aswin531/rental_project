@@ -102,9 +102,17 @@ Future<void> init() async {
 
   sl.registerLazySingleton<PaymentRepository>(
       () => StripePaymentRepository(stripeSecretKey: stripeSecretKey));
-
-  //sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
 }
+
+
+
+
+
+
+
+
+
+
 
 // Lazy singleton means the instance
 //will be created only once when it is needed for the first time.

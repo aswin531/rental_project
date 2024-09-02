@@ -1,11 +1,10 @@
-// lib/data/models/user_profile_model.dart
-
 import 'package:rentit/features/profile/domain/entity/profile_setup_entity.dart';
 
 class UserProfileModel extends UserProfile {
   UserProfileModel({
     required super.userId,
     required super.name,
+    required super.job,
     required super.location,
     required super.cityState,
     required super.phone,
@@ -19,6 +18,7 @@ class UserProfileModel extends UserProfile {
     return UserProfileModel(
       userId: json['userId'],
       name: json['name'],
+      job: json['job'],
       location: json['location'],
       cityState: json['cityState'],
       phone: json['phone'],
@@ -33,6 +33,7 @@ class UserProfileModel extends UserProfile {
     return {
       'userId': userId,
       'name': name,
+      'job': job,
       'location': location,
       'cityState': cityState,
       'phone': phone,

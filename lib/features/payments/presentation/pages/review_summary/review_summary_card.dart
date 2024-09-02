@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:rentit/features/payments/presentation/pages/review_summary/car_info_section.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class ReviewSummaryScreen extends StatelessWidget {
   const ReviewSummaryScreen({super.key});
@@ -21,6 +23,27 @@ class ReviewSummaryScreen extends StatelessWidget {
             .add(FetchUserRentalRequestsWithCarDetailsEvent(user));
       }
       if (state is UserRentalRequestsWithCarDetailsLoaded) {
+        if (state.requestsWithCarDetails.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  'assets/animation/no_user.json',
+                  width: 250,
+                  height: 250,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(height: 20),
+                const PrimaryText(
+                  text: "You didn't request any rental",
+                  size: 18,
+                  color: Colors.black54,
+                ),
+              ],
+            ),
+          );
+        }
         final rentalRequestWithCarDetails = state.requestsWithCarDetails.first;
         return Scaffold(
           backgroundColor: ExternalAppColors.bg,

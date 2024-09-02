@@ -1,10 +1,10 @@
-
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:rentit/features/profile/presentation/widgets/stat_column.dart';
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key});
+  final String username;
+  const ProfileCard({super.key,required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ProfileCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         padding: const EdgeInsets.all(16),
-        child: const Column(
+        child:  Column(
           children: [
             CircleAvatar(
               radius: 60,
@@ -31,7 +31,7 @@ class ProfileCard extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'Richard A. Bachmann',
+              username,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,

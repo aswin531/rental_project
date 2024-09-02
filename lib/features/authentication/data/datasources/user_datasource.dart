@@ -29,6 +29,4 @@ class UserRepository {
     }
     return null;
   }
-
-  // ... existing methods ...
 }
