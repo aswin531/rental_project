@@ -105,50 +105,10 @@ class RentalFormWidget extends StatelessWidget {
           pickUpTime: rentalRequestBloc.startTime!,
           estimatedKilometersDriven: 0,
           //estimatedKilometersDriven: double.parse(formState.kilometersController.text),
-          onSubmit: onSubmit,
+        //  onSubmit: onSubmit,
         ),
       ),
     );
   }
 }
   
-
-  // void _submitForm(BuildContext context) {
-  //   final user = FirebaseAuth.instance.currentUser;
-
-  //   if (formState.formKey.currentState!.validate()) {
-  //     final rentalRequestBloc = context.read<RentalRequestBloc>();
-  //     final state = rentalRequestBloc.state;
-  //     if (state is RentalRequestDateTimeState &&
-  //         state.pickupDate != null &&
-  //         state.returnDate != null) {
-  //       final rentalRequest = RentalRequest(
-  //         id: formState.licenseController.text,
-  //         carId: carId,
-  //         userId: user!.uid,
-  //         pickUpLocation: rentalRequestBloc.pickupLocation,
-  //         dropOffLocation: rentalRequestBloc.dropOffLocation,
-  //         pickupDate: rentalRequestBloc.pickupDate!,
-  //         returnDate: rentalRequestBloc.returnDate!,
-  //         pickupTime: rentalRequestBloc.startTime!,
-  //         returnTime: rentalRequestBloc.returnTime!,
-  //         name: formState.nameController.text,
-  //         phone: formState.phoneController.text,
-  //         email: formState.emailController.text,
-  //         address: formState.addressController.text,
-  //         licenseNumber: formState.licenseController.text,
-  //         comments: formState.commentController.text,
-  //         createdAt: DateTime.now(),
-  //         status: RentalRequestStatus.pending,
-  //       );
-  //       onSubmit(rentalRequest);
-  //       Navigator.pop(context);
-  //     } else {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(
-  //             content: Text('Please select start and end dates/times')),
-  //       );
-  //     }
-  //   }
-  // }
-
