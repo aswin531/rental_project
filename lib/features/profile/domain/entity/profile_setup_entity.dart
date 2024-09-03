@@ -20,7 +20,6 @@ class UserProfile {
     required this.license,
     required this.dob,
     required this.homeLocation,
-    this.imageUrl,
- 
+    required this.imageUrl,
  });
 }

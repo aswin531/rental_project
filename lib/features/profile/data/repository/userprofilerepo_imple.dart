@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:rentit/features/profile/data/datasource/userprofile_datasource.dart';
 import 'package:rentit/features/profile/data/model/userprofile_model.dart';
 import 'package:rentit/features/profile/domain/entity/profile_setup_entity.dart';
@@ -5,6 +7,7 @@ import 'package:rentit/features/profile/domain/repository/profile_setup_repo.dar
 
 class UserprofilerepoImple implements UserProfileRepository {
   final UserprofileDatasource userprofileDatasource;
+
   UserprofilerepoImple(this.userprofileDatasource);
 
   @override
@@ -18,6 +21,7 @@ class UserprofilerepoImple implements UserProfileRepository {
         phone: profile.phone,
         license: profile.license,
         dob: profile.dob,
+        imageUrl: profile.imageUrl,
         homeLocation: profile.homeLocation);
 
     await userprofileDatasource.saveuserProfile(userProfileModel);
@@ -44,5 +48,10 @@ class UserprofilerepoImple implements UserProfileRepository {
       imageUrl: profile.imageUrl,
     );
     await userprofileDatasource.updateUserProfile(userProfileModel);
+  }
+
+  @override
+  Future<String> uploadProfileImage(File imageFile) async {
+    return userprofileDatasource.uploadProfileImage(imageFile);
   }
 }

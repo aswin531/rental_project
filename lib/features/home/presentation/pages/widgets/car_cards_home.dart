@@ -21,7 +21,6 @@ class CarCard extends StatelessWidget {
       onTap: () {
         context.read<SelectedCarBloc>().add(SelectCar(car));
         context.push('/carDetailPage');
-
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -90,8 +89,8 @@ class CarCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),CustomContainer(text: car.body),
-            
+              const SizedBox(height: 16),
+              CustomContainer(text: car.body),
               const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,7 +111,7 @@ class CarCard extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: '/hrs',
+                          text: '/day',
                           style: TextStyle(
                               color: ExternalAppColors.grey,
                               fontSize: 18,

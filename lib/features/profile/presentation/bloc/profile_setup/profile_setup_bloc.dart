@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/profile/domain/entity/profile_setup_entity.dart';
+import 'package:rentit/features/profile/domain/usecases/profile_image_upload.dart';
 import 'package:rentit/features/profile/domain/usecases/profile_setup_getprofile_usecase.dart';
 import 'package:rentit/features/profile/domain/usecases/profile_setup_saveuser_usecase.dart';
 import 'package:rentit/features/profile/domain/usecases/profile_setup_update.dart';
@@ -11,31 +14,34 @@ import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_
 
 class ProfileSetupBloc extends Bloc<ProfileSetupEvent, ProfileSetupState> {
   final SaveUserProfileUsecase saveUserProfileUsecase;
-    final GetUserProfile getUserProfileUsecase;
+  final GetUserProfile getUserProfileUsecase;
   final UpdateUserProfile updateUserProfileUsecase;
+  final UploadProfileImageUsecase uploadProfileImageUsecase;
 
   final FirebaseAuth firebaseAuth;
-    PlatformFile? selectedImage;
+  PlatformFile? selectedImage;
 
-
-  ProfileSetupBloc({
-    required this.saveUserProfileUsecase,
-    required this.getUserProfileUsecase,
-    required this.updateUserProfileUsecase,
-    required this.firebaseAuth,
-  }) : super(ProfileSetupInitial()) {
+  ProfileSetupBloc(
+      {required this.saveUserProfileUsecase,
+      required this.getUserProfileUsecase,
+      required this.updateUserProfileUsecase,
+      required this.firebaseAuth,
+      required this.uploadProfileImageUsecase})
+      : super(ProfileSetupInitial()) {
     on<SubmitProfileSetup>(onSubmitProfileSetup);
-    on<ProfileImagePickedEvent>(onPickProfileImage);//FetchUserProfile
+    on<ProfileImagePickedEvent>(onPickProfileImage);
     on<FetchUserProfile>(onFetchUserProfile);
     on<UpdateProfileEvent>(onUpdateProfile);
-    
   }
   Future<void> onSubmitProfileSetup(
       SubmitProfileSetup event, Emitter<ProfileSetupState> emit) async {
     emit(ProfileSetupLoading());
     try {
       final currentUser = firebaseAuth.currentUser;
-      debugPrint(currentUser?.uid.toString());
+      String imageUrl =
+          await uploadProfileImageUsecase.call(File(event.profileImage!.path!));
+
+      debugPrint("Image URL **/**/*/*/*/*/*/*/*/*/ $imageUrl");
       final userProfile = UserProfile(
           userId: currentUser!.uid.toString(),
           name: event.name,
@@ -46,20 +52,18 @@ class ProfileSetupBloc extends Bloc<ProfileSetupEvent, ProfileSetupState> {
           license: event.license,
           dob: event.dob,
           homeLocation: event.homeLocation,
-          imageUrl: "");
+          imageUrl: imageUrl);
       await saveUserProfileUsecase.call(userProfile);
       emit(ProfileSetupSuccess());
     } catch (e) {
       emit(ProfileSetupError(e.toString()));
     }
   }
+
   Future<void> onPickProfileImage(
       ProfileImagePickedEvent event, Emitter<ProfileSetupState> emit) async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      selectedImage = result.files.single;
-      emit(ProfileImagePickedState(selectedImage!));
-    }
+    selectedImage = event.file;
+    emit(ProfileImagePickedState(selectedImage!));
   }
 
   Future<void> onFetchUserProfile(
@@ -69,7 +73,8 @@ class ProfileSetupBloc extends Bloc<ProfileSetupEvent, ProfileSetupState> {
       final currentUser = firebaseAuth.currentUser;
       final userProfile = await getUserProfileUsecase.call(currentUser!.uid);
       if (userProfile != null) {
-        emit(ProfileSetupLoaded(userProfile)); // Emit state with the loaded profile
+        emit(ProfileSetupLoaded(
+            userProfile)); // Emit state with the loaded profile
       } else {
         emit(const ProfileSetupError('User profile not found'));
       }
@@ -88,5 +93,4 @@ class ProfileSetupBloc extends Bloc<ProfileSetupEvent, ProfileSetupState> {
       emit(ProfileUpdateError(e.toString()));
     }
   }
-
 }

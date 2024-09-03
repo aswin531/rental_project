@@ -11,7 +11,7 @@ class UserProfileModel extends UserProfile {
     required super.license,
     required super.dob,
     required super.homeLocation,
-    super.imageUrl,
+    required super.imageUrl,
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {

@@ -9,6 +9,7 @@ import 'package:rentit/core/di/profile_dependencies.dart';
 import 'package:rentit/core/services/stripe_services.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_bloc.dart';
+import 'package:rentit/features/profile/domain/usecases/profile_image_upload.dart';
 import 'package:rentit/features/profile/domain/usecases/profile_setup_getprofile_usecase.dart';
 import 'package:rentit/features/profile/domain/usecases/profile_setup_saveuser_usecase.dart';
 import 'package:rentit/features/profile/domain/usecases/profile_setup_update.dart';
@@ -74,6 +75,9 @@ Future<void> main() async {
         RepositoryProvider<UpdateUserProfile>(
           create: (_) => sl<UpdateUserProfile>(),
         ),
+         RepositoryProvider<UploadProfileImageUsecase>(
+          create: (_) => sl<UploadProfileImageUsecase>(),
+        ),
       ],
       child: MultiBlocProvider(providers: [
         BlocProvider<AuthBloc>(
@@ -110,6 +114,7 @@ Future<void> main() async {
               firebaseAuth: GetIt.I<FirebaseAuth>(),
               saveUserProfileUsecase: context.read<SaveUserProfileUsecase>(),
               getUserProfileUsecase: context.read<GetUserProfile>(),
+              uploadProfileImageUsecase: context.read<UploadProfileImageUsecase>(),
               updateUserProfileUsecase: context.read<UpdateUserProfile>()),
         ),
       ], child: const MyApp())));

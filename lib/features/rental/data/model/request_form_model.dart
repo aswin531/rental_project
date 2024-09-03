@@ -21,6 +21,7 @@ class RentalRequestModel extends RentalRequest {
     required super.status,
     super.pickUpLocation,
     super.dropOffLocation,
+    super.estimatedCost,
     //*************** */
   });
 
@@ -71,7 +72,8 @@ class RentalRequestModel extends RentalRequest {
           .split('.')
           .last,           //splitting status.toString() => RentalRequestStatus.<status>
       'pickUpLocation': pickUpLocation,
-      'dropOffLocation': dropOffLocation,   
+      'dropOffLocation': dropOffLocation,  
+      'estimatedCost':estimatedCost,
 
           
     };
@@ -96,7 +98,8 @@ class RentalRequestModel extends RentalRequest {
       createdAt: entity.createdAt,
       status: entity.status,
       pickUpLocation: entity.pickUpLocation,
-      dropOffLocation: entity.dropOffLocation
+      dropOffLocation: entity.dropOffLocation,
+      estimatedCost: entity.estimatedCost
     );
   }
 }

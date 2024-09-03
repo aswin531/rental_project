@@ -16,6 +16,8 @@ class RentalRequest {
   final DateTime createdAt;
   final String? pickUpLocation;
   final String? dropOffLocation;
+  final double? estimatedCost;
+
 
   RentalRequest(
       {this.id,
@@ -35,6 +37,7 @@ class RentalRequest {
       required this.status, //this.status = false, // Default status is false (pending)
       this.pickUpLocation,
       this.dropOffLocation,
+      this.estimatedCost,
       });
 }
 

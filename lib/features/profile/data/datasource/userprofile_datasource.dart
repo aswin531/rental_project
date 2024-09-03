@@ -7,13 +7,13 @@ abstract class UserprofileDatasource {
   Future<void> saveuserProfile(UserProfileModel profile);
   Future<UserProfileModel?> getUserProfile(String userId);
   Future<void> updateUserProfile(UserProfileModel profile);
-    Future<String> uploadProfileImage(File imageFile);
+  Future<String> uploadProfileImage(File imageFile);
 
 }
 
 class UserProfileDataSourceImple implements UserprofileDatasource {
   final FirebaseFirestore firebaseFirestore;
-    final FirebaseStorage firebaseStorage;
+  final FirebaseStorage firebaseStorage;
 
 
   UserProfileDataSourceImple(this.firebaseFirestore,this.firebaseStorage);
@@ -47,9 +47,7 @@ class UserProfileDataSourceImple implements UserprofileDatasource {
   @override
   Future<String> uploadProfileImage(File imageFile) async {
     try {
-      final storageRef = firebaseStorage
-          .ref()
-          .child('profile_images/${imageFile.uri.pathSegments.last}');
+      final storageRef = firebaseStorage.ref().child('profile_images/${imageFile.uri.pathSegments.last}');
       final uploadTask = await storageRef.putFile(imageFile);
       final downloadUrl = await uploadTask.ref.getDownloadURL();
       return downloadUrl;

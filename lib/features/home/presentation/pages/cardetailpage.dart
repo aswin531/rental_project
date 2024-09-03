@@ -162,7 +162,7 @@ class CarDetailPage extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: '/hr',
+                              text: '/day',
                               style: TextStyle(
                                   color: ExternalAppColors.grey,
                                   fontSize: 18,
