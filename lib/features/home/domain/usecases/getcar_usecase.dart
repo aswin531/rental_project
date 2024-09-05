@@ -6,11 +6,14 @@ class GetCarsStreamUseCase {
 
   GetCarsStreamUseCase({required this.repository});
 
-  Stream<List<CarVehicleEntity>> execute() {
+  Stream<List<CarVehicleEntity>> call() {
     return repository.getCars();
   }
 }
 
 
 
-// What is the responsibility of the UseCase? The use case is responsible for encapsulating the business logic for a single reusable task the system must perform. 1- Business logic focuses on the WHAT the product team needs to achieve when they describe to us the task.
+// What is the responsibility of the UseCase? The use case is responsible for 
+//encapsulating the business logic for a single reusable task the system must 
+//perform. 1- Business logic focuses on the WHAT the product team needs to 
+//achieve when they describe to us the task.

@@ -28,7 +28,7 @@ class CarInfoSection extends StatelessWidget {
             imageUrl,
             width: 180,
             height: 180,
-            fit: BoxFit.cover,
+            fit: BoxFit.fitWidth,
           ),
         ),
         const SizedBox(width: 16),

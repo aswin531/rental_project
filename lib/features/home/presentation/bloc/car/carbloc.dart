@@ -15,10 +15,10 @@ class CarBloc extends Bloc<CarEvent, CarState> {
     on<RefreshCars>(onRefreshCars);
   }
 
-  Future<void> onFetchCars(FetchCars event, Emitter<CarState> emit) async {
+  onFetchCars(FetchCars event, Emitter<CarState> emit) async {
     emit(CarLoading());
     try {
-      final cars = getCarsStreamUseCase.execute();
+      final cars = getCarsStreamUseCase();
       await emit.forEach<List<CarVehicleEntity>>(
         cars,
         onData: (cars) => CarLoaded(cars),
@@ -30,10 +30,10 @@ class CarBloc extends Bloc<CarEvent, CarState> {
     }
   }
 
-  Future<void> onRefreshCars(RefreshCars event, Emitter<CarState> emit) async {
+  onRefreshCars(RefreshCars event, Emitter<CarState> emit) async {
     emit(CarLoading());
     try {
-      final cars = getCarsStreamUseCase.execute();
+      final cars = getCarsStreamUseCase();
       await emit.forEach<List<CarVehicleEntity>>(
         cars,
         onData: (cars) => CarLoaded(cars),

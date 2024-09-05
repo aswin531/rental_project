@@ -8,6 +8,7 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_stat
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_button.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/car_specs.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/req_car_details.dart';
+import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/status_animation.dart';
 import 'package:rentit/utils/appcolors.dart';
 
 class BookingContent extends StatelessWidget {
@@ -45,7 +46,7 @@ class BookingContent extends StatelessWidget {
             );
           }
           final rentalRequestWithCarDetails = state.requestsWithCarDetails.last;
-
+          // debugPrint(rentalRequestWithCarDetails.rentalRequest.stoString());
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
@@ -63,6 +64,11 @@ class BookingContent extends StatelessWidget {
                     rentalPrice: rentalRequestWithCarDetails
                         .car.rentalPriceRange.start
                         .toString(),
+                    status: rentalRequestWithCarDetails.rentalRequest.status
+                        .toString()
+                        .split('.')
+                        .last
+                        .toUpperCase(),
                   ),
                   const SizedBox(height: 20),
                   CarSpecs(
@@ -78,6 +84,11 @@ class BookingContent extends StatelessWidget {
                         .car.rentalPriceRange.start
                         .toString(),
                   ),
+                  AnimatedStatus(
+                    isVisible: true,
+                    status: rentalRequestWithCarDetails.rentalRequest.status
+                        .toString(),
+                  )
                 ],
               ),
             ),

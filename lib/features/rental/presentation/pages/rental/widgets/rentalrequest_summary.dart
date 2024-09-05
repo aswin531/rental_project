@@ -9,6 +9,7 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class RentalRequestReviewSummaryScreen extends StatelessWidget {
   final String carId;
@@ -28,7 +29,7 @@ class RentalRequestReviewSummaryScreen extends StatelessWidget {
   final double estimatedKilometersDriven;
 
   const RentalRequestReviewSummaryScreen({
-    Key? key,
+    super.key,
     required this.carId,
     required this.pickupDate,
     required this.returnDate,
@@ -44,7 +45,7 @@ class RentalRequestReviewSummaryScreen extends StatelessWidget {
     required this.pickUpTime,
     required this.returnTime,
     required this.estimatedKilometersDriven,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,8 @@ class RentalRequestReviewSummaryScreen extends StatelessWidget {
         backgroundColor: ExternalAppColors.bg,
         appBar: AppBar(
           backgroundColor: ExternalAppColors.bg,
-          title: const Text('Rental Summary', style: TextStyle(color: Colors.black)),
+          title: const Text('Rental Summary',
+              style: TextStyle(color: Colors.black)),
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -82,15 +84,18 @@ class RentalRequestReviewSummaryScreen extends StatelessWidget {
                 if (state is CarSelected) {
                   final selectedCar = state.car;
                   debugPrint(selectedCar.toString());
-                  final rentalDays = returnDate.difference(pickupDate).inDays + 1;
+                  final rentalDays =
+                      returnDate.difference(pickupDate).inDays + 1;
                   const double defaultFreeKmAllowance = 100;
                   const double defaultPerKmRate = 0.5;
                   final pricePerDay = selectedCar.rentalPriceRange.end.toInt();
 
-                  final extraKm = (estimatedKilometersDriven > defaultFreeKmAllowance)
-                      ? estimatedKilometersDriven - defaultFreeKmAllowance
-                      : 0;
-                  final estimatedCost = (pricePerDay * rentalDays) + (extraKm * defaultPerKmRate);
+                  final extraKm =
+                      (estimatedKilometersDriven > defaultFreeKmAllowance)
+                          ? estimatedKilometersDriven - defaultFreeKmAllowance
+                          : 0;
+                  final estimatedCost =
+                      (pricePerDay * rentalDays) + (extraKm * defaultPerKmRate);
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,44 +109,63 @@ class RentalRequestReviewSummaryScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
                       _buildSectionTitle('Rental Details'),
-                      _buildDetailRow('Pick-up Date', DateFormat('MMM dd, yyyy').format(pickupDate)),
-                      _buildDetailRow('Pick-up Time', DateFormat('hh:mm a').format(pickUpTime)),
-                      _buildDetailRow('Return Date', DateFormat('MMM dd, yyyy').format(returnDate)),
-                      _buildDetailRow('Return Time', DateFormat('hh:mm a').format(returnTime)),
+                      _buildDetailRow('Pick-up Date',
+                          DateFormat('MMM dd, yyyy').format(pickupDate)),
+                      _buildDetailRow('Pick-up Time',
+                          DateFormat('hh:mm a').format(pickUpTime)),
+                      _buildDetailRow('Return Date',
+                          DateFormat('MMM dd, yyyy').format(returnDate)),
+                      _buildDetailRow('Return Time',
+                          DateFormat('hh:mm a').format(returnTime)),
                       _buildDetailRow('Pick-up Location', pickupLocation),
                       _buildDetailRow('Drop-off Location', dropOffLocation),
                       const SizedBox(height: 24),
+                      const Divider(),
                       _buildSectionTitle('Pricing'),
-                      _buildDetailRow('Daily Rate', '\$${pricePerDay.toStringAsFixed(2)}'),
+                      _buildDetailRow(
+                          'Daily Rate', '\$${pricePerDay.toStringAsFixed(2)}'),
                       _buildDetailRow('Number of Days', rentalDays.toString()),
-                      _buildDetailRow('Estimated Kilometers', '${estimatedKilometersDriven.toStringAsFixed(2)} km'),
-                      _buildDetailRow('Free Kilometer Allowance', '${defaultFreeKmAllowance.toStringAsFixed(2)} km'),
-                      _buildDetailRow('Extra Kilometer Rate', '\$${defaultPerKmRate.toStringAsFixed(2)}/km'),
-                      _buildDetailRow('Estimated Total Cost', '\$${estimatedCost.toStringAsFixed(2)}', isTotal: true),
+                      _buildDetailRow('Estimated Kilometers',
+                          '${estimatedKilometersDriven.toStringAsFixed(2)} km'),
+                      _buildDetailRow('Free Kilometer Allowance',
+                          '${defaultFreeKmAllowance.toStringAsFixed(2)} km'),
+                      _buildDetailRow('Extra Kilometer Rate',
+                          '\$${defaultPerKmRate.toStringAsFixed(2)}/km'),
+                      _buildDetailRow('Estimated Total Cost',
+                          '\$${estimatedCost.toStringAsFixed(2)}',
+                          isTotal: true),
                       const SizedBox(height: 24),
+                      const Divider(),
                       _buildSectionTitle('Customer Information'),
                       _buildDetailRow('Name', name),
                       _buildDetailRow('Phone', phone),
                       _buildDetailRow('Email', email),
                       _buildDetailRow('Address', address),
                       _buildDetailRow('License Number', licenseNumber),
-                      if (comments.isNotEmpty) _buildDetailRow('Comments', comments),
+                      if (comments.isNotEmpty)
+                        _buildDetailRow('Comments', comments),
                       const SizedBox(height: 32),
                       SizedBox(
                         width: double.infinity,
-                        child: BlocBuilder<RentalRequestBloc, RentalRequestState>(
+                        child:
+                            BlocBuilder<RentalRequestBloc, RentalRequestState>(
                           builder: (context, state) {
                             return ElevatedButton(
                               onPressed: state is RentalRequestLoading
                                   ? null
-                                  : () => _submitRequest(context, estimatedCost),
+                                  : () =>
+                                      _submitRequest(context, estimatedCost),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: ExternalAppColors.blue,
-                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
                               ),
-                              child: Text(
-                                state is RentalRequestLoading ? 'Submitting...' : 'Confirm and Submit',
-                                style: const TextStyle(fontSize: 18),
+                              child: PrimaryText(
+                                text: state is RentalRequestLoading
+                                    ? 'Submitting...'
+                                    : 'Confirm and Submit',
+                                size: 18,
+                                color: ExternalAppColors.white,
                               ),
                             );
                           },
@@ -182,7 +206,9 @@ class RentalRequestReviewSummaryScreen extends StatelessWidget {
       estimatedCost: estimatedCost,
     );
 
-    context.read<RentalRequestBloc>().add(CreateRentalRequestEvent(rentalRequest));
+    context
+        .read<RentalRequestBloc>()
+        .add(CreateRentalRequestEvent(rentalRequest));
   }
 
   Widget _buildSectionTitle(String title) {

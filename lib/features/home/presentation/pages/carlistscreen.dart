@@ -34,7 +34,8 @@ class CarListScreen extends StatelessWidget {
             listener: (context, state) {
 if (state.currentAddress == null) {
       context.read<LocationMapBloc>().add(MoveToCurrentLocation());
-    }                        },
+    }
+                 },
           ),
           BlocListener<CarBloc, CarState>(
             listener: (context, state) {

@@ -9,6 +9,7 @@ class CarDetails extends StatelessWidget {
   final String rentalPrice;
   final String body;
   final String imageUrl;
+  final String status;
 
   const CarDetails(
       {super.key,
@@ -16,7 +17,8 @@ class CarDetails extends StatelessWidget {
       required this.model,
       required this.rentalPrice,
       required this.body,
-      required this.imageUrl});
+      required this.imageUrl,
+      required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +102,7 @@ class CarDetails extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: '/hr',
+                      text: '/day',
                       style: TextStyle(
                           color: ExternalAppColors.grey,
                           fontSize: 18,
@@ -115,7 +117,8 @@ class CarDetails extends StatelessWidget {
             height: 20,
             color: ExternalAppColors.bg,
             thickness: 2,
-          )
+          ),
+          Text(status)
         ],
       ),
     );
