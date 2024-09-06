@@ -27,22 +27,6 @@ class UserRentalRequestsWithCarDetailsLoaded extends RentalRequestState {
   UserRentalRequestsWithCarDetailsLoaded(this.requestsWithCarDetails);
 }
 
-// class RentalRequestDateTimeUpdated extends RentalRequestState {}
-
-// class RentalRequestDateTimeState extends RentalRequestState {
-//   final DateTime? pickupDate;
-//   final DateTime? startTime;
-//   final DateTime? returnDate;
-//   final DateTime? returnTime;
-
-//   RentalRequestDateTimeState({
-//     this.pickupDate,
-//     this.startTime,
-//     this.returnDate,
-//     this.returnTime,
-//   });
-// }
-
 class RentalRequestDateTimeState extends RentalRequestState {
   final DateTime? pickupDate;
   final DateTime? returnDate;
@@ -61,3 +45,4 @@ class RentalRequestDateTimeState extends RentalRequestState {
   });
 }
 
+class ReturnProcessCompleted extends RentalRequestState{}

@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/rental/domain/usecases/get_user_rental.dart';
+import 'package:rentit/features/rental/domain/usecases/rental_car_return_completion.dart';
+import 'package:rentit/features/rental/domain/usecases/update_car_availability_usecase.dart';
 import 'package:rentit/features/rental/domain/usecases/update_request.dart';
 import 'package:rentit/features/rental/domain/usecases/rental_usecase.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
@@ -17,12 +19,17 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   final CreateRentalRequest createRentalRequest;
   final GetUserRentalRequests getUserRentalRequests;
   final UpdateRentalRequestStatus updateRentalRequestStatus;
+  final UpdateCarAvailabilityUsecase updateCarAvailabilityUsecase;
+  final CompleteReturnProcessUsecase completeReturnProcessUsecase;
+
   final AuthRepository? authRepository;
 
   RentalRequestBloc(
       {required this.createRentalRequest,
       required this.getUserRentalRequests,
       required this.updateRentalRequestStatus,
+      required this.updateCarAvailabilityUsecase,
+      required this.completeReturnProcessUsecase,
       this.authRepository})
       : super(RentalRequestInitial()) {
     on<CreateRentalRequestEvent>(_onCreateRentalRequest);
@@ -34,7 +41,9 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     on<UpdateReturnDateEvent>(_onUpdateReturnDate);
     on<UpdateReturnTimeEvent>(_onUpdateReturnTime);
     on<UpdatePickupLocationEvent>(_onUpdatePickupLocation);
-  on<UpdateDropOffLocationEvent>(_onUpdateDropOffLocation);
+    on<UpdateDropOffLocationEvent>(_onUpdateDropOffLocation);
+    //on<AcceptRentalRequestEvent>(_onAcceptRentalRequestEvent);
+    //on<CompleteReturnProcessEvent>(_onCompleteReturnProcessEvent);
   }
 
   Future<void> _onCreateRentalRequest(
@@ -130,32 +139,46 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   }
 
   void _onUpdatePickupLocation(
-  UpdatePickupLocationEvent event,
-  Emitter<RentalRequestState> emit,
-) {
-  pickupLocation = event.pickupLocation;
-  emit(RentalRequestDateTimeState(
-    pickupDate: pickupDate,
-    startTime: startTime,
-    returnDate: returnDate,
-    returnTime: returnTime,
-    pickupLocation: pickupLocation,
-    dropOffLocation: dropOffLocation,
-  ));
-}
+    UpdatePickupLocationEvent event,
+    Emitter<RentalRequestState> emit,
+  ) {
+    pickupLocation = event.pickupLocation;
+    emit(RentalRequestDateTimeState(
+      pickupDate: pickupDate,
+      startTime: startTime,
+      returnDate: returnDate,
+      returnTime: returnTime,
+      pickupLocation: pickupLocation,
+      dropOffLocation: dropOffLocation,
+    ));
+  }
 
-void _onUpdateDropOffLocation(
-  UpdateDropOffLocationEvent event,
-  Emitter<RentalRequestState> emit,
-) {
-  dropOffLocation = event.dropOffLocation;
-  emit(RentalRequestDateTimeState(
-    pickupDate: pickupDate,
-    startTime: startTime,
-    returnDate: returnDate,
-    returnTime: returnTime,
-    pickupLocation: pickupLocation,
-    dropOffLocation: dropOffLocation,
-  ));
-}
+  void _onUpdateDropOffLocation(
+    UpdateDropOffLocationEvent event,
+    Emitter<RentalRequestState> emit,
+  ) {
+    dropOffLocation = event.dropOffLocation;
+    emit(RentalRequestDateTimeState(
+      pickupDate: pickupDate,
+      startTime: startTime,
+      returnDate: returnDate,
+      returnTime: returnTime,
+      pickupLocation: pickupLocation,
+      dropOffLocation: dropOffLocation,
+    ));
+  }
+
+/*  Future<void> _onAcceptRentalRequestEvent(AcceptRentalRequestEvent event,
+      Emitter<ReturnProcessCompleted> emit) async {
+    emit(RentalRequestLoading());
+    try {
+      await completeReturnProcessUsecase.call(event.requestId);
+      emit(ReturnProcessCompleted());
+    } catch (e) {
+      emit(RentalRequestError(
+          'Failed to complete return process: ${e.toString()}'));
+w    }
+  }
+
+  Future<void> _onCompleteReturnProcessEvent() async {}*/
 }

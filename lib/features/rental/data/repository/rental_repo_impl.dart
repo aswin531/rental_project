@@ -14,12 +14,25 @@ class RentalRequestRepositoryImpl implements RentalRequestRepository {
   }
 
   @override
-  Future<List<RentalRequestWithCarDetails>> getUserRentalRequests(String userId) {
+  Future<List<RentalRequestWithCarDetails>> getUserRentalRequests(
+      String userId) {
     return dataSource.getUserRentalRequests(userId);
   }
 
   @override
   Future<void> updateRentalRequestStatus(String requestId, String status) {
     return dataSource.updateRentalRequestStatus(requestId, status);
+  }
+
+  @override
+  Future<void> updateCarAvailability(
+      String carId, DateTime? startDate, DateTime? endDate, bool isAvailable) {
+    return dataSource.updateCarAvailability(
+        carId, startDate, endDate, isAvailable);
+  }
+
+  @override
+  Future<void> completeReturnProcess(String requestId) {
+    return dataSource.completeReturnProcess(requestId);
   }
 }
