@@ -5,9 +5,14 @@ class UpdateCarAvailabilityUsecase {
 
   UpdateCarAvailabilityUsecase(this.rentalRequestRepository);
 
-  Future<void> call(
-      String carId, DateTime? startDate, DateTime? endDate, bool isAvailable) {
+  Future<bool> call(String carId, String? startDateString, String? endDateString) {
+    DateTime? startDate = startDateString != null ? DateTime.parse(startDateString) : null;
+    DateTime? endDate = endDateString != null ? DateTime.parse(endDateString) : null;
+
     return rentalRequestRepository.updateCarAvailability(
-        carId, startDate, endDate, isAvailable);
+      carId,
+      startDate,
+      endDate,
+    );
   }
 }

@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:rentit/core/di/profile_dependencies.dart';
+import 'package:rentit/core/helpers/background_task_scheduler.dart';
+import 'package:rentit/core/helpers/notification_helper.dart';
 import 'package:rentit/core/services/stripe_services.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_bloc.dart';
@@ -14,6 +16,13 @@ import 'package:rentit/features/profile/domain/usecases/profile_setup_getprofile
 import 'package:rentit/features/profile/domain/usecases/profile_setup_saveuser_usecase.dart';
 import 'package:rentit/features/profile/domain/usecases/profile_setup_update.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_bloc.dart';
+import 'package:rentit/features/rental/domain/usecases/rental_car_return_completion.dart';
+import 'package:rentit/features/rental/domain/usecases/update_car_availability_usecase.dart';
+import 'package:rentit/features/returncar/data/datasource/return_car_datasource.dart';
+import 'package:rentit/features/returncar/data/repository/return_car_repo_impl.dart';
+import 'package:rentit/features/returncar/domain/usecases/return_car_confirm_usecases.dart';
+import 'package:rentit/features/returncar/domain/usecases/return_car_initial_usecases.dart';
+import 'package:rentit/features/returncar/presentation/bloc/return_car_bloc.dart';
 import 'package:rentit/utils/screen_util_setup.dart';
 import 'package:rentit/core/di/dependency_injection.dart';
 import 'package:rentit/core/router/approutes.dart';
@@ -39,12 +48,17 @@ import 'package:rentit/features/rental/domain/usecases/rental_usecase.dart';
 import 'package:rentit/features/rental/domain/usecases/update_request.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
+import 'package:workmanager/workmanager.dart';
 import 'firebase_options.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await stripeSetUp();
   await profileInit();
+  await initializeNotifications();
+  tz.initializeTimeZones();
+  await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -75,7 +89,10 @@ Future<void> main() async {
         RepositoryProvider<UpdateUserProfile>(
           create: (_) => sl<UpdateUserProfile>(),
         ),
-         RepositoryProvider<UploadProfileImageUsecase>(
+        RepositoryProvider<UploadProfileImageUsecase>(
+          create: (_) => sl<UploadProfileImageUsecase>(),
+        ),
+        RepositoryProvider<UploadProfileImageUsecase>(
           create: (_) => sl<UploadProfileImageUsecase>(),
         ),
       ],
@@ -89,12 +106,16 @@ Future<void> main() async {
                     GetCarsStreamUseCase(repository: _.read<CarRepository>()))),
         BlocProvider(
           create: (_) => RentalRequestBloc(
+              completeReturnProcessUsecase: CompleteReturnProcessUsecase(
+                  _.read<RentalRequestRepository>()),
               createRentalRequest:
                   CreateRentalRequest(_.read<RentalRequestRepository>()),
               getUserRentalRequests:
                   GetUserRentalRequests(_.read<RentalRequestRepository>()),
               updateRentalRequestStatus:
-                  UpdateRentalRequestStatus(_.read<RentalRequestRepository>())),
+                  UpdateRentalRequestStatus(_.read<RentalRequestRepository>()),
+              updateCarAvailabilityUsecase: UpdateCarAvailabilityUsecase(
+                  _.read<RentalRequestRepository>())),
         ),
         BlocProvider(
             create: (context) => BrandsBloc(
@@ -114,9 +135,24 @@ Future<void> main() async {
               firebaseAuth: GetIt.I<FirebaseAuth>(),
               saveUserProfileUsecase: context.read<SaveUserProfileUsecase>(),
               getUserProfileUsecase: context.read<GetUserProfile>(),
-              uploadProfileImageUsecase: context.read<UploadProfileImageUsecase>(),
+              uploadProfileImageUsecase:
+                  context.read<UploadProfileImageUsecase>(),
               updateUserProfileUsecase: context.read<UpdateUserProfile>()),
         ),
+        BlocProvider(
+          create: (_) => CarReturnBloc(
+            returnCarInitialUsecases: ReturnCarInitialUsecases(
+              CarReturnRepositoryImpl(
+                ReturnCarDataSourceImpl(FirebaseFirestore.instance),
+              ),
+            ),
+            returnCarConfirmUsecase: ReturnCarConfirmUsecase(
+              CarReturnRepositoryImpl(
+                ReturnCarDataSourceImpl(FirebaseFirestore.instance),
+              ),
+            ),
+          ),
+        )
       ], child: const MyApp())));
 }
 
@@ -132,7 +168,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         // showPerformanceOverlay: true,
-        title: 'Flutter Demo',
+        title: 'Rent IT',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,

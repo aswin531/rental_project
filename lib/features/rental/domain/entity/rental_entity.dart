@@ -17,7 +17,8 @@ class RentalRequest {
   final String? pickUpLocation;
   final String? dropOffLocation;
   final double? estimatedCost;
-
+  DateTime? actualReturnDate;
+  bool? isLate;
 
   RentalRequest(
       {this.id,
@@ -38,7 +39,8 @@ class RentalRequest {
       this.pickUpLocation,
       this.dropOffLocation,
       this.estimatedCost,
-      });
+      this.actualReturnDate,
+      this.isLate});
 }
 
 enum RentalRequestStatus { pending, accepted, rejected }

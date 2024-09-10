@@ -44,7 +44,7 @@ class ReviewSummaryScreen extends StatelessWidget {
             ),
           );
         }
-        final rentalRequestWithCarDetails = state.requestsWithCarDetails.first;
+        final rentalRequestWithCarDetails = state.requestsWithCarDetails.last;
         return Scaffold(
           backgroundColor: ExternalAppColors.bg,
           appBar: AppBar(

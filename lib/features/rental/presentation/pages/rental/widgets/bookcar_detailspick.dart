@@ -76,7 +76,7 @@ class BookcarDetailspick extends StatelessWidget {
                     height: 20,
                   ),
                   const DriverSelectionWidget(),
-                  const DateTimeSelectionScreen(),
+                   DateTimeSelectionScreen(carId: car.carId,),
                   Divider(
                     color: ExternalAppColors.grey.withOpacity(0.4),
                   ),

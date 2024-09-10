@@ -17,10 +17,10 @@ class BookingButton extends StatelessWidget {
     return BlocConsumer<RentalRequestBloc, RentalRequestState>(
       listener: (context, state) {
         if (state is RentalRequestCreated) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text('Rental request created successfully!')),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(
+          //       content: Text('Rental request created successfully!')),
+          // );
         } else if (state is RentalRequestError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Error: ${state.message}')),

@@ -9,8 +9,8 @@ abstract class RentalRequestDataSource {
   Future<List<RentalRequestWithCarDetails>> getUserRentalRequests(
       String userId);
   Future<void> updateRentalRequestStatus(String requestId, String status);
-  Future<void> updateCarAvailability(
-      String carId, DateTime? startDate, DateTime? endDate, bool isAvailable);
+  Future<bool> isCarAvailable(
+      String carId, DateTime? startDate, DateTime? endDate);
   Future<void> completeReturnProcess(String requestId);
 }
 
@@ -52,20 +52,39 @@ class FirebaseRentalRequestDataSource implements RentalRequestDataSource {
   }
 
   @override
-  Future<void> updateCarAvailability(String carId, DateTime? startDate,
-      DateTime? endDate, bool isAvailable) async {
-    await _firestore.collection('cars').doc(carId).update({
-      'isAvailable': isAvailable,
-      'reservedFrom': startDate,
-      'reservedUntil': endDate,
-    });
+  Future<bool> isCarAvailable(
+    String carId,
+    DateTime? startDate, // Now nullable
+    DateTime? endDate, // Now nullable
+  ) async {
+    if (startDate == null || endDate == null) {
+      // If either date is null, we cannot check availability, return false or handle appropriately
+      return false;
+    }
+
+    // Query rental requests where the car's pickup and return dates overlap with the requested dates
+    final rentalRequests = await _firestore
+        .collection('rentalRequests')
+        .where('carId', isEqualTo: carId)
+        .where('pickupDate', isLessThanOrEqualTo: endDate)
+        .where('returnDate', isGreaterThanOrEqualTo: startDate)
+        .get();
+
+    // If any document is found, the car is not available
+    if (rentalRequests.docs.isNotEmpty) {
+      return false;
+    }
+
+    // If no overlapping reservation is found, the car is available
+    return true;
   }
 
-    @override
+  @override
   Future<void> completeReturnProcess(String requestId) async {
     await _firestore.collection('rental_requests').doc(requestId).update({
-      'status': 'completed',
-      'actualReturnDate': DateTime.now(), // when the rental return process is marked as completed
+      'returnstatus': 'completed',
+      'actualReturnDate': DateTime
+          .now(), // when the rental return process is marked as completed
     });
   }
 

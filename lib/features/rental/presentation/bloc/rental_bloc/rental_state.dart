@@ -1,11 +1,19 @@
 import 'package:rentit/features/rental/data/model/combined.dart';
 import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
 
-abstract class RentalRequestState {}
+abstract class RentalRequestState {
+  final DateTime? startDate;
+  final DateTime? returnDate;
+  const RentalRequestState({this.startDate, this.returnDate});
+}
 
-class RentalRequestInitial extends RentalRequestState {}
+class RentalRequestInitial extends RentalRequestState {
+  RentalRequestInitial() : super();
+}
 
-class RentalRequestLoading extends RentalRequestState {}
+class RentalRequestLoading extends RentalRequestState {
+  RentalRequestLoading({super.startDate, super.returnDate});
+}
 
 class RentalRequestCreated extends RentalRequestState {}
 
@@ -18,7 +26,8 @@ class UserRentalRequestsLoaded extends RentalRequestState {
 
 class RentalRequestError extends RentalRequestState {
   final String message;
-  RentalRequestError(this.message);
+
+  RentalRequestError(this.message, {super.startDate, super.returnDate});
 }
 
 class UserRentalRequestsWithCarDetailsLoaded extends RentalRequestState {
@@ -45,4 +54,20 @@ class RentalRequestDateTimeState extends RentalRequestState {
   });
 }
 
-class ReturnProcessCompleted extends RentalRequestState{}
+class ReturnProcessCompleted extends RentalRequestState {}
+
+class CarAvailabilityChecked extends RentalRequestState {
+  final bool isAvailable;
+
+  CarAvailabilityChecked(
+      {required this.isAvailable, super.startDate, super.returnDate});
+}
+
+
+
+class CarStatusUpdated extends RentalRequestState {
+  final String status;
+
+  CarStatusUpdated({required this.status});
+}
+

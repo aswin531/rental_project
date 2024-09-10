@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_bloc.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_event.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_state.dart';
@@ -17,25 +18,26 @@ class ActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<PaymentBloc, PaymentState>(
       listener: (context, state) {
-        if (state is PaymentSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Payment successful!')),
-          );
-          final user = FirebaseAuth.instance.currentUser!.uid;
-          context
-              .read<RentalRequestBloc>()
-              .add(FetchUserRentalRequestsWithCarDetailsEvent(user));
+        // if (state is PaymentSuccess) {
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     const SnackBar(content: Text('Payment successful!')),
+        //   );
+        //   Lottie.asset("assets/animation/success.json");
+        //   final user = FirebaseAuth.instance.currentUser!.uid;
+        //   context
+        //       .read<RentalRequestBloc>()
+        //       .add(FetchUserRentalRequestsWithCarDetailsEvent(user));
 
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const ReviewSummaryScreen(),
-            ),
-          );
-        } else if (state is PaymentFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-        }
+        //   Navigator.of(context).pushReplacement(
+        //     MaterialPageRoute(
+        //       builder: (context) => const ReviewSummaryScreen(),
+        //     ),
+        //   );
+        // } else if (state is PaymentFailure) {
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(content: Text(state.message)),
+        //   );
+        // }
       },
       builder: (context, state) {
         return Row(
@@ -53,6 +55,26 @@ class ActionButtons extends StatelessWidget {
                         context.read<PaymentBloc>().add(MakePaymentEvent(
                             amount: double.parse(rentalPrice).toInt(),
                             currency: 'usd'));
+                        if (state is PaymentSuccess) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Payment successful!')),
+                          );
+                          Lottie.asset("assets/animation/success.json");
+                          final user = FirebaseAuth.instance.currentUser!.uid;
+                          context.read<RentalRequestBloc>().add(
+                              FetchUserRentalRequestsWithCarDetailsEvent(user));
+
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => const ReviewSummaryScreen(),
+                            ),
+                          );
+                        } else if (state is PaymentFailure) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(state.message)),
+                          );
+                        }
                       },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                 child: const PrimaryText(

@@ -66,7 +66,7 @@ class ProfileSetupPage extends StatelessWidget {
                     );
                     if (result != null) {
                       // ignore: use_build_context_synchronously
-                      context.read<ProfileSetupBloc>().add(ProfileImagePickedEvent(result.files.first));
+                      context.read<ProfileSetupBloc>().add(ProfileImagePickedEvent(result.files.last));
                     }
                   },
                   child: CircleAvatar(

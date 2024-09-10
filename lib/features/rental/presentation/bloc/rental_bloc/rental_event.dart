@@ -59,32 +59,47 @@ class UpdatePickupLocationEvent extends RentalRequestEvent {
   UpdatePickupLocationEvent(this.pickupLocation);
 }
 
-class UpdateDropOffLocationEvent extends RentalRequestEvent {
+class UpdateDropOffLocationEvent extends RentalRequestEvent { 
   final String dropOffLocation;
 
   UpdateDropOffLocationEvent(this.dropOffLocation);
 }
 
-class AcceptRentalRequestEvent extends RentalRequestEvent {
+// class AcceptRentalRequestEvent extends RentalRequestEvent {
+//   final String requestId;
+//   final String carId;
+//   final DateTime startDate;
+//   final DateTime endDate;
+
+//   AcceptRentalRequestEvent({
+//     required this.requestId,
+//     required this.carId,
+//     required this.startDate,
+//     required this.endDate,
+//   });
+// }
+
+class CompleteReturnProcessEvent extends RentalRequestEvent {
   final String requestId;
+  final String? carId;
+
+  CompleteReturnProcessEvent({
+    required this.requestId,
+    this.carId,
+  });
+}
+
+class CheckCarAvailabilityEvent extends RentalRequestEvent {
   final String carId;
   final DateTime startDate;
   final DateTime endDate;
 
-  AcceptRentalRequestEvent({
-    required this.requestId,
-    required this.carId,
-    required this.startDate,
-    required this.endDate,
-  });
+  CheckCarAvailabilityEvent({required this.carId, required this.startDate, required this.endDate});
 }
 
-class CompleteReturnProcessEvent extends RentalRequestEvent {
-  final String requestId;
+class UpdateCarStatusEvent extends RentalRequestEvent {
   final String carId;
+  final String status;
 
-  CompleteReturnProcessEvent({
-    required this.requestId,
-    required this.carId,
-  });
+  UpdateCarStatusEvent({required this.carId, required this.status});
 }

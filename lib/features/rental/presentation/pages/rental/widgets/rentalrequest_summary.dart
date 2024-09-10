@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selected_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/selectedcar/selectedcar_state.dart';
@@ -58,7 +59,7 @@ class RentalRequestReviewSummaryScreen extends StatelessWidget {
               backgroundColor: Colors.green,
             ),
           );
-          Navigator.pop(context);
+          context.pop();
         } else if (state is RentalRequestError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

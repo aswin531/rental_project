@@ -10,7 +10,7 @@ class RentalRequestModel extends RentalRequest {
     required super.pickupDate,
     required super.returnDate,
     required super.pickupTime,
-   required super.returnTime,
+    required super.returnTime,
     required super.name,
     required super.phone,
     required super.address,
@@ -22,6 +22,8 @@ class RentalRequestModel extends RentalRequest {
     super.pickUpLocation,
     super.dropOffLocation,
     super.estimatedCost,
+    super.actualReturnDate,
+    super.isLate,
     //*************** */
   });
 
@@ -30,7 +32,7 @@ class RentalRequestModel extends RentalRequest {
       id: id,
       carId: json['carId'] as String,
       userId: json['userId'] as String,
-      pickupDate: (json['pickupDate'] ).toDate(),
+      pickupDate: (json['pickupDate']).toDate(),
       returnDate: (json['returnDate']).toDate(),
       pickupTime: (json['pickupTime'] as Timestamp).toDate(),
       returnTime: (json['returnTime'] as Timestamp).toDate(),
@@ -40,7 +42,8 @@ class RentalRequestModel extends RentalRequest {
       licenseNumber: json['licenseNumber'] as String,
       email: json['email'] as String,
       comments: json['comments'] as String?,
-      createdAt: (json['createdAt'] ).toDate(),
+      createdAt: (json['createdAt']).toDate(),
+      estimatedCost: json['estimatedCost'] ?? 'estimatedCost',
       status: RentalRequestStatus.values.firstWhere(
           (element) =>
               element.toString().split('.').last ==
@@ -70,37 +73,34 @@ class RentalRequestModel extends RentalRequest {
       'status': status
           .toString()
           .split('.')
-          .last,           //splitting status.toString() => RentalRequestStatus.<status>
+          .last, //splitting status.toString() => RentalRequestStatus.<status>
       'pickUpLocation': pickUpLocation,
-      'dropOffLocation': dropOffLocation,  
-      'estimatedCost':estimatedCost,
-
-          
+      'dropOffLocation': dropOffLocation,
+      'estimatedCost': estimatedCost,
     };
   }
 
   // Convert entity to model
   factory RentalRequestModel.fromEntity(RentalRequest entity) {
     return RentalRequestModel(
-      id: entity.id,
-      carId: entity.carId,
-      userId: entity.userId,
-      pickupDate: entity.pickupDate,
-      returnDate: entity.returnDate,
-      pickupTime: entity.pickupTime,
-      returnTime: entity.returnTime,
-      name: entity.name,
-      phone: entity.phone,
-      address: entity.address,
-      licenseNumber: entity.licenseNumber,
-      email: entity.email,
-      comments: entity.comments,
-      createdAt: entity.createdAt,
-      status: entity.status,
-      pickUpLocation: entity.pickUpLocation,
-      dropOffLocation: entity.dropOffLocation,
-      estimatedCost: entity.estimatedCost
-    );
+        id: entity.id,
+        carId: entity.carId,
+        userId: entity.userId,
+        pickupDate: entity.pickupDate,
+        returnDate: entity.returnDate,
+        pickupTime: entity.pickupTime,
+        returnTime: entity.returnTime,
+        name: entity.name,
+        phone: entity.phone,
+        address: entity.address,
+        licenseNumber: entity.licenseNumber,
+        email: entity.email,
+        comments: entity.comments,
+        createdAt: entity.createdAt,
+        status: entity.status,
+        pickUpLocation: entity.pickUpLocation,
+        dropOffLocation: entity.dropOffLocation,
+        estimatedCost: entity.estimatedCost);
   }
 }
 

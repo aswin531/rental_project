@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentit/core/di/dependency_injection.dart';
 import 'package:rentit/features/payments/presentation/pages/review_summary/review_summary_card.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/event.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/state.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_components.dart';
+import 'package:rentit/features/returncar/presentation/pages/return_screen.dart';
 import 'package:rentit/utils/appcolors.dart';
 
 class BookingPage extends StatefulWidget {
@@ -56,10 +58,12 @@ class _BookingPageState extends State<BookingPage>
           ),
           body: IndexedStack(
             index: state.currentIndex,
-            children: const [
-              BookingContent(),
-              ReviewSummaryScreen(),
-              Center(child: Text('Cancelled Bookings')),
+            children: [
+              const BookingContent(),
+              const ReviewSummaryScreen(),
+              //ConfirmCarReturnForm(),
+              InitiateCarReturnButton(firebaseAuthInstance.currentUser!.uid)
+              // Center(child: Text('Cancelled Bookings')),
             ],
           ),
         );

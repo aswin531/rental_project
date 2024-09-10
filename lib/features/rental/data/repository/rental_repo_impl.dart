@@ -25,14 +25,19 @@ class RentalRequestRepositoryImpl implements RentalRequestRepository {
   }
 
   @override
-  Future<void> updateCarAvailability(
-      String carId, DateTime? startDate, DateTime? endDate, bool isAvailable) {
-    return dataSource.updateCarAvailability(
-        carId, startDate, endDate, isAvailable);
+  Future<bool> updateCarAvailability(
+      String carId, DateTime? startDate, DateTime? endDate) {
+    return dataSource.isCarAvailable(
+        carId, startDate, endDate);
   }
 
   @override
   Future<void> completeReturnProcess(String requestId) {
     return dataSource.completeReturnProcess(requestId);
+  }
+  
+  @override
+  Future<void> updateCarStatus(String carId, String status) {
+    throw UnimplementedError();
   }
 }

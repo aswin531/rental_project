@@ -10,6 +10,7 @@ import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/car_
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/req_car_details.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/status_animation.dart';
 import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class BookingContent extends StatelessWidget {
   const BookingContent({super.key});
@@ -46,7 +47,7 @@ class BookingContent extends StatelessWidget {
             );
           }
           final rentalRequestWithCarDetails = state.requestsWithCarDetails.last;
-          // debugPrint(rentalRequestWithCarDetails.rentalRequest.stoString());
+          debugPrint(rentalRequestWithCarDetails.rentalRequest.toString());
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
@@ -59,10 +60,10 @@ class BookingContent extends StatelessWidget {
                   CarDetails(
                     body: rentalRequestWithCarDetails.car.body,
                     brand: rentalRequestWithCarDetails.car.make,
-                    imageUrl: rentalRequestWithCarDetails.car.imageUrls.last,
+                    imageUrl: rentalRequestWithCarDetails.car.imageUrls.first,
                     model: rentalRequestWithCarDetails.car.model,
                     rentalPrice: rentalRequestWithCarDetails
-                        .car.rentalPriceRange.start
+                        .rentalRequest.estimatedCost
                         .toString(),
                     status: rentalRequestWithCarDetails.rentalRequest.status
                         .toString()
@@ -77,11 +78,25 @@ class BookingContent extends StatelessWidget {
                     seatCapacity: rentalRequestWithCarDetails.car.seatCapacity,
                   ),
                   const SizedBox(height: 20),
+                  PrimaryText(
+                    text: rentalRequestWithCarDetails.rentalRequest.userId,
+                    color: ExternalAppColors.black,
+                  ),
+                  const SizedBox(height: 20),
+                  PrimaryText(
+                    text: rentalRequestWithCarDetails.rentalRequest.carId,
+                    color: ExternalAppColors.black,
+                  ),
+                  const SizedBox(height: 20),
+                  PrimaryText(
+                    text: rentalRequestWithCarDetails.rentalRequest.name,
+                    color: ExternalAppColors.black,
+                  ),
                   // const LocationMap(),
                   const SizedBox(height: 20),
                   ActionButtons(
                     rentalPrice: rentalRequestWithCarDetails
-                        .car.rentalPriceRange.start
+                        .rentalRequest.estimatedCost
                         .toString(),
                   ),
                   AnimatedStatus(

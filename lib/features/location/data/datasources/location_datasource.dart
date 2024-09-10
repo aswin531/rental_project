@@ -66,8 +66,5 @@ class LocationDataSourceImpl implements LocationDatasource {
     }
   }
 
-  // @override
-  // Future<LocationModel> getSearchtLocation(String query) async {
-
-  // }
+ 
 }

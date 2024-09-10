@@ -26,4 +26,19 @@ class CarReturnModel extends CarReturnEntity {
         json['lateFee'],
         json['totalCost']);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'returnId': returnId,
+      'carId': carId,
+      'userId': userId,
+      'returnDate': returnDate,
+      'isDamaged': isDamaged,
+      'fuelLevel': fuelLevel,
+      'mileage': mileage,
+      'comments': comments,
+      'lateFee': lateFee,
+      'totalCost': totalCost,
+    };
+  }
 }
