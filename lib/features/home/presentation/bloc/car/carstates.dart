@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:rentit/features/home/data/model/carvehicle_model.dart';
 import 'package:rentit/features/home/domain/entity/car_entity.dart';
 
 abstract class CarState extends Equatable {
@@ -20,6 +21,15 @@ class CarLoaded extends CarState {
   @override
   List<Object> get props => [cars];
 }
+
+class CarSearchLoaded extends CarState {
+  final List<CarVehicleModel> cars;
+
+  const CarSearchLoaded(this.cars);
+  @override
+  List<Object> get props => [cars];
+}
+
 
 class CarError extends CarState {
   final String message;

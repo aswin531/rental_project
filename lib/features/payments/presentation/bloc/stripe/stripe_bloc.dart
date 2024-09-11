@@ -14,12 +14,16 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   Future<void> _onMakePayment(
       MakePaymentEvent event, Emitter<PaymentState> emit) async {
     emit(PaymentLoading());
-    final payment = Payment(amount: event.amount, currency: event.currency);
-    final result = await makePaymentUsecase(payment);
-    if (result) {
-      emit(PaymentSuccess());
-    } else {
-      emit(PaymentFailure("Payment failed Or was cancelled"));
+    try {
+      final payment = Payment(amount: event.amount, currency: event.currency);
+      final result = await makePaymentUsecase(payment);
+      if (result) {
+        emit(PaymentSuccess());
+      } else {
+        emit(PaymentFailure("Payment failed or was cancelled"));
+      }
+    } catch (e) {
+      emit(PaymentFailure(e.toString()));
     }
   }
 }

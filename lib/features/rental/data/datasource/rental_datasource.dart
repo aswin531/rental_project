@@ -1,5 +1,6 @@
 // rental_request_data_source.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:rentit/features/rental/data/model/car_req.dart';
 import 'package:rentit/features/rental/data/model/combined.dart';
 import 'package:rentit/features/rental/data/model/request_form_model.dart';
@@ -31,21 +32,32 @@ class FirebaseRentalRequestDataSource implements RentalRequestDataSource {
         .collection('rental_requests')
         .where('userId', isEqualTo: userId)
         .get();
-
+// .orderBy('createdAt', descending: true)
     List<RentalRequestWithCarDetails> results = [];
 
     for (var doc in rentalRequestsQuerySnapshot.docs) {
       final rentalRequest = RentalRequestModel.fromJson(doc.data(), doc.id);
+      debugPrint(
+          "CarID from fetching : ${rentalRequest.carId} and UserID from Fetching : ${rentalRequest.userId} and DocumentId : ${doc.id}");
 
       // Fetch car details
       final carDoc = await FirebaseFirestore.instance
           .collection('cars')
           .doc(rentalRequest.carId)
           .get();
-      final carData = carDoc.data();
-      final car = CarModel.fromJson(carData!, rentalRequest.carId);
-      results.add(
-          RentalRequestWithCarDetails(rentalRequest: rentalRequest, car: car));
+
+      if (carDoc.exists) {
+        final carData = carDoc.data();
+        if (carData != null) {
+          final car = CarModel.fromJson(carData, rentalRequest.carId);
+          results.add(RentalRequestWithCarDetails(
+              rentalRequest: rentalRequest, car: car));
+        } else {
+          debugPrint("Car data is null for carId: ${rentalRequest.carId}");
+        }
+      } else {
+        debugPrint("No car found with carId: ${rentalRequest.carId}");
+      }
     }
 
     return results;

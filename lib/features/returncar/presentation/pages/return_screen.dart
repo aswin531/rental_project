@@ -20,8 +20,8 @@ class InitiateCarReturnButton extends StatelessWidget {
               CarReturnInitiate(rentalId),
             );
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  ConfirmCarReturnForm(firebaseAuthInstance.currentUser!.uid),
+              builder: (context) => ConfirmCarReturnForm(
+                  firebaseAuthInstance.currentUser!.uid, rentalId),
             ));
           },
           child: state is CarReturnInProgress

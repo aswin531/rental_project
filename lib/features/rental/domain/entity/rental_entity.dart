@@ -19,9 +19,11 @@ class RentalRequest {
   final double? estimatedCost;
   DateTime? actualReturnDate;
   bool? isLate;
+  final String paymentStatus;
 
   RentalRequest(
       {this.id,
+      required this.paymentStatus,
       required this.carId,
       required this.userId,
       required this.pickupDate,

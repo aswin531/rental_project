@@ -9,6 +9,7 @@ import 'package:rentit/core/di/profile_dependencies.dart';
 import 'package:rentit/core/helpers/background_task_scheduler.dart';
 import 'package:rentit/core/helpers/notification_helper.dart';
 import 'package:rentit/core/services/stripe_services.dart';
+import 'package:rentit/features/home/domain/usecases/search_filter_usecases.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_bloc.dart';
 import 'package:rentit/features/profile/domain/usecases/profile_image_upload.dart';
@@ -102,6 +103,8 @@ Future<void> main() async {
         ),
         BlocProvider<CarBloc>(
             create: (_) => CarBloc(
+              filterCarsUsecase: FilterCarsUsecase(carRepository: _.read<CarRepository>()),
+            searchCarsUsecase: SearchCarsUsecase(carRepository: _.read<CarRepository>()),
                 getCarsStreamUseCase:
                     GetCarsStreamUseCase(repository: _.read<CarRepository>()))),
         BlocProvider(

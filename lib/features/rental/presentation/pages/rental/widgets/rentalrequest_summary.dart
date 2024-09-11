@@ -187,7 +187,7 @@ class RentalRequestReviewSummaryScreen extends StatelessWidget {
 
   void _submitRequest(BuildContext context, double estimatedCost) {
     final rentalRequest = RentalRequest(
-      id: licenseNumber,
+      id: licenseNumber,paymentStatus: "",
       carId: carId,
       userId: userId,
       pickUpLocation: pickupLocation,

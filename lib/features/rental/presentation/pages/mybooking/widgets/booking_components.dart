@@ -8,7 +8,6 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_stat
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_button.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/car_specs.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/req_car_details.dart';
-import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/status_animation.dart';
 import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
 
@@ -46,7 +45,8 @@ class BookingContent extends StatelessWidget {
               ),
             );
           }
-          final rentalRequestWithCarDetails = state.requestsWithCarDetails.last;
+          final rentalRequestWithCarDetails =
+              state.requestsWithCarDetails.first;
           debugPrint(rentalRequestWithCarDetails.rentalRequest.toString());
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -78,32 +78,35 @@ class BookingContent extends StatelessWidget {
                     seatCapacity: rentalRequestWithCarDetails.car.seatCapacity,
                   ),
                   const SizedBox(height: 20),
+                  // PrimaryText(
+                  //   text: rentalRequestWithCarDetails.rentalRequest.userId,
+                  //   color: ExternalAppColors.black,
+                  // ),
+                  // const SizedBox(height: 20),
+                  // PrimaryText(
+                  //   text: rentalRequestWithCarDetails.rentalRequest.carId,
+                  //   color: ExternalAppColors.black,
+                  // ),
+                  // const SizedBox(height: 20),
                   PrimaryText(
-                    text: rentalRequestWithCarDetails.rentalRequest.userId,
-                    color: ExternalAppColors.black,
-                  ),
-                  const SizedBox(height: 20),
-                  PrimaryText(
-                    text: rentalRequestWithCarDetails.rentalRequest.carId,
-                    color: ExternalAppColors.black,
-                  ),
-                  const SizedBox(height: 20),
-                  PrimaryText(
-                    text: rentalRequestWithCarDetails.rentalRequest.name,
+                    text:
+                        rentalRequestWithCarDetails.rentalRequest.paymentStatus,
                     color: ExternalAppColors.black,
                   ),
                   // const LocationMap(),
                   const SizedBox(height: 20),
                   ActionButtons(
+                    documentId:
+                        rentalRequestWithCarDetails.rentalRequest.id.toString(),
                     rentalPrice: rentalRequestWithCarDetails
                         .rentalRequest.estimatedCost
                         .toString(),
                   ),
-                  AnimatedStatus(
-                    isVisible: true,
-                    status: rentalRequestWithCarDetails.rentalRequest.status
-                        .toString(),
-                  )
+                  // AnimatedStatus(
+                  //   isVisible: true,
+                  //   status: rentalRequestWithCarDetails.rentalRequest.status
+                  //       .toString(),
+                  // )
                 ],
               ),
             ),

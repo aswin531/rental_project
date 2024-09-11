@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rentit/features/profile/presentation/widgets/detailed_page.dart';
 import 'package:rentit/features/profile/presentation/widgets/section_header.dart';
+import 'package:rentit/features/profile/presentation/widgets/settings_page.dart';
 import 'package:rentit/features/profile/presentation/widgets/team_item.dart';
+
 
 class TeamSection extends StatelessWidget {
   TeamSection({super.key});
@@ -51,12 +53,21 @@ class TeamSection extends StatelessWidget {
         ...teamItems.map((item) {
           return GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailsPage(title: item['title']),
-                ),
-              );
+              if (item['title'] == 'Settings') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsPage(),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsPage(title: item['title']),
+                  ),
+                );
+              }
             },
             child: TeamItem(
               title: item['title'],

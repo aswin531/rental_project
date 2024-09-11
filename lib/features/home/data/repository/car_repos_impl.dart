@@ -51,6 +51,23 @@ class CarReposImpl implements CarRepository {
     throw UnimplementedError();
   }
 
+   @override
+  Stream<List<CarVehicleModel>> getCarBySearch({
+    String? searchTerm,
+    String? make,
+    String? model,
+   // PriceRange? priceRange,
+    int? year,
+  }) {
+    return remoteDataSource.getCarBySearch(
+      searchTerm: searchTerm,
+      make: make,
+      model: model,
+     // priceRange: priceRange,
+      year: year,
+    );
+  }
+
   // @override
   // Future<List<CarVehicleModel>> getCarsByBrand(String brand) async {
   //   final cars = await remoteDataSource.getCars();

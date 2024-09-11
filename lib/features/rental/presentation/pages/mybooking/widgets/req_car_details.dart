@@ -118,7 +118,13 @@ class CarDetails extends StatelessWidget {
             color: ExternalAppColors.bg,
             thickness: 2,
           ),
-          Text(status)
+          Align(
+              alignment: Alignment.topLeft,
+              child: PrimaryText(
+                text: status,
+                color: ExternalAppColors.black,
+                size: 20,
+              ))
         ],
       ),
     );

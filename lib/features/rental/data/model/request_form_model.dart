@@ -17,6 +17,7 @@ class RentalRequestModel extends RentalRequest {
     required super.licenseNumber,
     required super.email,
     required super.createdAt,
+    required super.paymentStatus,
     super.comments,
     required super.status,
     super.pickUpLocation,
@@ -36,6 +37,7 @@ class RentalRequestModel extends RentalRequest {
       returnDate: (json['returnDate']).toDate(),
       pickupTime: (json['pickupTime'] as Timestamp).toDate(),
       returnTime: (json['returnTime'] as Timestamp).toDate(),
+      paymentStatus: json['paymentStatus'],
       name: json['name'] as String,
       phone: json['phone'] as String,
       address: json['address'] as String,
@@ -77,6 +79,7 @@ class RentalRequestModel extends RentalRequest {
       'pickUpLocation': pickUpLocation,
       'dropOffLocation': dropOffLocation,
       'estimatedCost': estimatedCost,
+      'paymentStatus':paymentStatus,
     };
   }
 
@@ -84,6 +87,7 @@ class RentalRequestModel extends RentalRequest {
   factory RentalRequestModel.fromEntity(RentalRequest entity) {
     return RentalRequestModel(
         id: entity.id,
+        paymentStatus: "",
         carId: entity.carId,
         userId: entity.userId,
         pickupDate: entity.pickupDate,

@@ -96,7 +96,7 @@ Future<void> init() async {
 //final dio = GetIt.instance<Dio>();
   sl.registerLazySingleton<Dio>(() => Dio());
 
-  sl.registerLazySingleton(() => PaymentBloc(makePaymentUsecase: sl()));
+   sl.registerLazySingleton(() => PaymentBloc(makePaymentUsecase: sl()));
 
   sl.registerLazySingleton(() => MakePaymentUsecase(sl()));
 

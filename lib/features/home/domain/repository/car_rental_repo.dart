@@ -6,4 +6,11 @@ abstract class CarRepository {
   Stream<List<CarVehicleEntity>> getCars();
    Future<List<BrandEntity>> getBrands();
    Future<List<CarVehicleModel>> getCarsByBrand(String brandName);
+    Stream<List<CarVehicleModel>> getCarBySearch({
+    String? searchTerm,
+    String? make,
+    String? model,
+    //PriceRange? priceRange,
+    int? year,
+  });
 }

@@ -63,17 +63,19 @@ class ReturnCarDataSourceImpl implements ReturnCarDatasource {
     }
 
     try {
-      await firebaseFirestore
-          .collection("rental_requests")
-          .doc(rentalId)
-          .update({
-        'return_status': 'returned',
-        'return_details': carReturnModel.toJson(),
-        'returned_at': DateTime.now().toIso8601String(),
-      });
-    } catch (e) {
-      debugPrint('Error confirming car return: $e');
-      throw Exception('Failed to confirm car return');
-    }
+  await firebaseFirestore
+      .collection("rental_requests")
+      .doc(rentalId)
+      .update({
+    'return_status': 'returned',
+    'return_details': carReturnModel.toJson(),
+    'returned_at': DateTime.now().toIso8601String(),
+  });
+  debugPrint("Return confirmation successful for rentalId: $rentalId");
+} catch (e) {
+  debugPrint('Error confirming car return: $e');
+  throw Exception('Failed to confirm car return');
+}
+
   }
 }
