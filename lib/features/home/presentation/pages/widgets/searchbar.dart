@@ -49,6 +49,7 @@ class SearchBarWidget extends StatelessWidget {
                 'assets/icons/filter.svg',
                 height: 30,
                 width: 30,
+                // ignore: deprecated_member_use
                 color: Colors.blue,
               ),
               onPressed: () {
@@ -65,7 +66,7 @@ class SearchBarWidget extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return FilterDialog();
+        return const FilterDialog();
       },
     );
   }

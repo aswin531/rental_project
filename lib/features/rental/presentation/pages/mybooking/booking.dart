@@ -6,6 +6,7 @@ import 'package:rentit/features/rental/presentation/bloc/tab_blloc/bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/event.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/state.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_components.dart';
+import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/completed_booking_rental.dart';
 import 'package:rentit/features/returncar/presentation/pages/return_screen.dart';
 import 'package:rentit/utils/appcolors.dart';
 
@@ -60,7 +61,8 @@ class _BookingPageState extends State<BookingPage>
             index: state.currentIndex,
             children: [
               const BookingContent(),
-              const ReviewSummaryScreen(),
+CompletedBookingsContent(),
+             // const ReviewSummaryScreen(),
               //ConfirmCarReturnForm(),
               InitiateCarReturnButton(firebaseAuthInstance.currentUser!.uid)
               // Center(child: Text('Cancelled Bookings')),

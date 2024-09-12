@@ -65,19 +65,12 @@ class UpdateDropOffLocationEvent extends RentalRequestEvent {
   UpdateDropOffLocationEvent(this.dropOffLocation);
 }
 
-// class AcceptRentalRequestEvent extends RentalRequestEvent {
-//   final String requestId;
-//   final String carId;
-//   final DateTime startDate;
-//   final DateTime endDate;
+class FetchCompletedRentalRequestsEvent extends RentalRequestEvent {
+  final String userId;
+  
+  FetchCompletedRentalRequestsEvent(this.userId);
+}
 
-//   AcceptRentalRequestEvent({
-//     required this.requestId,
-//     required this.carId,
-//     required this.startDate,
-//     required this.endDate,
-//   });
-// }
 
 class CompleteReturnProcessEvent extends RentalRequestEvent {
   final String requestId;

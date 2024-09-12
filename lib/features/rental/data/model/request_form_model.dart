@@ -37,7 +37,7 @@ class RentalRequestModel extends RentalRequest {
       returnDate: (json['returnDate']).toDate(),
       pickupTime: (json['pickupTime'] as Timestamp).toDate(),
       returnTime: (json['returnTime'] as Timestamp).toDate(),
-      paymentStatus: json['paymentStatus'],
+      paymentStatus: json['paymentStatus'] ,
       name: json['name'] as String,
       phone: json['phone'] as String,
       address: json['address'] as String,
@@ -86,8 +86,7 @@ class RentalRequestModel extends RentalRequest {
   // Convert entity to model
   factory RentalRequestModel.fromEntity(RentalRequest entity) {
     return RentalRequestModel(
-        id: entity.id,
-        paymentStatus: "",
+        id: entity.id,paymentStatus: "",
         carId: entity.carId,
         userId: entity.userId,
         pickupDate: entity.pickupDate,

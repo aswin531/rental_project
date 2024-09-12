@@ -136,7 +136,7 @@ class PricingSection extends StatelessWidget {
               size: 18,
             ),
             PrimaryText(
-              text: '\$30.00/hr',
+              text: '₹30.00/hr',
               color: ExternalAppColors.black,
               size: 17,
             ),
@@ -168,7 +168,7 @@ class PricingSection extends StatelessWidget {
               size: 18,
             ),
             PrimaryText(
-              text: '\$50.00',
+              text: '₹50.00',
               color: ExternalAppColors.black,
               size: 17,
             ),
@@ -186,7 +186,7 @@ class PricingSection extends StatelessWidget {
             ),
             PrimaryText(
               color: ExternalAppColors.black,
-              text: '\$770.00',
+              text: '₹770.00',
             ),
           ],
         ),
@@ -239,22 +239,21 @@ class ContinueButton extends StatelessWidget {
         onPressed: () {},
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
-          backgroundColor: Colors.blueAccent, // Button background color
-          foregroundColor: Colors.white, // Text color
-          shadowColor: Colors.blueAccent.withOpacity(0.5), // Shadow color
-          elevation: 5, // Button elevation
+          backgroundColor: Colors.blueAccent,
+          shadowColor: Colors.blueAccent.withOpacity(0.5),
+          elevation: 5,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12), // Rounded corners
+            borderRadius: BorderRadius.circular(12), 
             side: const BorderSide(
-                color: Colors.blue, width: 2), // Border color and width
+                color: Colors.blue, width: 2),
           ),
         ),
         child: const Text(
           'Continue',
           style: TextStyle(
-            fontSize: 18, // Font size
-            fontWeight: FontWeight.bold, // Font weight
-            letterSpacing: 1.2, // Spacing between letters
+            fontSize: 18, 
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2, 
           ),
         ),
       ),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +13,12 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/utils/primary_text.dart';
 
-
 class ActionButtons extends StatelessWidget {
   final String rentalPrice;
   final String documentId;
 
-  const ActionButtons({
-    Key? key, 
-    required this.rentalPrice, 
-    required this.documentId
-  }) : super(key: key);
+  const ActionButtons(
+      {super.key, required this.rentalPrice, required this.documentId});
 
   Future<bool> updatePaymentStatus(BuildContext context, String docId) async {
     try {
@@ -28,10 +26,10 @@ class ActionButtons extends StatelessWidget {
           .collection('rental_requests')
           .doc(docId)
           .update({'paymentStatus': 'completed'});
-      print('Payment status updated successfully for document: $docId');
+      debugPrint('Payment status updated successfully for document: $docId');
       return true;
     } catch (e) {
-      print('Error updating payment status: $e');
+      debugPrint('Error updating payment status: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to update payment status: $e')),
       );
@@ -45,10 +43,11 @@ class ActionButtons extends StatelessWidget {
       listener: (context, state) async {
         if (state is PaymentSuccess) {
           bool updateSuccess = await updatePaymentStatus(context, documentId);
-          
+
           if (updateSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Payment successful and status updated!')),
+              const SnackBar(
+                  content: Text('Payment successful and status updated!')),
             );
             showDialog(
               context: context,
@@ -68,7 +67,9 @@ class ActionButtons extends StatelessWidget {
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Payment successful, but failed to update status. Please contact support.')),
+              const SnackBar(
+                  content: Text(
+                      'Payment successful, but failed to update status. Please contact support.')),
             );
           }
         } else if (state is PaymentFailure) {
@@ -97,8 +98,8 @@ class ActionButtons extends StatelessWidget {
                           currency: 'usd'));
                     },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-              child: const PrimaryText(
-                text: 'Pay to proceed',
+              child: PrimaryText(
+                text: 'Pay to proceed $rentalPrice',
                 size: 14,
               ),
             ),

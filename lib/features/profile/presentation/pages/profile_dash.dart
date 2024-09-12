@@ -36,9 +36,7 @@ class ProfileDashboard extends StatelessWidget {
                     children: [
                       ProfileCard(
                         username: userProfile.name,
-                        imageUrl: userProfile.imageUrl?.isNotEmpty == true
-                            ? userProfile.imageUrl!
-                            : "assets/images/admin.jpg",
+                        imageUrl: "assets/images/admin.jpg",
                       ),
                       const SizedBox(height: 20),
                       const FoldersSection(),

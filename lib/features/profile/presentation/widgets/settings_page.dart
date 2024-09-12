@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_state.dart';
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,8 @@ class SettingsPage extends StatelessWidget {
         listener: (context, state) {
           if (state is AuthUnAuthenticated) {
             // Navigate to login page or initial page when logged out
-            Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/login', (route) => false);
           } else if (state is AuthError) {
             // Show error message
             ScaffoldMessenger.of(context).showSnackBar(
@@ -88,7 +90,7 @@ class SettingsPage extends StatelessWidget {
                         TextButton(
                           child: const Text('Exit'),
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            context.go('/login');
                             context.read<AuthBloc>().add(SignOutEvent());
                           },
                         ),

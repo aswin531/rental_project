@@ -1,28 +1,24 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:rentit/core/di/dependency_injection.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
-import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_button.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/car_specs.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/req_car_details.dart';
 import 'package:rentit/utils/appcolors.dart';
-import 'package:rentit/utils/primary_text.dart';
 
-class BookingContent extends StatelessWidget {
-  const BookingContent({super.key});
+class CompletedBookingsContent extends StatelessWidget {
+  const CompletedBookingsContent({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RentalRequestBloc, RentalRequestState>(
       builder: (context, state) {
         if (state is RentalRequestInitial) {
-          final user = FirebaseAuth.instance.currentUser!.uid;
-          context
-              .read<RentalRequestBloc>()
-              .add(FetchUserRentalRequestsWithCarDetailsEvent(user));
+          final user = firebaseAuthInstance.currentUser!.uid;
+          context.read<RentalRequestBloc>().add(FetchCompletedRentalRequestsEvent(user));
         }
         if (state is UserRentalRequestsWithCarDetailsLoaded) {
           if (state.requestsWithCarDetails.isEmpty) {
@@ -38,16 +34,14 @@ class BookingContent extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    "You didn't request any rental",
+                    "No completed rental requests",
                     style: TextStyle(fontSize: 18, color: Colors.black54),
                   ),
                 ],
               ),
             );
           }
-          final rentalRequestWithCarDetails =
-              state.requestsWithCarDetails.first;
-          debugPrint(rentalRequestWithCarDetails.rentalRequest.toString());
+          final rentalRequestWithCarDetails = state.requestsWithCarDetails.first;
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
@@ -55,7 +49,6 @@ class BookingContent extends StatelessWidget {
                   color: ExternalAppColors.white,
                   borderRadius: BorderRadius.circular(15)),
               child: ListView(
-                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CarDetails(
                     body: rentalRequestWithCarDetails.car.body,
@@ -78,23 +71,15 @@ class BookingContent extends StatelessWidget {
                     seatCapacity: rentalRequestWithCarDetails.car.seatCapacity,
                   ),
                   const SizedBox(height: 20),
-
-
-                  PrimaryText(
-                      text:
-                          "Payment status: ${rentalRequestWithCarDetails.rentalRequest.paymentStatus.toUpperCase()}",
-                      color: ExternalAppColors.blue,
-                      size: 20),
-                  // const LocationMap(),
-                  const SizedBox(height: 20),
-                  ActionButtons(
-                    documentId:
-                        rentalRequestWithCarDetails.rentalRequest.id.toString(),
-                    rentalPrice: rentalRequestWithCarDetails
-                        .rentalRequest.estimatedCost
-                        .toString(),
+                  Text(
+                    'Payment Status: ${rentalRequestWithCarDetails.rentalRequest.paymentStatus}',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: ExternalAppColors.black,
+                    ),
                   ),
-                  
+                  const SizedBox(height: 20),
+                  // ActionButtons and more can go here
                 ],
               ),
             ),

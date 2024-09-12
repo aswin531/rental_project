@@ -7,7 +7,6 @@ import 'package:rentit/features/profile/presentation/widgets/section_header.dart
 import 'package:rentit/features/profile/presentation/widgets/settings_page.dart';
 import 'package:rentit/features/profile/presentation/widgets/team_item.dart';
 
-
 class TeamSection extends StatelessWidget {
   TeamSection({super.key});
 
@@ -15,31 +14,37 @@ class TeamSection extends StatelessWidget {
     {
       'title': 'Profile',
       'subtitle': 'Project in Progress',
-      'avatars': ['assets/images/admin.jpg', 'assets/images/iphone.png'],
+      'avatars': [
+        'assets/images/admin.jpg',
+      ],
       'icon': FontAwesomeIcons.user
     },
     {
       'title': 'My Bookings',
       'subtitle': 'Completed',
-      'avatars': ['assets/images/admin.jpg', 'assets/images/iphone.png'],
+      'avatars': [
+        'assets/images/admin.jpg',
+      ],
       'icon': FontAwesomeIcons.calendarCheck
     },
     {
       'title': 'Settings',
       'subtitle': '',
-      'avatars': ['assets/images/iphone.png', 'assets/images/admin.jpg'],
+      'avatars': ['assets/images/admin.jpg'],
       'icon': FontAwesomeIcons.cogs
     },
     {
       'title': 'Privacy Policy',
       'subtitle': '',
-      'avatars': ['assets/images/location.jpg', 'assets/images/location.jpg'],
+      'avatars': [
+        'assets/images/admin.jpg',
+      ],
       'icon': FontAwesomeIcons.shieldAlt
     },
     {
       'title': 'My Account',
       'subtitle': '',
-      'avatars': ['assets/images/location.jpg', 'assets/images/admin.jpg'],
+      'avatars': ['assets/images/admin.jpg'],
       'icon': FontAwesomeIcons.userCog
     },
   ];
