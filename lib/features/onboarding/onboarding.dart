@@ -3,47 +3,56 @@ import 'package:flutter/services.dart';
 import 'package:rentit/features/onboarding/widgets/onboardingpage.dart';
 import 'package:rentit/features/onboarding/widgets/onboardingpagedata.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
+  @override
+  OnboardingScreenState createState() => OnboardingScreenState();
+}
+
+class OnboardingScreenState extends State<OnboardingScreen> {
+  PageController? pageController;
+  int currentIndex = 0;
+  double percentage = 0.25;
+
+  @override
+  void initState() {
+    pageController = PageController(initialPage: 0);
+    super.initState();
+  }
+
   final List<OnboardingPageData> pages = [
     OnboardingPageData(
-        backgroundColor: const Color(0xFFF0CF69),
-        imagePath: 'assets/icons/onboarding1F0CF69.svg',
-        text:
-            'Welcome to Rent It! Your go-to app for convenient and hassle-free car rentals.',
-        subText: "Find and rent the car that fits your needs, hassle-free.",
-        crossAxisAlignment: CrossAxisAlignment.start),
+      backgroundColor: const Color(0xFFF0CF69),
+      imagePath: 'assets/icons/onboarding1F0CF69.svg',
+      text: 'Welcome to Rent It!',
+      subText: "Find and rent the car that fits your needs.",
+      crossAxisAlignment: CrossAxisAlignment.start,
+    ),
     OnboardingPageData(
-        backgroundColor: const Color(0xFFB7ABFD),
-        imagePath: 'assets/icons/onboarding2B7ABFD.svg',
-        text: 'Discover a diverse range of cars to suit your needs.',
-        subText: 'Choose from a wide variety of vehicles, whenever you need.',
-        crossAxisAlignment: CrossAxisAlignment.end),
-    OnboardingPageData(
-        backgroundColor: const Color(0xFFEFB491),
-        imagePath: 'assets/icons/onboarding3EFB491.svg',
-        text:
-            'Choose your pickup and drop-off locations, select your desired car, and complete your booking.',
-        subText: 'Rent your car with just a few clicks, fast and secure.',
-        crossAxisAlignment: CrossAxisAlignment.end),
-    OnboardingPageData(
-        backgroundColor: const Color(0xFF95B6FF),
-        imagePath: 'assets/icons/onboarding495B6FF.svg',
-        text: 'Experience the convenience of hassle-free car rentals.',
-        subText: 'Affordable rates, no commitments, enjoy your ride.',
-        crossAxisAlignment: CrossAxisAlignment.center),
+      backgroundColor: const Color(0xFFB7ABFD),
+      imagePath: 'assets/icons/onboarding2B7ABFD.svg',
+      text: 'Discover a range of cars.',
+      subText: 'Choose from a variety of vehicles.',
+      crossAxisAlignment: CrossAxisAlignment.end,
+    ),
   ];
-
-  OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      // statusBarIconBrightness: Brightness.light,
     ));
     return Scaffold(
       body: PageView.builder(
+        controller: pageController,
         itemCount: pages.length,
+        onPageChanged: (int index) {
+          setState(() {
+            currentIndex = index;
+            percentage = (index + 1) / pages.length;
+          });
+        },
         itemBuilder: (context, index) {
           final page = pages[index];
           return OnboardingPage(
@@ -52,9 +61,28 @@ class OnboardingScreen extends StatelessWidget {
             text: page.text,
             subText: page.subText,
             crossAxisAlignment: page.crossAxisAlignment,
+            currentIndex: currentIndex,
+            pages: pages,
+            percentage: percentage,
+            onNextPressed: () {
+              if (currentIndex < pages.length - 1) {
+                pageController!.nextPage(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                );
+              }
+            },
+            onSkipPressed: () {},
+            pageController: pageController!,
           );
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    pageController?.dispose();
+    super.dispose();
   }
 }

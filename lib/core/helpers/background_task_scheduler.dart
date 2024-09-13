@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'notification_helper.dart';
@@ -40,7 +41,7 @@ Future<void> callbackDispatcher() async {
 
       return Future.value(true);
     } catch (e) {
-      print('Error in background task: $e');
+      debugPrint('Error in background task: $e');
       return Future.value(false);
     }
   });

@@ -38,6 +38,8 @@ class UserRentalRequestsWithCarDetailsLoaded extends RentalRequestState {
 
 class RentalRequestDateTimeState extends RentalRequestState {
   final DateTime? pickupDate;
+  @override
+  // ignore: overridden_fields
   final DateTime? returnDate;
   final DateTime? startTime;
   final DateTime? returnTime;

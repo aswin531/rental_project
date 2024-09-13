@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/core/di/dependency_injection.dart';
-import 'package:rentit/features/payments/presentation/pages/review_summary/review_summary_card.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/event.dart';
 import 'package:rentit/features/rental/presentation/bloc/tab_blloc/state.dart';
@@ -61,7 +60,7 @@ class _BookingPageState extends State<BookingPage>
             index: state.currentIndex,
             children: [
               const BookingContent(),
-CompletedBookingsContent(),
+const CompletedBookingsContent(),
              // const ReviewSummaryScreen(),
               //ConfirmCarReturnForm(),
               InitiateCarReturnButton(firebaseAuthInstance.currentUser!.uid)

@@ -63,7 +63,7 @@ class SettingsPage extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(FontAwesomeIcons.questionCircle),
+              leading: const Icon(FontAwesomeIcons.headphonesSimple),
               title: const Text('Help & Support'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
