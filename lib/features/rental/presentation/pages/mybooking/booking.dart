@@ -60,8 +60,8 @@ class _BookingPageState extends State<BookingPage>
             index: state.currentIndex,
             children: [
               const BookingContent(),
-const CompletedBookingsContent(),
-             // const ReviewSummaryScreen(),
+              const CompletedBookingsContent(),
+              // const ReviewSummaryScreen(),
               //ConfirmCarReturnForm(),
               InitiateCarReturnButton(firebaseAuthInstance.currentUser!.uid)
               // Center(child: Text('Cancelled Bookings')),

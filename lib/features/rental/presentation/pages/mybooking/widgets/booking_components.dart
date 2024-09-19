@@ -79,7 +79,6 @@ class BookingContent extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
-
                   PrimaryText(
                       text:
                           "Payment status: ${rentalRequestWithCarDetails.rentalRequest.paymentStatus.toUpperCase()}",
@@ -94,7 +93,6 @@ class BookingContent extends StatelessWidget {
                         .rentalRequest.estimatedCost
                         .toString(),
                   ),
-                  
                 ],
               ),
             ),
@@ -102,7 +100,11 @@ class BookingContent extends StatelessWidget {
         } else if (state is RentalRequestError) {
           return Center(child: Text('Error: ${state.message}'));
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+              child: Lottie.asset('assets/animation/loading.json',
+                  fit: BoxFit.cover, height: 100));
+
+          //return const Center(child: CircularProgressIndicator());
         }
       },
     );

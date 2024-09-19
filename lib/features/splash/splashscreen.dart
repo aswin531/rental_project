@@ -60,7 +60,8 @@ class SplashScreenListener extends StatelessWidget {
           if (state is AuthAuthenticated) {
             context.go('/navBarBottom');
           } else if (state is AuthUnAuthenticated) {
-            context.go('/loginRegSelection');
+            context.go('/onboardingScreen');
+           // context.go('/loginRegSelection');
           }
         });
       },

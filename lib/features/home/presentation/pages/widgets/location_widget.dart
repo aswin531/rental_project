@@ -70,7 +70,7 @@ class LocationWidget extends StatelessWidget {
     // Check if there are at least two parts (Place and City)
     if (parts.length > 1) {
       // Trim spaces and return the second part (City)
-      return parts[2].trim();
+      return parts[0  ].trim();
     }
     return null;
   }

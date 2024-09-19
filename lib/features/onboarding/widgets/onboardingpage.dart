@@ -46,7 +46,7 @@ class OnboardingPage extends StatelessWidget {
               crossAxisAlignment: crossAxisAlignment,
               children: [
                 Align(
-                  alignment: Alignment.center,
+                  alignment: Alignment.topCenter,
                   child: PrimaryText(
                     text: text,
                     color: ExternalAppColors.white,
@@ -54,12 +54,15 @@ class OnboardingPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                PrimaryText(
-                  text: subText,
-                  size: 20,
-                  color: ExternalAppColors.white,
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: PrimaryText(
+                    text: subText,
+                    size: 20,
+                    color: ExternalAppColors.white,
+                  ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 55),
                 SvgPicture.asset(imagePath),
                 const SizedBox(height: 24),
               ],
@@ -102,7 +105,7 @@ class OnboardingPage extends StatelessWidget {
                           child: CircularProgressIndicator(
                             value: percentage,
                             backgroundColor: ExternalAppColors.white,
-                            valueColor: AlwaysStoppedAnimation<Color>(
+                            valueColor: const AlwaysStoppedAnimation<Color>(
                               Color.fromARGB(255, 238, 230, 218),
                             ),
                           ),

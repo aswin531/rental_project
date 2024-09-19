@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentit/features/onboarding/widgets/onboardingpage.dart';
 import 'package:rentit/features/onboarding/widgets/onboardingpagedata.dart';
 
@@ -31,24 +32,25 @@ class OnboardingScreenState extends State<OnboardingScreen> {
     ),
     OnboardingPageData(
       backgroundColor: const Color(0xFFB7ABFD),
-      imagePath: 'assets/icons/onboarding1B7ABFD.svg',
+      imagePath: 'assets/icons/onboarding2B7ABFD.svg',
       text: 'Your Journey Starts Here',
       subText: 'Find the perfect car for your adventure.',
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
     ),
     OnboardingPageData(
       backgroundColor: const Color(0xFFEFB491),
-      imagePath: 'assets/icons/onboarding2EFB491.svg',
+      imagePath: 'assets/icons/onboarding3EFB491.svg',
       text: 'Rent It, Anywhere, Anytime',
       subText: 'Enjoy the freedom of flexible car rentals.',
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
     ),
     OnboardingPageData(
-      backgroundColor: const Color(0xFFB7ABFD),
-      imagePath: 'assets/icons/onboarding2B7ABFD.svg',
+      // ignore: use_full_hex_values_for_flutter_colors
+      backgroundColor: const Color(0xff95b6ffd),
+      imagePath: 'assets/icons/onboarding495B6FF.svg',
       text: 'Discover a range of cars.',
       subText: 'Choose from a variety of vehicles.',
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
     ),
   ];
 
@@ -84,9 +86,15 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                   duration: const Duration(milliseconds: 400),
                   curve: Curves.easeInOut,
                 );
+              } else {
+                // replaces the current onboarding route-preventing going back to it
+                context.replace(
+                    '/loginRegSelection'); 
               }
             },
-            onSkipPressed: () {},
+            onSkipPressed: () {
+              context.replace('/loginRegSelection');
+            },
             pageController: pageController!,
           );
         },

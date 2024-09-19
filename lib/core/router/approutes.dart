@@ -7,6 +7,7 @@ import 'package:rentit/features/authentication/presentation/pages/reglog.dart';
 import 'package:rentit/features/bottomnav/presentation/pages/bottomnav_with_anicons.dart';
 import 'package:rentit/features/home/presentation/pages/cardetailpage.dart';
 import 'package:rentit/features/home/presentation/pages/carlistscreen.dart';
+import 'package:rentit/features/onboarding/onboarding.dart';
 import 'package:rentit/features/profile/presentation/pages/intro_profile_setup.dart';
 import 'package:rentit/features/profile/presentation/pages/profile_dash.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/booking_continue_page.dart';
@@ -16,6 +17,11 @@ final GoRouter router = GoRouter(initialLocation: '/splash', routes: [
   GoRoute(
     path: '/splash',
     builder: (context, state) => const SplashScreenListener(),
+  ),
+  //OnboardingScreen
+  GoRoute(
+    path: '/onboardingScreen',
+    builder: (context, state) => const OnboardingScreen(),
   ),
   GoRoute(
     path: '/loginRegSelection',
@@ -63,9 +69,8 @@ final GoRouter router = GoRouter(initialLocation: '/splash', routes: [
   ),
   GoRoute(
     path: '/userProfileSetup',
-    builder: (context, state) =>  ProfileSetupPage(),
+    builder: (context, state) => ProfileSetupPage(),
   ),
-
 ]);
 
 
