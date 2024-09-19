@@ -1,3 +1,6 @@
+import 'package:rentit/features/location/domain/entity/location_entity.dart';
+import 'package:googleapis/airquality/v1.dart';
+
 class LocationModel {
   final double latitude;
   final double longitude;
@@ -19,5 +22,12 @@ class LocationModel {
       'longitude': 'longitude',
       'address': 'address'
     };
+  }
+
+   LocationEntity toEntity() {
+    return LocationEntity(
+      coordinates: LatLng(latitude: latitude, longitude: longitude),
+      address: address
+    );
   }
 }

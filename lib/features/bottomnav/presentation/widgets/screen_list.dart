@@ -10,7 +10,7 @@ List<Widget> screens() {
     const CarListScreen(),
     const LocationMapTestWidget(),
     const BookingPage(),
-    OnboardingScreen(),
+    const OnboardingScreen(),
    // ReviewScreen(),
    // UserIntroProfileDetailsScreen(),
 //const GooglePayButtonWidget(amount: '333   ',currency: '30000',),

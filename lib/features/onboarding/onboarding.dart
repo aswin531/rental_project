@@ -31,6 +31,20 @@ class OnboardingScreenState extends State<OnboardingScreen> {
     ),
     OnboardingPageData(
       backgroundColor: const Color(0xFFB7ABFD),
+      imagePath: 'assets/icons/onboarding1B7ABFD.svg',
+      text: 'Your Journey Starts Here',
+      subText: 'Find the perfect car for your adventure.',
+      crossAxisAlignment: CrossAxisAlignment.start,
+    ),
+    OnboardingPageData(
+      backgroundColor: const Color(0xFFEFB491),
+      imagePath: 'assets/icons/onboarding2EFB491.svg',
+      text: 'Rent It, Anywhere, Anytime',
+      subText: 'Enjoy the freedom of flexible car rentals.',
+      crossAxisAlignment: CrossAxisAlignment.start,
+    ),
+    OnboardingPageData(
+      backgroundColor: const Color(0xFFB7ABFD),
       imagePath: 'assets/icons/onboarding2B7ABFD.svg',
       text: 'Discover a range of cars.',
       subText: 'Choose from a variety of vehicles.',

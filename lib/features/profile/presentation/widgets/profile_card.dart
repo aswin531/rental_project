@@ -1,12 +1,14 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rentit/features/profile/presentation/widgets/stat_column.dart';
 
 class ProfileCard extends StatelessWidget {
   final String username;
-  final String? imageUrl;
+  final String imageUrl;
+  final String? job;
   const ProfileCard(
-      {super.key, required this.username, required this.imageUrl});
+      {super.key, required this.username, required this.imageUrl,this.job});
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +32,19 @@ class ProfileCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 60,
-              backgroundImage: imageUrl?.isNotEmpty == true
-                  ? NetworkImage(imageUrl!)
-                  : const AssetImage("assets/images/admin.jpg") as ImageProvider,
+ backgroundColor: Colors.grey[300],  
+ child: ClipOval(
+            child: CachedNetworkImage(
+              imageUrl: imageUrl, 
+              placeholder: (context, url) =>Image.asset('assets/images/placeholder-image.jpg'),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              fit: BoxFit.cover,
+              width: 60,
+              height: 60,
             ),
+          ),
+        
+           ),
             const SizedBox(height: 10),
             Text(
               username,
@@ -42,9 +53,9 @@ class ProfileCard extends StatelessWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
-            const Text(
-              'UI/UX Designer',
-              style: TextStyle(color: Colors.white70, fontSize: 14),
+             Text(
+             job ?? 'UI/UX Designer',
+              style: const TextStyle(color: Colors.white70, fontSize: 14),
             ),
             const SizedBox(height: 20),
             const Row(

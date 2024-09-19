@@ -74,7 +74,7 @@ class ProfileSetupBloc extends Bloc<ProfileSetupEvent, ProfileSetupState> {
       final userProfile = await getUserProfileUsecase.call(currentUser!.uid);
       if (userProfile != null) {
         emit(ProfileSetupLoaded(
-            userProfile)); // Emit state with the loaded profile
+            userProfile)); 
       } else {
         emit(const ProfileSetupError('User profile not found'));
       }

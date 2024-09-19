@@ -5,12 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
+import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
+import 'package:rentit/features/location/presentation/widgets/locationpicker_bottom_sheet.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_bloc.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_event.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_state.dart';
-
+import 'package:rentit/utils/appcolors.dart';
+import 'package:rentit/utils/primary_text.dart';
 
 class ProfileSetupPage extends StatelessWidget {
+  ProfileSetupPage({super.key});
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController jobController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
@@ -20,8 +25,6 @@ class ProfileSetupPage extends StatelessWidget {
   final TextEditingController dobController = TextEditingController();
   final TextEditingController homeLocationController = TextEditingController();
 
-  ProfileSetupPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileSetupBloc, ProfileSetupState>(
@@ -29,7 +32,7 @@ class ProfileSetupPage extends StatelessWidget {
         if (state is ProfileSetupSuccess) {
           final profileData = {
             'name': nameController.text,
-            'job':jobController.text,
+            'job': jobController.text,
             'location': locationController.text,
             'cityState': cityStateController.text,
             'phone': phoneController.text,
@@ -53,7 +56,16 @@ class ProfileSetupPage extends StatelessWidget {
         }
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Profile Setup')),
+          appBar: AppBar(
+            title: PrimaryText(
+              text: 'Profile Setup',
+              size: 24,
+              color: ExternalAppColors.black,
+            ),
+            centerTitle: true,
+            toolbarHeight: 50,
+            backgroundColor: Colors.transparent,
+          ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -66,44 +78,55 @@ class ProfileSetupPage extends StatelessWidget {
                     );
                     if (result != null) {
                       // ignore: use_build_context_synchronously
-                      context.read<ProfileSetupBloc>().add(ProfileImagePickedEvent(result.files.last));
+                      context
+                          .read<ProfileSetupBloc>()
+                          .add(ProfileImagePickedEvent(result.files.last));
                     }
                   },
                   child: CircleAvatar(
-                    radius: 50,
+                    radius: 60,
                     backgroundColor: Colors.grey[300],
                     backgroundImage: selectedImage != null
                         ? FileImage(File(selectedImage.path!))
                         : null,
                     child: selectedImage == null
-                        ? const Icon(Icons.camera_alt, size: 40)
+                        ? const Icon(Icons.camera_alt,
+                            size: 40, color: Colors.grey)
                         : null,
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  controller: nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
-                ),
-                TextFormField(
-                  controller: locationController,
-                  decoration: const InputDecoration(labelText: 'Location'),
-                ),
-                TextFormField(
-                  controller: cityStateController,
-                  decoration: const InputDecoration(labelText: 'City/State'),
-                ),
-                TextFormField(
-                  controller: phoneController,
-                  decoration: const InputDecoration(labelText: 'Phone'),
-                ),
-                TextFormField(
-                  controller: licenseController,
-                  decoration: const InputDecoration(labelText: 'License'),
-                ),
+                _buildTextFormField(controller: nameController, label: 'Name'),
+                const SizedBox(height: 12),
+                _buildTextFormField(controller: jobController, label: 'Job'),
+                const SizedBox(height: 12),
+                _buildTextFormField(
+                    controller: locationController,
+                    readOnly: true,
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.location_on),
+                      onPressed: () => _showLocationPicker(context),
+                    ),
+                    label: 'Location'),
+                const SizedBox(height: 12),
+                _buildTextFormField(
+                    controller: cityStateController, label: 'City/State'),
+                const SizedBox(height: 12),
+                _buildTextFormField(
+                    controller: phoneController,
+                    label: 'Phone',
+                    keyboardType: TextInputType.phone),
+                const SizedBox(height: 12),
+                _buildTextFormField(
+                    controller: licenseController, label: 'License'),
+                const SizedBox(height: 12),
                 TextFormField(
                   controller: dobController,
-                  decoration: const InputDecoration(labelText: 'Date of Birth'),
+                  decoration: const InputDecoration(
+                    labelText: 'Date of Birth',
+                    border: OutlineInputBorder(),
+                  ),
+                  readOnly: true,
                   onTap: () async {
                     final pickedDate = await showDatePicker(
                       context: context,
@@ -113,16 +136,21 @@ class ProfileSetupPage extends StatelessWidget {
                     );
                     if (pickedDate != null) {
                       dobController.text =
-                          pickedDate.toIso8601String().split('T')[0];
+                          pickedDate.toLocal().toString().split(' ')[0];
                     }
                   },
                 ),
-                TextFormField(
-                  controller: homeLocationController,
-                  decoration: const InputDecoration(labelText: 'Home Location'),
-                ),
+                const SizedBox(height: 12),
+                _buildTextFormField(
+                    controller: homeLocationController, label: 'Home Location'),
                 const SizedBox(height: 20),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    backgroundColor: Colors.blue,
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
                   onPressed: state is ProfileSetupLoading
                       ? null
                       : () {
@@ -142,7 +170,11 @@ class ProfileSetupPage extends StatelessWidget {
                         },
                   child: state is ProfileSetupLoading
                       ? const CircularProgressIndicator()
-                      : const Text('Complete Setup'),
+                      : PrimaryText(
+                          text: 'Complete Setup',
+                          color: ExternalAppColors.white,
+                          size: 20,
+                        ),
                 ),
               ],
             ),
@@ -150,5 +182,45 @@ class ProfileSetupPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _buildTextFormField({
+    required TextEditingController controller,
+    required String label,
+    TextInputType? keyboardType,
+    bool readOnly = false,
+    Widget? suffixIcon,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        suffixIcon: suffixIcon,
+        border: const OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+      keyboardType: keyboardType,
+      readOnly: readOnly,
+    );
+  }
+
+  void _showLocationPicker(BuildContext context) {
+    try {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          final locationMapBloc = BlocProvider.of<LocationMapBloc>(context);
+          return LocationPickerBottomSheet(
+              onLocationSelected: (String address) {
+            locationController.text = address;
+            context.pop();
+          });
+        },
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    }
   }
 }

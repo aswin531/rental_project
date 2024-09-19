@@ -76,14 +76,16 @@ class BookcarDetailspick extends StatelessWidget {
                     height: 20,
                   ),
                   const DriverSelectionWidget(),
-                   DateTimeSelectionScreen(carId: car.carId,),
+                  DateTimeSelectionScreen(
+                    carId: car.carId,
+                  ),
                   Divider(
                     color: ExternalAppColors.grey.withOpacity(0.4),
                   ),
                   BlocBuilder<LocationMapBloc, LocationMapState>(
                     builder: (context, state) {
                       debugPrint(
-                          "Current LocationMapState: ${state.currentAddress}"); 
+                          "Current LocationMapState: ${state.currentAddress}");
                       return LocationSelectionWidget();
                     },
                   )

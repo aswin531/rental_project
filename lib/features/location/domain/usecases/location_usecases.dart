@@ -13,11 +13,11 @@ class GetCurrentLocationUseCase {
 }
 
 class GetLocationFromPlaceIdUseCase {
-  final LocationRepository repository;
-  GetLocationFromPlaceIdUseCase({required this.repository});
+  final LocationRepository locationRepository;
+  GetLocationFromPlaceIdUseCase( this.locationRepository);
 
-  Future<LocationEntity> call(String placeId) async {
-    return repository.getLocationFromPlaceId(placeId);
+  Future<LocationEntity> call(String query) async {
+    return await locationRepository.getLocationFromPlaceId(query);
   }
 }
 

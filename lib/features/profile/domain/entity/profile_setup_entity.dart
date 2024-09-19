@@ -8,7 +8,7 @@ class UserProfile {
   final String license;
   final DateTime dob;
   final String homeLocation;
-  final String? imageUrl;
+  final String imageUrl;
 
   UserProfile({
     required this.userId,

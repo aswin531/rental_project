@@ -87,16 +87,21 @@ Future<void> init() async {
 
 // Usecase===============================================
   sl.registerLazySingleton(() => GetCurrentLocationCameraPositionUseCase(sl()));
+  sl.registerLazySingleton(
+      () => GetLocationFromPlaceIdUseCase(sl<LocationRepository>()));
 
 // BLoC==================================================
-  sl.registerFactory(() => LocationMapBloc(sl()));
+  sl.registerFactory(() => LocationMapBloc(
+        sl(),
+        sl(),
+      ));
 
 //========================================================
 // Setup method to register services
 //final dio = GetIt.instance<Dio>();
   sl.registerLazySingleton<Dio>(() => Dio());
 
-   sl.registerLazySingleton(() => PaymentBloc(makePaymentUsecase: sl()));
+  sl.registerLazySingleton(() => PaymentBloc(makePaymentUsecase: sl()));
 
   sl.registerLazySingleton(() => MakePaymentUsecase(sl()));
 

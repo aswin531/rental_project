@@ -65,10 +65,12 @@ class GalleryTabWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),
         child: CachedNetworkImage(
+          placeholder: (context, url) =>
+              Image.asset('assets/images/placeholder-image.jpg'),
           imageUrl: imageUrl,
-          progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-            child: CircularProgressIndicator(value: downloadProgress.progress),
-          ),
+          // progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+          //   child: CircularProgressIndicator(value: downloadProgress.progress),
+          // ),
           errorWidget: (context, url, error) =>
               const Icon(Icons.error, color: Colors.red),
           fit: BoxFit.cover,

@@ -25,23 +25,20 @@ class CustomCachedNetworkImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         child: CachedNetworkImage(
           imageUrl: imageUrl,
+          placeholder: (context, url) =>
+              Image.asset('assets/images/placeholder-image.jpg'),
           imageBuilder: (context, imageProvider) => Container(
             decoration: BoxDecoration(
               borderRadius:
                   BorderRadius.vertical(top: Radius.circular(borderRadius)),
               image: DecorationImage(
                 image: imageProvider,
-                fit: fit, // Adjust the fit as needed
+                fit: fit,
               ),
             ),
           ),
-          placeholder: (context, url) => const Center(
-            child:
-                CircularProgressIndicator(), // Progress indicator while loading
-          ),
           errorWidget: (context, url, error) => const Center(
-            child: Icon(Icons.error,
-                color: Colors.red), // Error icon if the image fails to load
+            child: Icon(Icons.error, color: Colors.red),
           ),
         ),
       ),

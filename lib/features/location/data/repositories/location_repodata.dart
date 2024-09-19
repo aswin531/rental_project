@@ -24,7 +24,9 @@ class LocationRepositoryImpl implements LocationRepository {
   }
 
   @override
-  Future<LocationEntity> getLocationFromPlaceId(String query) {
-    throw UnimplementedError();
+  Future<LocationEntity> getLocationFromPlaceId(String query) async {
+    final locationModel = await locationDatasource.getSearchLocation(query);
+    return locationModel.toEntity();
+
   }
 }

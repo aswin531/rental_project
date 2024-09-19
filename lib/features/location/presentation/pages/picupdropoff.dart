@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rentit/features/location/presentation/bloc/location_event.dart';
 import 'package:rentit/features/location/presentation/bloc/location_state.dart';
+import 'package:rentit/features/location/presentation/widgets/location_selection.dart';
 
 class LocationMapTestWidget extends StatelessWidget {
   const LocationMapTestWidget({super.key});
@@ -36,8 +37,9 @@ class LocationMapTestWidget extends StatelessWidget {
                 mapType: MapType.normal,
                 initialCameraPosition: state.cameraPosition,
                 onMapCreated: (GoogleMapController mapController) {
-                      context.read<LocationMapBloc>().add(InitializeMap(mapController));
-
+                  context
+                      .read<LocationMapBloc>()
+                      .add(InitializeMap(mapController));
                 },
                 markers: {
                   Marker(
@@ -47,12 +49,31 @@ class LocationMapTestWidget extends StatelessWidget {
                   ),
                 },
                 myLocationEnabled: true,
-                myLocationButtonEnabled: true,
+                myLocationButtonEnabled: false,
               ),
               Positioned(
-                bottom: 16,
+                top: 40,
                 left: 16,
                 right: 16,
+                child: LocationSelectionCommonWidget(
+                  searchController:
+                      context.read<LocationMapBloc>().searchController,
+                  onCurrentLocationTap: () {
+                    context
+                        .read<LocationMapBloc>()
+                        .add(MoveToCurrentLocation());
+                  },
+                  onSearchSubmitted: (query) {
+                    context
+                        .read<LocationMapBloc>()
+                        .add(SearchLocationEvent(query: query));
+                  },
+                ),
+              ),
+              Positioned(
+                bottom: 10,
+                left: 16,
+                right: 55,
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rentit/features/rental/domain/entity/rental_entity.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'package:rentit/features/rental/presentation/pages/rental/widgets/logo_form.dart';
@@ -82,6 +83,8 @@ class RentalFormWidget extends StatelessWidget {
   void _submitForm(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     final rentalRequestBloc = context.read<RentalRequestBloc>();
+    final locationMapBloc = context.read<LocationMapBloc>();
+
     // rentalRequestBloc
     //     .add(FetchUserRentalRequestsWithCarDetailsEvent(user!.uid));
 
@@ -92,8 +95,8 @@ class RentalFormWidget extends StatelessWidget {
           carId: carId,
           pickupDate: rentalRequestBloc.pickupDate!,
           returnDate: rentalRequestBloc.returnDate!,
-          pickupLocation: rentalRequestBloc.pickupLocation.toString(),
-          dropOffLocation: rentalRequestBloc.dropOffLocation.toString(),
+          pickupLocation: locationMapBloc.state.pickupLocation ?? 'Unknown',
+          dropOffLocation: locationMapBloc.state.dropOffLocation ?? 'Unknown',
           userId: user!.uid,
           name: formState.nameController.text,
           phone: formState.phoneController.text,
@@ -105,10 +108,9 @@ class RentalFormWidget extends StatelessWidget {
           pickUpTime: rentalRequestBloc.startTime!,
           estimatedKilometersDriven: 0,
           //estimatedKilometersDriven: double.parse(formState.kilometersController.text),
-        //  onSubmit: onSubmit,
+          //  onSubmit: onSubmit,
         ),
       ),
     );
   }
 }
-  
