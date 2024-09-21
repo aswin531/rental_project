@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:rentit/features/rental/domain/repository/rental_repo.dart';
@@ -9,14 +10,15 @@ import 'package:rentit/features/rental/domain/usecases/rental_usecase.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 
+import '../../../data/model/combined.dart';
+
 class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   final RentalRequestRepository rentalRequestRepository;
   DateTime? pickupDate;
   DateTime? returnDate;
   DateTime? startTime;
   DateTime? returnTime;
-  //String? pickupLocation;
-  //String? dropOffLocation;
+
 
   final CreateRentalRequest createRentalRequest;
   final GetUserRentalRequests getUserRentalRequests;
@@ -43,9 +45,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     on<UpdateStartTimeEvent>(_onUpdateStartTime);
     on<UpdateReturnDateEvent>(_onUpdateReturnDate);
     on<UpdateReturnTimeEvent>(_onUpdateReturnTime);
-    //on<UpdatePickupLocationEvent>(_onUpdatePickupLocation);
-    //on<UpdateDropOffLocationEvent>(_onUpdateDropOffLocation);
-    on<FetchCompletedRentalRequestsEvent>(_onFetchCompletedRentalRequestsEvent);
+    //on<FetchCompletedRentalRequestsEvent>(_onFetchCompletedRentalRequestsEvent);
   }
 
   Future<void> _onCreateRentalRequest(
@@ -61,18 +61,27 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     }
   }
 
-  Future<void> _onFetchUserRentalRequestsWithCarDetails(
+ void _onFetchUserRentalRequestsWithCarDetails(
     FetchUserRentalRequestsWithCarDetailsEvent event,
     Emitter<RentalRequestState> emit,
   ) async {
     emit(RentalRequestLoading());
-    try {
-      final requestsWithCarDetails = await getUserRentalRequests(event.userId);
-
-      emit(UserRentalRequestsWithCarDetailsLoaded(requestsWithCarDetails));
-    } catch (e) {
-      emit(RentalRequestError(e.toString()));
-    }
+    await emit.forEach(
+      getUserRentalRequests(event.userId),
+      onData: (List<RentalRequestWithCarDetails> requestsWithCarDetails) {
+        if (requestsWithCarDetails.isNotEmpty) {
+          debugPrint('Data passed to UI: ${requestsWithCarDetails.length}');
+          return UserRentalRequestsWithCarDetailsLoaded(requestsWithCarDetails);
+        } else {
+          debugPrint('No data found');
+          return UserRentalRequestsWithCarDetailsLoaded([]);
+        }
+      },
+      onError: (error, stackTrace) {
+        debugPrint('Error: $error');
+        return RentalRequestError(error.toString());
+      },
+    );
   }
 
   Future<void> _onUpdateRentalRequestStatus(
@@ -140,51 +149,21 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     ));
   }
 
-  // void _onUpdatePickupLocation(
-  //   UpdatePickupLocationEvent event,
-  //   Emitter<RentalRequestState> emit,
-  // ) {
-  //   pickupLocation = event.pickupLocation;
-  //   emit(RentalRequestDateTimeState(
-  //     pickupDate: pickupDate,
-  //     startTime: startTime,
-  //     returnDate: returnDate,
-  //     returnTime: returnTime,
-  //     pickupLocation: pickupLocation,
-  //     dropOffLocation: dropOffLocation,
-  //   ));
+  // Future<void> _onFetchCompletedRentalRequestsEvent(
+  //     FetchCompletedRentalRequestsEvent event,
+  //     Emitter<RentalRequestState> emit) async {
+  //   try {
+  //     final rentalRequestsWithCarDetails =
+  //         await rentalRequestRepository.getUserRentalRequests(event.userId);
+
+  //     // Filter requests where paymentStatus is 'completed'
+  //     final completedRequests = rentalRequestsWithCarDetails
+  //         .where((rental) => rental.rentalRequest.paymentStatus == 'completed')
+  //         .toList();
+  //     emit(UserRentalRequestsWithCarDetailsLoaded(completedRequests));
+  //   } catch (e) {
+  //     emit(RentalRequestError(
+  //         'Error loading completed rentals: ${e.toString()}'));
+  //   }
   // }
-
-  // void _onUpdateDropOffLocation(
-  //   UpdateDropOffLocationEvent event,
-  //   Emitter<RentalRequestState> emit,
-  // ) {
-  //   dropOffLocation = event.dropOffLocation;
-  //   emit(RentalRequestDateTimeState(
-  //     pickupDate: pickupDate,
-  //     startTime: startTime,
-  //     returnDate: returnDate,
-  //     returnTime: returnTime,
-  //     pickupLocation: pickupLocation,
-  //     dropOffLocation: dropOffLocation,
-  //   ));
-  // }
-
-  Future<void> _onFetchCompletedRentalRequestsEvent(
-      FetchCompletedRentalRequestsEvent event,
-      Emitter<RentalRequestState> emit) async {
-    try {
-      final rentalRequestsWithCarDetails =
-          await rentalRequestRepository.getUserRentalRequests(event.userId);
-
-      // Filter requests where paymentStatus is 'completed'
-      final completedRequests = rentalRequestsWithCarDetails
-          .where((rental) => rental.rentalRequest.paymentStatus == 'completed')
-          .toList();
-      emit(UserRentalRequestsWithCarDetailsLoaded(completedRequests));
-    } catch (e) {
-      emit(RentalRequestError(
-          'Error loading completed rentals: ${e.toString()}'));
-    }
-  }
 }

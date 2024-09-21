@@ -8,7 +8,7 @@ class ProfileCard extends StatelessWidget {
   final String imageUrl;
   final String? job;
   const ProfileCard(
-      {super.key, required this.username, required this.imageUrl,this.job});
+      {super.key, required this.username, required this.imageUrl, this.job});
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +32,19 @@ class ProfileCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 60,
- backgroundColor: Colors.grey[300],  
- child: ClipOval(
-            child: CachedNetworkImage(
-              imageUrl: imageUrl, 
-              placeholder: (context, url) =>Image.asset('assets/images/placeholder-image.jpg'),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              fit: BoxFit.cover,
-              width: 60,
-              height: 60,
+              backgroundColor: Colors.grey[300],
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  placeholder: (context, url) =>
+                      Image.asset('assets/images/placeholder-image.jpg'),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  fit: BoxFit.cover,
+                  width: 60,
+                  height: 60,
+                ),
+              ),
             ),
-          ),
-        
-           ),
             const SizedBox(height: 10),
             Text(
               username,
@@ -53,8 +53,8 @@ class ProfileCard extends StatelessWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
-             Text(
-             job ?? 'UI/UX Designer',
+            Text(
+              job ?? 'UI/UX Designer',
               style: const TextStyle(color: Colors.white70, fontSize: 14),
             ),
             const SizedBox(height: 20),

@@ -3,15 +3,16 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rentit/core/validators/license_validators.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
-import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rentit/features/location/presentation/widgets/locationpicker_bottom_sheet.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_bloc.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_event.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_state.dart';
 import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
+import 'package:rentit/utils/validation/validator.dart';
 
 class ProfileSetupPage extends StatelessWidget {
   ProfileSetupPage({super.key});
@@ -96,13 +97,28 @@ class ProfileSetupPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _buildTextFormField(controller: nameController, label: 'Name'),
+                _buildTextFormField(
+                  controller: nameController,
+                  label: 'Name',
+                  hintText: 'Enter your full name',
+                  validator: (value) =>
+                      CustomValidator.validateEmptyText('Name', value),
+                ),
                 const SizedBox(height: 12),
-                _buildTextFormField(controller: jobController, label: 'Job'),
+                _buildTextFormField(
+                  controller: jobController,
+                  label: 'Job',
+                  hintText: 'Enter your job title',
+                  validator: (value) =>
+                      CustomValidator.validateEmptyText('Job', value),
+                ),
                 const SizedBox(height: 12),
                 _buildTextFormField(
                     controller: locationController,
                     readOnly: true,
+                    hintText: 'Select your location',
+                    validator: (value) =>
+                        CustomValidator.validateEmptyText('Location', value),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.location_on),
                       onPressed: () => _showLocationPicker(context),
@@ -110,23 +126,38 @@ class ProfileSetupPage extends StatelessWidget {
                     label: 'Location'),
                 const SizedBox(height: 12),
                 _buildTextFormField(
-                    controller: cityStateController, label: 'City/State'),
+                    hintText: 'Enter your city and state',
+                    controller: cityStateController,
+                    validator: (value) =>
+                        CustomValidator.validateEmptyText('City/State', value),
+                    label: 'City/State'),
                 const SizedBox(height: 12),
                 _buildTextFormField(
+                    validator: (value) =>
+                        CustomValidator.validateEmptyText('Phone', value),
+                    hintText: 'Enter your phone number',
                     controller: phoneController,
                     label: 'Phone',
                     keyboardType: TextInputType.phone),
                 const SizedBox(height: 12),
                 _buildTextFormField(
-                    controller: licenseController, label: 'License'),
+                    hintText: 'Enter your driver\'s license number',
+                    validator: (value) =>
+                        Validator.driverLicenseValidator(value),
+                    controller: licenseController,
+                    label: 'License'),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: dobController,
                   decoration: const InputDecoration(
                     labelText: 'Date of Birth',
+    hintText: 'Select your date of birth',
                     border: OutlineInputBorder(),
                   ),
                   readOnly: true,
+                  onChanged: (value) {
+                    
+                  },
                   onTap: () async {
                     final pickedDate = await showDatePicker(
                       context: context,
@@ -142,7 +173,11 @@ class ProfileSetupPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 _buildTextFormField(
-                    controller: homeLocationController, label: 'Home Location'),
+                    hintText: 'Enter your home location',
+                    validator: (value) => CustomValidator.validateEmptyText(
+                        'Home Location', value),
+                    controller: homeLocationController,
+                    label: 'Home Location'),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -189,18 +224,23 @@ class ProfileSetupPage extends StatelessWidget {
     required String label,
     TextInputType? keyboardType,
     bool readOnly = false,
+    required String hintText,
     Widget? suffixIcon,
+    required FormFieldValidator<String> validator,
   }) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
+        hintText: hintText,
         suffixIcon: suffixIcon,
         border: const OutlineInputBorder(),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       ),
       keyboardType: keyboardType,
+    
       readOnly: readOnly,
+      validator: validator,
     );
   }
 
@@ -209,7 +249,7 @@ class ProfileSetupPage extends StatelessWidget {
       showModalBottomSheet(
         context: context,
         builder: (context) {
-          final locationMapBloc = BlocProvider.of<LocationMapBloc>(context);
+        //  final locationMapBloc = BlocProvider.of<LocationMapBloc>(context);
           return LocationPickerBottomSheet(
               onLocationSelected: (String address) {
             locationController.text = address;

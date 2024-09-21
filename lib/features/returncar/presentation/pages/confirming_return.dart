@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentit/core/di/dependency_injection.dart';
+import 'package:rentit/core/injection_container/dependency_injection.dart';
 import 'package:rentit/features/authentication/presentation/widgets/custom_form_field.dart';
 import 'package:rentit/features/returncar/domain/entity/car_return_entity.dart';
 import 'package:rentit/features/returncar/presentation/bloc/return_car_bloc.dart';

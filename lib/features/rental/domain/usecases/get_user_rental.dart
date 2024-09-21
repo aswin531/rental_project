@@ -6,7 +6,7 @@ class GetUserRentalRequests {
 
   GetUserRentalRequests(this.repository);
 
-  Future<List<RentalRequestWithCarDetails>> call(String userId) {
+  Stream<List<RentalRequestWithCarDetails>> call(String userId) {
     return repository.getUserRentalRequests(userId);
   }
 }

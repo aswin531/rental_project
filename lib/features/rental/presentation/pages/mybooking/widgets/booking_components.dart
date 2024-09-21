@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:rentit/core/injection_container/dependency_injection.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
@@ -16,15 +16,30 @@ class BookingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RentalRequestBloc, RentalRequestState>(
+    return BlocConsumer<RentalRequestBloc, RentalRequestState>(
+      listener: (context, state) {
+        if (state is RentalRequestError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error: ${state.message}')),
+          );
+        }
+      },
       builder: (context, state) {
         if (state is RentalRequestInitial) {
-          final user = FirebaseAuth.instance.currentUser!.uid;
+          final user = firebaseAuthInstance.currentUser!.uid;
           context
               .read<RentalRequestBloc>()
               .add(FetchUserRentalRequestsWithCarDetailsEvent(user));
         }
+        if (state is RentalRequestLoading) {
+          return Center(
+            child: Lottie.asset('assets/animation/loading.json',
+                fit: BoxFit.cover, height: 100),
+          );
+        }
+
         if (state is UserRentalRequestsWithCarDetailsLoaded) {
+          debugPrint('Received rental requests: ${state.requestsWithCarDetails.length}');
           if (state.requestsWithCarDetails.isEmpty) {
             return Center(
               child: Column(
@@ -47,7 +62,7 @@ class BookingContent extends StatelessWidget {
           }
           final rentalRequestWithCarDetails =
               state.requestsWithCarDetails.first;
-          debugPrint(rentalRequestWithCarDetails.rentalRequest.toString());
+          debugPrint(rentalRequestWithCarDetails.car.toString());
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
@@ -55,7 +70,6 @@ class BookingContent extends StatelessWidget {
                   color: ExternalAppColors.white,
                   borderRadius: BorderRadius.circular(15)),
               child: ListView(
-                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CarDetails(
                     body: rentalRequestWithCarDetails.car.body,
@@ -81,7 +95,7 @@ class BookingContent extends StatelessWidget {
 
                   PrimaryText(
                       text:
-                          "Payment status: ${rentalRequestWithCarDetails.rentalRequest.paymentStatus.toUpperCase()}",
+                          "Payment status: ${rentalRequestWithCarDetails.rentalRequest.carId.toUpperCase()}",
                       color: ExternalAppColors.blue,
                       size: 20),
                   // const LocationMap(),
@@ -97,8 +111,6 @@ class BookingContent extends StatelessWidget {
               ),
             ),
           );
-        } else if (state is RentalRequestError) {
-          return Center(child: Text('Error: ${state.message}'));
         } else {
           return Center(
               child: Lottie.asset('assets/animation/loading.json',

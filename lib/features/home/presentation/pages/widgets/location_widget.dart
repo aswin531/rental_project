@@ -16,10 +16,11 @@ class LocationWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Location',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
+              // PrimaryText(
+              //   text: 'Location',
+              //   color: ExternalAppColors.white,
+              //   size: 18,
+              // ),
               BlocBuilder<LocationMapBloc, LocationMapState>(
                 builder: (context, state) {
                   debugPrint(
@@ -29,7 +30,8 @@ class LocationWidget extends StatelessWidget {
                       const Icon(Icons.location_on, color: Colors.white),
                       const SizedBox(width: 8),
                       Text(
-                        _extractCityFromAddress(state.currentAddress) ??
+                        state.currentAddress ??
+                            //   _extractCityFromAddress(state.currentAddress) ??
                             "Fetching address...",
                         style: const TextStyle(
                             color: Colors.white,
@@ -67,10 +69,8 @@ class LocationWidget extends StatelessWidget {
       return null;
     }
     List<String> parts = address.split(',');
-    // Check if there are at least two parts (Place and City)
-    if (parts.length > 1) {
-      // Trim spaces and return the second part (City)
-      return parts[0  ].trim();
+    if (parts.length > 3) {
+      return parts[3].trim();
     }
     return null;
   }

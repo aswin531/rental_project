@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rentit/core/di/dependency_injection.dart';
+import 'package:rentit/core/injection_container/dependency_injection.dart';
 import 'package:rentit/features/authentication/data/model/user_model.dart';
 
 class UserRepository {

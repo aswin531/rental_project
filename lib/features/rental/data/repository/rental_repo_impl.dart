@@ -14,7 +14,7 @@ class RentalRequestRepositoryImpl implements RentalRequestRepository {
   }
 
   @override
-  Future<List<RentalRequestWithCarDetails>> getUserRentalRequests(
+  Stream<List<RentalRequestWithCarDetails>> getUserRentalRequests(
       String userId) {
     return dataSource.getUserRentalRequests(userId);
   }

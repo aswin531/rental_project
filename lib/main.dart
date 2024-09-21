@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:rentit/core/di/profile_dependencies.dart';
+import 'package:rentit/core/injection_container/profile_dependencies.dart';
 import 'package:rentit/core/helpers/background_task_scheduler.dart';
 import 'package:rentit/core/helpers/notification_helper.dart';
 import 'package:rentit/core/services/stripe_services.dart';
@@ -25,7 +25,7 @@ import 'package:rentit/features/returncar/domain/usecases/return_car_confirm_use
 import 'package:rentit/features/returncar/domain/usecases/return_car_initial_usecases.dart';
 import 'package:rentit/features/returncar/presentation/bloc/return_car_bloc.dart';
 import 'package:rentit/utils/screen_util_setup.dart';
-import 'package:rentit/core/di/dependency_injection.dart';
+import 'package:rentit/core/injection_container/dependency_injection.dart';
 import 'package:rentit/core/router/approutes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:rentit/features/authentication/domain/repositories/auth_repository.dart';
@@ -78,7 +78,7 @@ Future<void> main() async {
         ),
         RepositoryProvider<RentalRequestRepository>(
           create: (_) => RentalRequestRepositoryImpl(
-            FirebaseRentalRequestDataSource(FirebaseFirestore.instance),
+            FirebaseRentalRequestDataSource(),
           ),
         ),
         RepositoryProvider<SaveUserProfileUsecase>(

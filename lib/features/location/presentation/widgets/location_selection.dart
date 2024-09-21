@@ -63,7 +63,7 @@ class LocationSelectionCommonWidget extends StatelessWidget {
                 );
               }
               if (state.searchResults.isEmpty) {
-                Text('No Data ');
+                const Text('No Data ');
                // return Lottie.asset('assets/animation/loc_blue.json');
               }
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:rentit/core/di/dependency_injection.dart';
+import 'package:rentit/core/injection_container/dependency_injection.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
-import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/car_specs.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/req_car_details.dart';
@@ -18,7 +17,7 @@ class CompletedBookingsContent extends StatelessWidget {
       builder: (context, state) {
         if (state is RentalRequestInitial) {
           final user = firebaseAuthInstance.currentUser!.uid;
-          context.read<RentalRequestBloc>().add(FetchCompletedRentalRequestsEvent(user));
+          //context.read<RentalRequestBloc>().add(FetchCompletedRentalRequestsEvent(user));
         }
         if (state is UserRentalRequestsWithCarDetailsLoaded) {
           if (state.requestsWithCarDetails.isEmpty) {

@@ -22,7 +22,6 @@ class SettingsPage extends StatelessWidget {
             Navigator.of(context)
                 .pushNamedAndRemoveUntil('/login', (route) => false);
           } else if (state is AuthError) {
-            // Show error message
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
             );

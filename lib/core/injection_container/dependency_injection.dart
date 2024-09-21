@@ -15,14 +15,21 @@ import 'package:rentit/features/location/data/repositories/location_repodata.dar
 import 'package:rentit/features/location/domain/repositories/location_repository.dart';
 import 'package:rentit/features/location/domain/usecases/location_usecases.dart';
 import 'package:rentit/features/location/presentation/bloc/location_bloc.dart';
+import 'package:rentit/features/payments/data/datasources/stripe_datasource.dart';
 import 'package:rentit/features/payments/data/repository/payment_repository_impl.dart';
 import 'package:rentit/features/payments/domain/repository/payment_repository.dart';
 import 'package:rentit/features/payments/domain/usecases/payment_usecases.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_bloc.dart';
+import 'package:rentit/features/returncar/data/datasource/return_car_datasource.dart';
+import 'package:rentit/features/returncar/data/repository/return_car_repo_impl.dart';
+import 'package:rentit/features/returncar/domain/repository/return_car_repository.dart';
+import 'package:rentit/features/returncar/domain/usecases/return_car_confirm_usecases.dart';
+import 'package:rentit/features/returncar/domain/usecases/return_car_initial_usecases.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
-//final Dio dio = Dio();
+final Dio dio = Dio();
+final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 final FirebaseAuth firebaseAuthInstance = FirebaseAuth.instance;
 
 Future<void> init() async {
@@ -96,8 +103,8 @@ Future<void> init() async {
         sl(),
       ));
 
-//========================================================
-// Setup method to register services
+//Payment-STRIPE========================================================
+
 //final dio = GetIt.instance<Dio>();
   sl.registerLazySingleton<Dio>(() => Dio());
 
@@ -105,19 +112,26 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => MakePaymentUsecase(sl()));
 
-  sl.registerLazySingleton<PaymentRepository>(
-      () => StripePaymentRepository(stripeSecretKey: stripeSecretKey));
+  sl.registerLazySingleton<PaymentDataSource>(() => PaymentDataSource());
+
+  sl.registerLazySingleton<PaymentRepository>(() => StripePaymentRepository(
+      stripeSecretKey: stripeSecretKey, paymentDataSource: sl()));
+
+//Return Process====================================================
+
+//Repositories---------------------------------------------
+
+  sl.registerLazySingleton<CarReturnRepository>(
+      () => CarReturnRepositoryImpl(sl()));
+//DataSource---------------------------------------------
+
+  sl.registerLazySingleton<ReturnCarDatasource>(
+      () => ReturnCarDataSourceImpl(sl()));
+
+//UseCases---------------------------------------------
+  sl.registerLazySingleton(() => ReturnCarConfirmUsecase(sl()));
+  sl.registerLazySingleton(() => ReturnCarInitialUsecases(sl()));
 }
-
-
-
-
-
-
-
-
-
-
 
 // Lazy singleton means the instance
 //will be created only once when it is needed for the first time.

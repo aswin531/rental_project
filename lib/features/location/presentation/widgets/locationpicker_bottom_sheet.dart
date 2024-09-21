@@ -31,77 +31,81 @@ class LocationPickerBottomSheet extends StatelessWidget {
               ),
             ],
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Select a Location',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(fontWeight: FontWeight.bold),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Select a Location',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  context
+                      .read<LocationMapBloc>()
+                      .add(MoveToCurrentLocation());
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ExternalAppColors.bg,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
                 ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<LocationMapBloc>().add(MoveToCurrentLocation());
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PrimaryText(
+                    text: 'Use Current Location',
+                    size: 15,
+                    color: ExternalAppColors.blue,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: context.read<LocationMapBloc>().searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search location',
+                  suffixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide:
+                        BorderSide(color: Theme.of(context).primaryColor),
+                  ),
+                ),
+                onChanged: (query) {
+                  context.read<LocationMapBloc>().debouncer.run(() {
+                    context
+                        .read<LocationMapBloc>()
+                        .add(SearchLocationEvent(query: query));
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+              Flexible(
+                fit: FlexFit.loose, 
+          
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.searchResults.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(state.searchResults[index].address),
+                      onTap: () {
+                        onLocationSelected(
+                            state.searchResults[index].address);
+                      },
+                    );
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ExternalAppColors.bg,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: PrimaryText(
-                      text: 'Use Current Location',
-                      size: 15,
-                      color: ExternalAppColors.blue,
-                    ),
-                  ),
                 ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: context.read<LocationMapBloc>().searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Search location',
-                    suffixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
-                    ),
-                  ),
-                  onChanged: (query) {
-                    context.read<LocationMapBloc>().debouncer.run(() {
-                      context
-                          .read<LocationMapBloc>()
-                          .add(SearchLocationEvent(query: query));
-                    });
-                  },
-                ),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: state.searchResults.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(state.searchResults[index].address),
-                        onTap: () {
-                          onLocationSelected(state.searchResults[index].address);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
