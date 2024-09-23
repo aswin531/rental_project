@@ -38,30 +38,25 @@ class PaymentDataSource {
   }
 
 //showing sheets
-   Future<bool> processPayment(String clientSecret) async {
-    try {
-      await Stripe.instance.initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-              paymentIntentClientSecret: clientSecret,
-              merchantDisplayName: 'Rent It'));
-      await Stripe.instance.presentPaymentSheet();
-      await Stripe.instance.confirmPaymentSheetPayment();
-      return true;
-    } catch (e) {
-      if (e is StripeException) {
-        if (e.error.code == FailureCode.Canceled) {
-          debugPrint("Payment flow was canceled by the user.");
-          return false;
-        } else {
-          debugPrint("Payment failed: ${e.error.localizedMessage}");
-          return false;
-        }
-      } else {
-        debugPrint("An unexpected error occurred: $e");
-        return false;
-      }
+  Future<bool> processPayment(String clientSecret) async {
+  try {
+    await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+            paymentIntentClientSecret: clientSecret,
+            merchantDisplayName: 'Rent It'));
+    await Stripe.instance.presentPaymentSheet();
+    return true; // This assumes the payment was successful
+  } catch (e) {
+    if (e is StripeException) {
+      debugPrint("Payment failed: ${e.error.localizedMessage}");
+      return false;
+    } else {
+      debugPrint("An unexpected error occurred: $e");
+      return false;
     }
   }
+}
+
 
   Future<bool> updatePaymentStatus(String docId) async {
     try {

@@ -5,10 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:rentit/features/home/presentation/pages/carlistscreen.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_bloc.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_event.dart';
 import 'package:rentit/features/payments/presentation/bloc/stripe/stripe_state.dart';
-import 'package:rentit/features/payments/presentation/pages/review_summary/review_summary_card.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_bloc.dart';
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_event.dart';
 import 'package:rentit/utils/primary_text.dart';
@@ -62,7 +62,7 @@ class ActionButtons extends StatelessWidget {
 
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => const ReviewSummaryScreen(),
+                builder: (context) => const CarListScreen(),
               ),
             );
           } else {
@@ -83,9 +83,7 @@ class ActionButtons extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ElevatedButton(
-              onPressed: () {
-                // Handle cancel  
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
               child: const Text('Cancel'),
             ),

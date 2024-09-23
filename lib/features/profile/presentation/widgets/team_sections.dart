@@ -1,10 +1,10 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
 import 'package:rentit/features/profile/presentation/widgets/detailed_page.dart';
-import 'package:rentit/features/profile/presentation/widgets/section_header.dart';
-import 'package:rentit/features/profile/presentation/widgets/settings_page.dart';
 import 'package:rentit/features/profile/presentation/widgets/team_item.dart';
 
 class TeamSection extends StatelessWidget {
@@ -12,7 +12,7 @@ class TeamSection extends StatelessWidget {
 
   final List<Map<String, dynamic>> teamItems = [
     {
-      'title': 'Profile',
+      'title': 'My Account',
       'subtitle': 'Project in Progress',
       'avatars': [
         'assets/images/admin.jpg',
@@ -31,7 +31,7 @@ class TeamSection extends StatelessWidget {
       'title': 'Settings',
       'subtitle': '',
       'avatars': ['assets/images/admin.jpg'],
-      'icon': FontAwesomeIcons.cogs
+      'icon': FontAwesomeIcons.gears
     },
     {
       'title': 'Privacy Policy',
@@ -39,13 +39,13 @@ class TeamSection extends StatelessWidget {
       'avatars': [
         'assets/images/admin.jpg',
       ],
-      'icon': FontAwesomeIcons.shieldAlt
+      'icon': FontAwesomeIcons.eye
     },
     {
-      'title': 'My Account',
+      'title': 'Logout',
       'subtitle': '',
       'avatars': ['assets/images/admin.jpg'],
-      'icon': FontAwesomeIcons.userCog
+      'icon': FontAwesomeIcons.arrowRightFromBracket,
     },
   ];
 
@@ -53,17 +53,35 @@ class TeamSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SectionHeader(title: 'My Team'),
+        // const SectionHeader(title: 'My Team'),
         const SizedBox(height: 10),
         ...teamItems.map((item) {
           return GestureDetector(
             onTap: () {
-              if (item['title'] == 'Settings') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SettingsPage(),
-                  ),
+              if (item['title'] == 'Logout') {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Logout'),
+                      content: const Text('Are you sure you want to logout?'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          child: const Text('Exit'),
+                          onPressed: () {
+                            context.go('/login');
+                            context.read<AuthBloc>().add(SignOutEvent());
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 );
               } else {
                 Navigator.push(

@@ -7,6 +7,7 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_even
 import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_state.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/booking_button.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/car_specs.dart';
+import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/location_map.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/req_car_details.dart';
 import 'package:rentit/utils/appcolors.dart';
 import 'package:rentit/utils/primary_text.dart';
@@ -98,7 +99,7 @@ class BookingContent extends StatelessWidget {
                           "Payment status: ${rentalRequestWithCarDetails.rentalRequest.carId.toUpperCase()}",
                       color: ExternalAppColors.blue,
                       size: 20),
-                  // const LocationMap(),
+                   const LocationMap(),
                   const SizedBox(height: 20),
                   ActionButtons(
                     documentId:
@@ -115,8 +116,6 @@ class BookingContent extends StatelessWidget {
           return Center(
               child: Lottie.asset('assets/animation/loading.json',
                   fit: BoxFit.cover, height: 100));
-
-          //return const Center(child: CircularProgressIndicator());
         }
       },
     );

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_state.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -73,30 +71,7 @@ class SettingsPage extends StatelessWidget {
               leading: const Icon(FontAwesomeIcons.signOutAlt),
               title: const Text('Log Out'),
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Logout'),
-                      content: const Text('Are you sure you want to logout?'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text('Cancel'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        TextButton(
-                          child: const Text('Exit'),
-                          onPressed: () {
-                            context.go('/login');
-                            context.read<AuthBloc>().add(SignOutEvent());
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
+               
               },
             ),
           ],
