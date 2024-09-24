@@ -72,6 +72,10 @@ dependencies:
   flutter_local_notifications: ^17.2.2
   timezone: ^0.9.4
   flutter_google_maps_webservices: ^1.1.1
+  flutter_launcher_icons: ^0.14.0
+  webview_flutter: ^4.8.0
+
+    
   
   
 
@@ -132,3 +136,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+

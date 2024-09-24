@@ -4,7 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rentit/features/authentication/presentation/bloc/authentication_event.dart';
-import 'package:rentit/features/profile/presentation/widgets/detailed_page.dart';
+import 'package:rentit/features/profile/presentation/widgets/mybooking.dart';
+import 'package:rentit/features/profile/presentation/widgets/privacypolicy.dart';
+import 'package:rentit/features/profile/presentation/widgets/sections.dart';
 import 'package:rentit/features/profile/presentation/widgets/team_item.dart';
 
 class TeamSection extends StatelessWidget {
@@ -13,7 +15,7 @@ class TeamSection extends StatelessWidget {
   final List<Map<String, dynamic>> teamItems = [
     {
       'title': 'My Account',
-      'subtitle': 'Project in Progress',
+      'subtitle': '',
       'avatars': [
         'assets/images/admin.jpg',
       ],
@@ -49,45 +51,28 @@ class TeamSection extends StatelessWidget {
     },
   ];
 
+  final Map<String, Widget> sectionScreens = {
+    'My Account': const MyAccountPage(),
+    'My Bookings':  BookingDetailScreen(),
+    'Settings': const SettingsPage(),
+    'Privacy Policy':  PrivacyPolicy(),
+  };
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // const SectionHeader(title: 'My Team'),
         const SizedBox(height: 10),
         ...teamItems.map((item) {
           return GestureDetector(
             onTap: () {
               if (item['title'] == 'Logout') {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Logout'),
-                      content: const Text('Are you sure you want to logout?'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text('Cancel'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        TextButton(
-                          child: const Text('Exit'),
-                          onPressed: () {
-                            context.go('/login');
-                            context.read<AuthBloc>().add(SignOutEvent());
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
+                _showLogoutDialog(context);
               } else {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailsPage(title: item['title']),
+                    builder: (context) => sectionScreens[item['title']]!,
                   ),
                 );
               }
@@ -101,6 +86,33 @@ class TeamSection extends StatelessWidget {
           );
         }),
       ],
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Exit'),
+              onPressed: () {
+                context.go('/login');
+                context.read<AuthBloc>().add(SignOutEvent());
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
