@@ -181,12 +181,7 @@ class LocationSelectionWidget extends StatelessWidget {
   void _useCurrentLocationForDropOff(BuildContext context) {
     context.read<LocationMapBloc>().add(const UseCurrentLocationForDropOff());
   }
-  // void _useCurrentLocationForPickup(BuildContext context, LocationMapState locationState) {
-  //   if (locationState.currentAddress != null) {
-  //     pickupLocationController.text = locationState.currentAddress!;
-  //     context.read<LocationMapBloc>().add(UpdatePickupLocationEvent(locationState.currentAddress!));
-  //   }
-  // }
+ 
 
   void _useCurrentLocationForBoth(
       BuildContext context, LocationMapState locationState) {

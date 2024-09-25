@@ -118,41 +118,8 @@ class CarDetails extends StatelessWidget {
             color: ExternalAppColors.bg,
             thickness: 2,
           ),
-          Align(
-              alignment: Alignment.topLeft,
-              child: PrimaryText(
-                text: status,
-                color: ExternalAppColors.black,
-                size: 20,
-              ))
         ],
       ),
     );
   }
 }
-
-
-
-// Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Align(
-                //     alignment: Alignment.bottomLeft,
-                //     child: Container(
-                //       color: Colors.amber,
-                //       child: Padding(
-                //         padding: const EdgeInsets.all(8.0),
-                //         child: PrimaryText(
-                //             text: rentalRequestWithCarDetails
-                //                 .rentalRequest.status
-                //                 .toString()
-                //                 .toUpperCase()
-                //                 .split('.')
-                //                 .last,
-                //             size: 20,
-                //             fontWeight: FontWeight.bold,
-                //             color: getStatusColor(rentalRequestWithCarDetails
-                //                 .rentalRequest.status)),
-                //       ),
-                //     ),
-                //   ),
-                // ),

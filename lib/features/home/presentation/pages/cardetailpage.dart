@@ -43,27 +43,27 @@ class CarDetailPage extends StatelessWidget {
                 color: ExternalAppColors.black,
               ),
               centerTitle: true,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: ExternalAppColors.white),
-                      child: IconButton(
-                          icon: const Icon(Icons.share), onPressed: () {})),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: ExternalAppColors.white),
-                      child: IconButton(
-                          icon: const Icon(Icons.favorite_outline),
-                          onPressed: () {})),
-                ),
-              ],
+              // actions: [
+              //   Padding(
+              //     padding: const EdgeInsets.all(6.0),
+              //     child: Container(
+              //         decoration: BoxDecoration(
+              //             shape: BoxShape.circle,
+              //             color: ExternalAppColors.white),
+              //         child: IconButton(
+              //             icon: const Icon(Icons.share), onPressed: () {})),
+              //   ),
+              //   Padding(
+              //     padding: const EdgeInsets.all(6.0),
+              //     child: Container(
+              //         decoration: BoxDecoration(
+              //             shape: BoxShape.circle,
+              //             color: ExternalAppColors.white),
+              //         child: IconButton(
+              //             icon: const Icon(Icons.favorite_outline),
+              //             onPressed: () {})),
+              //   ),
+              // ],
             ),
             body: Column(
               children: [
@@ -154,7 +154,7 @@ class CarDetailPage extends StatelessWidget {
                           children: [
                             TextSpan(
                               text:
-                                  '\$${car.rentalPriceRange.start.toStringAsFixed(2)}',
+                                  '\₹${car.rentalPriceRange.start.toStringAsFixed(2)}',
                               style: TextStyle(
                                 color: ExternalAppColors.blue,
                                 fontSize: 20,

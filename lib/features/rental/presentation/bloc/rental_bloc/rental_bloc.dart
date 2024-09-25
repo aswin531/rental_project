@@ -19,7 +19,6 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
   DateTime? startTime;
   DateTime? returnTime;
 
-
   final CreateRentalRequest createRentalRequest;
   final GetUserRentalRequests getUserRentalRequests;
   final UpdateRentalRequestStatus updateRentalRequestStatus;
@@ -61,7 +60,7 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
     }
   }
 
- void _onFetchUserRentalRequestsWithCarDetails(
+  void _onFetchUserRentalRequestsWithCarDetails(
     FetchUserRentalRequestsWithCarDetailsEvent event,
     Emitter<RentalRequestState> emit,
   ) async {
@@ -148,22 +147,4 @@ class RentalRequestBloc extends Bloc<RentalRequestEvent, RentalRequestState> {
       returnTime: returnTime,
     ));
   }
-
-  // Future<void> _onFetchCompletedRentalRequestsEvent(
-  //     FetchCompletedRentalRequestsEvent event,
-  //     Emitter<RentalRequestState> emit) async {
-  //   try {
-  //     final rentalRequestsWithCarDetails =
-  //         await rentalRequestRepository.getUserRentalRequests(event.userId);
-
-  //     // Filter requests where paymentStatus is 'completed'
-  //     final completedRequests = rentalRequestsWithCarDetails
-  //         .where((rental) => rental.rentalRequest.paymentStatus == 'completed')
-  //         .toList();
-  //     emit(UserRentalRequestsWithCarDetailsLoaded(completedRequests));
-  //   } catch (e) {
-  //     emit(RentalRequestError(
-  //         'Error loading completed rentals: ${e.toString()}'));
-  //   }
-  // }
 }

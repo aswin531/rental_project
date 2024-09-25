@@ -7,6 +7,7 @@ import 'package:rentit/features/authentication/presentation/bloc/authentication_
 import 'package:rentit/features/profile/presentation/widgets/mybooking.dart';
 import 'package:rentit/features/profile/presentation/widgets/privacypolicy.dart';
 import 'package:rentit/features/profile/presentation/widgets/sections.dart';
+import 'package:rentit/features/profile/presentation/widgets/settings.dart';
 import 'package:rentit/features/profile/presentation/widgets/team_item.dart';
 
 class TeamSection extends StatelessWidget {
@@ -54,8 +55,8 @@ class TeamSection extends StatelessWidget {
   final Map<String, Widget> sectionScreens = {
     'My Account': const MyAccountPage(),
     'My Bookings':  BookingDetailScreen(),
-    'Settings': const SettingsPage(),
-    'Privacy Policy':  PrivacyPolicy(),
+    'Settings': const SettingsPageWidget(),
+    'Privacy Policy':  const PrivacyPolicy(),
   };
 
   @override

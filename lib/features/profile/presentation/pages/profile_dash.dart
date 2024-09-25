@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_bloc.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_event.dart';
 import 'package:rentit/features/profile/presentation/bloc/profile_setup/profile_setup_state.dart';
-import 'package:rentit/features/profile/presentation/widgets/folder_section.dart';
 import 'package:rentit/features/profile/presentation/widgets/profile_card.dart';
 import 'package:rentit/features/profile/presentation/widgets/team_sections.dart';
 
@@ -40,7 +39,7 @@ class ProfileDashboard extends StatelessWidget {
                         job: userProfile.job,
                       ),
                       const SizedBox(height: 20),
-                      const FoldersSection(),
+                      // const FoldersSection(),
                       const SizedBox(height: 20),
                       TeamSection(),
                     ],

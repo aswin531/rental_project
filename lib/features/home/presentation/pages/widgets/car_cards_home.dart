@@ -103,7 +103,7 @@ class CarCard extends StatelessWidget {
                       children: [
                         TextSpan(
                           text:
-                              '\$${car.rentalPriceRange.start.toStringAsFixed(2)}',
+                              '₹${car.rentalPriceRange.start.toStringAsFixed(2)}',
                           style: TextStyle(
                             color: ExternalAppColors.blue,
                             fontSize: 20,

@@ -15,7 +15,7 @@ class CompletedBookingsContent extends StatelessWidget {
     return BlocBuilder<RentalRequestBloc, RentalRequestState>(
       builder: (context, state) {
         if (state is RentalRequestInitial) {
-        //  final user = firebaseAuthInstance.currentUser!.uid;
+          //  final user = firebaseAuthInstance.currentUser!.uid;
           //context.read<RentalRequestBloc>().add(FetchCompletedRentalRequestsEvent(user));
         }
         if (state is UserRentalRequestsWithCarDetailsLoaded) {
@@ -39,7 +39,8 @@ class CompletedBookingsContent extends StatelessWidget {
               ),
             );
           }
-          final rentalRequestWithCarDetails = state.requestsWithCarDetails.first;
+          final rentalRequestWithCarDetails =
+              state.requestsWithCarDetails.first;
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
@@ -69,15 +70,6 @@ class CompletedBookingsContent extends StatelessWidget {
                     seatCapacity: rentalRequestWithCarDetails.car.seatCapacity,
                   ),
                   const SizedBox(height: 20),
-                  Text(
-                    'Payment Status: ${rentalRequestWithCarDetails.rentalRequest.paymentStatus}',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: ExternalAppColors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  // ActionButtons and more can go here
                 ],
               ),
             ),

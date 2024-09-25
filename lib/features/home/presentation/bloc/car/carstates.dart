@@ -12,8 +12,6 @@ class CarInitial extends CarState {}
 
 class CarLoading extends CarState {}
 
-// class BrandLoading extends CarState {}
-
 class CarLoaded extends CarState {
   final List<CarVehicleEntity> cars;
 
@@ -37,12 +35,3 @@ class CarError extends CarState {
   @override
   List<Object> get props => [message];
 }
-
-// class BrandsLoaded extends CarState {
-//   final List<String> brands;
-
-//   const BrandsLoaded(this.brands);
-
-//   @override
-//   List<Object> get props => [brands];
-// }

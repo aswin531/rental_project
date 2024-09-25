@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carbloc.dart';
 import 'package:rentit/features/home/presentation/bloc/car/carevent.dart';
@@ -33,6 +32,7 @@ class SearchBarWidget extends StatelessWidget {
               ),
             ),
             onChanged: (value) {
+              print('Search term: $value'); // Debug print
               context.read<CarBloc>().add(SearchCars(searchTerm: value));
             },
           ),
@@ -45,13 +45,7 @@ class SearchBarWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: IconButton(
-              icon: SvgPicture.asset(
-                'assets/icons/filter.svg',
-                height: 30,
-                width: 30,
-                // ignore: deprecated_member_use
-                color: Colors.blue,
-              ),
+              icon: const Icon(Icons.filter_list, color: Colors.blue),
               onPressed: () {
                 _showFilterDialog(context);
               },

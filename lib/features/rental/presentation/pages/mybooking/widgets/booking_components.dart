@@ -10,7 +10,6 @@ import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/car_
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/location_map.dart';
 import 'package:rentit/features/rental/presentation/pages/mybooking/widgets/req_car_details.dart';
 import 'package:rentit/utils/appcolors.dart';
-import 'package:rentit/utils/primary_text.dart';
 
 class BookingContent extends StatelessWidget {
   const BookingContent({super.key});
@@ -40,7 +39,8 @@ class BookingContent extends StatelessWidget {
         }
 
         if (state is UserRentalRequestsWithCarDetailsLoaded) {
-          debugPrint('Received rental requests: ${state.requestsWithCarDetails.length}');
+          debugPrint(
+              'Received rental requests: ${state.requestsWithCarDetails.length}');
           if (state.requestsWithCarDetails.isEmpty) {
             return Center(
               child: Column(
@@ -93,15 +93,11 @@ class BookingContent extends StatelessWidget {
                     seatCapacity: rentalRequestWithCarDetails.car.seatCapacity,
                   ),
                   const SizedBox(height: 20),
-
-                  PrimaryText(
-                      text:
-                          "Payment status: ${rentalRequestWithCarDetails.rentalRequest.carId.toUpperCase()}",
-                      color: ExternalAppColors.blue,
-                      size: 20),
-                   const LocationMap(),
+                  const LocationMap(),
                   const SizedBox(height: 20),
                   ActionButtons(
+                    carId: rentalRequestWithCarDetails.car.make,
+                    imageUrl: rentalRequestWithCarDetails.car.imageUrls.first,
                     documentId:
                         rentalRequestWithCarDetails.rentalRequest.id.toString(),
                     rentalPrice: rentalRequestWithCarDetails

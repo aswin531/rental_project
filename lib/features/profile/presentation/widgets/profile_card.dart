@@ -1,7 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:rentit/features/profile/presentation/widgets/stat_column.dart';
 
 class ProfileCard extends StatelessWidget {
   final String username;
@@ -61,9 +60,9 @@ class ProfileCard extends StatelessWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                StatColumn(value: '75k', label: 'Rented Cars'),
-                StatColumn(value: '16k', label: 'Total Rentals'),
-                StatColumn(value: '600', label: 'Reviews'),
+                // StatColumn(value: '75k', label: 'Rented Cars'),
+                // StatColumn(value: '16k', label: 'Total Rentals'),
+                // StatColumn(value: '600', label: 'Reviews'),
               ],
             ),
           ],

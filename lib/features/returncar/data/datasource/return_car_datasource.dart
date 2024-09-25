@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:rentit/core/injection_container/dependency_injection.dart';
 import 'package:rentit/features/returncar/data/model/car_return_model.dart';
 
 abstract class ReturnCarDatasource {
@@ -8,9 +8,8 @@ abstract class ReturnCarDatasource {
 }
 
 class ReturnCarDataSourceImpl implements ReturnCarDatasource {
-  final FirebaseFirestore firebaseFirestore;
 
-  ReturnCarDataSourceImpl(this.firebaseFirestore);
+  ReturnCarDataSourceImpl();
 
   Future<String?> _findRentalRequestId(String userId) async {
     try {
@@ -20,16 +19,13 @@ class ReturnCarDataSourceImpl implements ReturnCarDatasource {
           .where('status', isEqualTo: 'accepted')
           .limit(1)
           .get();
-      debugPrint(querySnapshot.docChanges.length.toString());
       if (querySnapshot.docs.isNotEmpty) {
-        return querySnapshot.docs.last.id;
+        return querySnapshot.docs.first.id;
       } else {
-        debugPrint('No matching rental request found for user $userId');
         return null;
       }
     } catch (e) {
-      debugPrint('Error finding rental request: $e');
-      return null;
+      throw Exception('Error finding rental request: $e');
     }
   }
 
@@ -49,33 +45,28 @@ class ReturnCarDataSourceImpl implements ReturnCarDatasource {
         'return_initiated_at': DateTime.now().toIso8601String(),
       });
     } catch (e) {
-      debugPrint('Error initiating car return: $e');
-      throw Exception('Failed to initiate car return');
+      throw Exception('Failed to initiate car return: $e');
     }
   }
 
   @override
-  Future<void> carReturnConfirm(
-      String userId, CarReturnModel carReturnModel) async {
+  Future<void> carReturnConfirm(String userId, CarReturnModel carReturnModel) async {
     String? rentalId = await _findRentalRequestId(userId);
     if (rentalId == null) {
       throw Exception('No active rental request found for user $userId');
     }
 
     try {
-  await firebaseFirestore
-      .collection("rental_requests")
-      .doc(rentalId)
-      .update({
-    'return_status': 'returned',
-    'return_details': carReturnModel.toJson(),
-    'returned_at': DateTime.now().toIso8601String(),
-  });
-  debugPrint("Return confirmation successful for rentalId: $rentalId");
-} catch (e) {
-  debugPrint('Error confirming car return: $e');
-  throw Exception('Failed to confirm car return');
-}
-
+      await firebaseFirestore
+          .collection("rental_requests")
+          .doc(rentalId)
+          .update({
+        'return_status': 'returned',
+        'return_details': carReturnModel.toJson(),
+        'returned_at': DateTime.now().toIso8601String(),
+      });
+    } catch (e) {
+      throw Exception('Failed to confirm car return: $e');
+    }
   }
 }

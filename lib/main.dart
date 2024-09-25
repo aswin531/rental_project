@@ -24,6 +24,7 @@ import 'package:rentit/features/returncar/data/repository/return_car_repo_impl.d
 import 'package:rentit/features/returncar/domain/usecases/return_car_confirm_usecases.dart';
 import 'package:rentit/features/returncar/domain/usecases/return_car_initial_usecases.dart';
 import 'package:rentit/features/returncar/presentation/bloc/return_car_bloc.dart';
+import 'package:rentit/features/reviews/presentation/bloc/review_bloc.dart';
 import 'package:rentit/utils/screen_util_setup.dart';
 import 'package:rentit/core/injection_container/dependency_injection.dart';
 import 'package:rentit/core/router/approutes.dart';
@@ -146,16 +147,19 @@ Future<void> main() async {
           create: (_) => CarReturnBloc(
             returnCarInitialUsecases: ReturnCarInitialUsecases(
               CarReturnRepositoryImpl(
-                ReturnCarDataSourceImpl(FirebaseFirestore.instance),
+                ReturnCarDataSourceImpl(),
               ),
             ),
             returnCarConfirmUsecase: ReturnCarConfirmUsecase(
               CarReturnRepositoryImpl(
-                ReturnCarDataSourceImpl(FirebaseFirestore.instance),
+                ReturnCarDataSourceImpl(),
               ),
             ),
           ),
-        )
+        ),
+                BlocProvider(create: (context) => sl<ReviewBloc>()),
+
+
       ], child: const MyApp())));
 }
 

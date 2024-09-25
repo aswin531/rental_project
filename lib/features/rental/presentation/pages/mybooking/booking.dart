@@ -51,7 +51,7 @@ class _BookingPageState extends State<BookingPage>
               tabs: const [
                 Tab(text: 'My requests'),
                 Tab(text: 'Completed'),
-                Tab(text: 'Cancelled'),
+                Tab(text: 'Returned'),
               ],
             ),
           ),

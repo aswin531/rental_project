@@ -22,12 +22,6 @@ List<PersistentBottomNavBarItem> navBarItems() {
       inactiveColorPrimary: Colors.grey,
     ),
     PersistentBottomNavBarItem(
-      icon: const Icon(Icons.textsms_sharp),
-      title: "Test",
-      activeColorPrimary: Colors.blue,
-      inactiveColorPrimary: Colors.grey,
-    ),
-    PersistentBottomNavBarItem(
       icon: const Icon(Icons.person),
       title: "Profile",
       activeColorPrimary: Colors.blue,

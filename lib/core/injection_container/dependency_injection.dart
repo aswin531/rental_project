@@ -25,6 +25,12 @@ import 'package:rentit/features/returncar/data/repository/return_car_repo_impl.d
 import 'package:rentit/features/returncar/domain/repository/return_car_repository.dart';
 import 'package:rentit/features/returncar/domain/usecases/return_car_confirm_usecases.dart';
 import 'package:rentit/features/returncar/domain/usecases/return_car_initial_usecases.dart';
+import 'package:rentit/features/reviews/data/datasource/review_datasource.dart';
+import 'package:rentit/features/reviews/data/repository/reviewrepo_impl.dart';
+import 'package:rentit/features/reviews/domain/repository/review_repository.dart';
+import 'package:rentit/features/reviews/domain/usecases/addreview_usecase.dart';
+import 'package:rentit/features/reviews/domain/usecases/uploadimage_usecase.dart';
+import 'package:rentit/features/reviews/presentation/bloc/review_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -126,11 +132,23 @@ Future<void> init() async {
 //DataSource---------------------------------------------
 
   sl.registerLazySingleton<ReturnCarDatasource>(
-      () => ReturnCarDataSourceImpl(sl()));
+      () => ReturnCarDataSourceImpl());
 
 //UseCases---------------------------------------------
   sl.registerLazySingleton(() => ReturnCarConfirmUsecase(sl()));
   sl.registerLazySingleton(() => ReturnCarInitialUsecases(sl()));
+
+  sl.registerLazySingleton(() => AddReviewUseCase(sl()));
+  sl.registerLazySingleton(() => UploadImageUseCase(sl()));
+
+  sl.registerLazySingleton<ReviewRepository>(() => ReviewRepositoryImpl(sl()));
+
+  sl.registerLazySingleton<ReviewDataSource>(() => ReviewDataSource());
+
+  sl.registerFactory(() => ReviewBloc(
+        sl(),
+        sl(),
+      ));
 }
 
 // Lazy singleton means the instance

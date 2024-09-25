@@ -7,9 +7,6 @@ import 'package:rentit/features/rental/presentation/bloc/rental_bloc/rental_stat
 import 'package:rentit/features/returncar/domain/usecases/return_car_confirm_usecases.dart';
 import 'package:rentit/features/returncar/domain/usecases/return_car_initial_usecases.dart';
 import 'package:rentit/features/returncar/presentation/bloc/return_car_bloc.dart';
-import 'package:rentit/features/returncar/presentation/bloc/return_car_event.dart';
-import 'package:rentit/features/returncar/presentation/bloc/return_car_state.dart';
-import 'package:rentit/features/returncar/presentation/pages/confirming_return.dart';
 
 class CarReturnProcessScreen extends StatelessWidget {
   const CarReturnProcessScreen({
@@ -48,7 +45,7 @@ class CarReturnProcessScreen extends StatelessWidget {
                     const SizedBox(height: 24),
                     _buildReturnChecklist(),
                     const SizedBox(height: 24),
-                    _buildInitiateReturnButton(),
+                    // _buildInitiateReturnButton(),
                   ],
                 ),
               ),
@@ -82,11 +79,11 @@ class CarReturnProcessScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Rental ID: ${rentalDetails}',
+              'Rental ID: $rentalDetails',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            Text('User ID:${rentalDetails} '),
+            Text('User ID:$rentalDetails '),
             const SizedBox(height: 8),
             Text(
                 'Return Date: ${DateFormat('yyyy-MM-dd').format(DateTime.now())}'),
@@ -126,48 +123,6 @@ class CarReturnProcessScreen extends StatelessWidget {
         const SizedBox(width: 8),
         Text(text),
       ],
-    );
-  }
-
-  Widget _buildInitiateReturnButton() {
-    return BlocConsumer<CarReturnBloc, CarReturnState>(
-      listener: (context, state) {
-        if (state is CarReturnSuccess) {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ConfirmCarReturnForm('rentalId', 'carId'),
-          ));
-        } else if (state is CarReturFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-        }
-      },
-      builder: (context, state) {
-        return SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: state is CarReturnInProgress
-                ? null
-                : () {
-                    BlocProvider.of<CarReturnBloc>(context).add(
-                      CarReturnInitiate('rentalId'),
-                    );
-                  },
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: state is CarReturnInProgress
-                ? const CircularProgressIndicator(color: Colors.white)
-                : const Text(
-                    'Initiate Return',
-                    style: TextStyle(fontSize: 18),
-                  ),
-          ),
-        );
-      },
     );
   }
 }

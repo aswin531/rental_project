@@ -45,51 +45,26 @@ class CarReposImpl implements CarRepository {
     final brandModels = await remoteDataSource.getBrands();
     return brandModels.map((model) => model.toEntity()).toList();
   }
-  
+
   @override
   Future<List<CarVehicleModel>> getCarsByBrand(String brandName) {
     throw UnimplementedError();
   }
 
-   @override
+  @override
   Stream<List<CarVehicleModel>> getCarBySearch({
     String? searchTerm,
     String? make,
     String? model,
-   // PriceRange? priceRange,
+    // PriceRange? priceRange,
     int? year,
   }) {
     return remoteDataSource.getCarBySearch(
       searchTerm: searchTerm,
       make: make,
       model: model,
-     // priceRange: priceRange,
+      // priceRange: priceRange,
       year: year,
     );
   }
-
-  // @override
-  // Future<List<CarVehicleModel>> getCarsByBrand(String brand) async {
-  //   final cars = await remoteDataSource.getCars();
-  //   return cars.where((car) => car.make == brand).toList();
-  // }
 }
-
-
-
-
-// class GetCarsUseCase {
-//   final CarRepository repository;
-
-//   GetCarsUseCase(this.repository);
-
-//   Future<List<Car>> execute() async {
-//     try {
-//       return await repository.getCars();
-//     } on ServerException catch (e) {
-//       // Handle the exception or rethrow it
-//       print('Error fetching cars: ${e.message}');
-//       rethrow;
-//     }
-//   }
-// }

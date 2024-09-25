@@ -53,7 +53,6 @@ class LocationSelectionCommonWidget extends StatelessWidget {
                     return ListTile(
                       title: Text(state.searchResults[index].address),
                       onTap: () {
-                        // Handle search result selection
                         context.read<LocationMapBloc>().add(
                             UpdatePickupLocationEvent(
                                 state.searchResults[index]));
@@ -64,7 +63,6 @@ class LocationSelectionCommonWidget extends StatelessWidget {
               }
               if (state.searchResults.isEmpty) {
                 const Text('No Data ');
-               // return Lottie.asset('assets/animation/loc_blue.json');
               }
 
               return const SizedBox.shrink();

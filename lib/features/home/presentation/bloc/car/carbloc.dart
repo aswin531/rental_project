@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentit/features/home/data/model/carvehicle_model.dart';
@@ -53,18 +54,27 @@ class CarBloc extends Bloc<CarEvent, CarState> {
     }
   }
  
-  void _onSearchCars(SearchCars event, Emitter<CarState> emit) async {
-    emit(CarLoading());
-    try {
-      await emit.forEach(
-        searchCarsUsecase.call(event.searchTerm),
-        onData: (List<CarVehicleModel> cars) => CarSearchLoaded(cars),
-        onError: (error, stackTrace) => CarError(error.toString()),
-      );
-    } catch (e) {
-      emit(CarError(e.toString()));
-    }
+ void _onSearchCars(SearchCars event, Emitter<CarState> emit) async {
+  print('Searching for cars with term: ${event.searchTerm}');
+  emit(CarLoading());
+  try {
+    await emit.forEach(
+      searchCarsUsecase.call(event.searchTerm),
+      onData: (List<CarVehicleModel> cars) {
+        print('Cars found: ${cars.length}');
+        return CarSearchLoaded(cars);
+      },
+      onError: (error, stackTrace) {
+        print('Search error: $error');
+        return CarError(error.toString());
+      },
+    );
+  } catch (e) {
+    print('Exception during search: $e');
+    emit(CarError(e.toString()));
   }
+}
+
 
   void _onFilterCars(FilterCars event, Emitter<CarState> emit) async {
     emit(CarLoading());
